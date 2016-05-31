@@ -4,4 +4,5 @@ COLUMN owner FORMAT a20
 COLUMN username FORMAT a20
 COLUMN host FORMAT a60
 
-SELECT * FROM dba_db_links;
+SELECT  * 
+FROM    dba_db_links;
