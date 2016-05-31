@@ -12,4 +12,5 @@ SET LONGCHUNK 1000000
 SET LINESIZE 200
 SET PAGESIZE 0
 
-select dbms_metadata.get_ddl('TABLESPACE', '&tbsp_name') from dual; 
+select  dbms_metadata.get_ddl('TABLESPACE', '&tbsp_name') 
+from    dual; 
