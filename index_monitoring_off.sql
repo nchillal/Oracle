@@ -1,6 +1,4 @@
 -- -----------------------------------------------------------------------------------
--- File Name    : https://oracle-base.com/dba/script_creation/index_monitoring_on.sql
--- Author       : Tim Hall
 -- Description  : Sets monitoring off for the specified table indexes.
 -- Call Syntax  : @index_monitoring_on (schema) (table-name or all)
 -- Last Modified: 04/02/2005
