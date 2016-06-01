@@ -1,6 +1,4 @@
 -- -----------------------------------------------------------------------------------
--- File Name    : https://oracle-base.com/dba/monitoring/index_monitoring_status.sql
--- Author       : Tim Hall
 -- Description  : Shows the monitoring status for the specified table indexes.
 -- Call Syntax  : @index_monitoring_status (schema) (table-name or all)
 -- Last Modified: 04/02/2005
