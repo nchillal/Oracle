@@ -1,4 +1,4 @@
-select  sql_id, 
+SELECT  sql_id, 
         sql_child_number 
-from    v$session 
-where   sid=&sid;
+FROM    v$session 
+WHERE   sid=&sid;
