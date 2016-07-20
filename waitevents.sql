@@ -1,18 +1,18 @@
-set lines 230 pages 200
+SET lines 230 pages 200
 
-break on inst_id
+BREAK ON inst_id
 
-col event for a50
-col machine for a40
+COLUMN event FORMAT a50
+COLUMN machine FORMAT a40
 
-select  inst_id, 
+SELECT  inst_id, 
         sid, 
         event, 
         seconds_in_wait, 
         status, 
         machine, 
         program 
-from    gv$session 
-where   wait_time=0 
-and     type <> 'BACKGROUND' 
-and     event not in ('dispatcher timer','pipe get','pmon timer','PX Idle Wait','PX Deq Credit: need buffer','rdbms ipc message','shared server idle wait','smon timer','SQL*Net message from client');
+FROM    gv$session 
+WHERE   wait_time=0 
+AND     type <> 'BACKGROUND' 
+AND     event NOT IN ('dispatcher timer','pipe get','pmon timer','PX Idle Wait','PX Deq Credit: need buffer','rdbms ipc message','shared server idle wait','smon timer','SQL*Net message from client');
