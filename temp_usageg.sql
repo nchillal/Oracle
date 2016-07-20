@@ -1,14 +1,3 @@
-/*#########################################
-## Script is from Tanel Poder tools
-## changed for globalization 
-## and changed the script to use v$tempseg_usage 
-## instead of v$sort_usage
-##
-## Commented out scripts are due to misleading info 
-## because of bug Bug 7210183: 
-#########################################*/
-
-
 col sid_serial format a10
 col username format a17
 col osuser format a15
