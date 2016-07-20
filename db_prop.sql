@@ -1,6 +1,8 @@
-set lines 230 pages 200
-col DESCRIPTION for a100
-col PROPERTY_NAME for a50
-col PROPERTY_VALUE for a80
-select  * 
-from    database_properties; 
+SET lines 230 pages 200
+
+COLUMN DESCRIPTION for a100
+COLUMN PROPERTY_NAME for a50
+COLUMN PROPERTY_VALUE for a80
+
+SELECT  * 
+FROM    database_properties; 
