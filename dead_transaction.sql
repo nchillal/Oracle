@@ -1,5 +1,7 @@
 # Purpose: Query to list dead transaction.
 
-select ktuxeusn USN, ktuxeslt Slot, ktuxesqn Seq, ktuxesta State, ktuxesiz Undo 
-from x$ktuxe 
-where ktuxesta <> 'INACTIVE' and ktuxecfl like '%DEAD%' order by ktuxesiz asc;
+SELECT    ktuxeusn USN, ktuxeslt Slot, ktuxesqn Seq, ktuxesta State, ktuxesiz Undo 
+FROM      x$ktuxe 
+WHERE     ktuxesta <> 'INACTIVE' 
+AND       ktuxecfl LIKE '%DEAD%' 
+ORDER BY  ktuxesiz ASC;
