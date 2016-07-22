@@ -6,7 +6,8 @@ COLUMN event FORMAT a50
 COLUMN machine FORMAT a40
 
 SELECT  inst_id, 
-        sid, 
+        sid,
+        username,
         event, 
         seconds_in_wait, 
         status, 
