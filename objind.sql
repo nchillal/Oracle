@@ -1,2 +1,8 @@
-select OWNER, INDEX_NAME, INDEX_TYPE, UNIQUENESS, STATUS from dba_indexes where TABLE_NAME='&table_name'
+SELECT  owner, 
+        index_name, 
+        index_type, 
+        uniqueness, 
+        status 
+FROM    dba_indexes 
+WHERE   table_name='&table_name'
 /
