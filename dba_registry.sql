@@ -1,8 +1,8 @@
-set lines 230 pages 30
-col comp_name for a80
-select    comp_id, 
+SET lines 230 pages 30
+COLUMN comp_name for a80
+SELECT    comp_id, 
           comp_name, 
           version, 
           status 
-from dba_registry
+FROM      dba_registry
 /
