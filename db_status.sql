@@ -1,5 +1,10 @@
 set lines 200 
-select    instance_name, 
+SELECT    instance_name, 
           host_name, 
           status 
-from      gv$instance;
+FROM      gv$instance;
+
+SELECT    name, 
+          open_mode, 
+          database_role 
+FROM      v$database; 
