@@ -9,5 +9,5 @@ UNION
 SELECT  name, value
 FROM    v$spparameter
 WHERE   REGEXP_LIKE(name, 'log_archive_dest_state_+\d')
-AND     REGEXP_LIKE(value, '
+AND     value IS NOT NULL
 /
