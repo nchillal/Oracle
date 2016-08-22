@@ -11,3 +11,8 @@ FROM    v$spparameter
 WHERE   REGEXP_LIKE(name, 'log_archive_dest_state_+\d')
 AND     value IS NOT NULL
 /
+
+SELECT  value 
+FROM    v$parameter 
+WHERE   name='&param_name'
+/
