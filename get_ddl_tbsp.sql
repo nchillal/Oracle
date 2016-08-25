@@ -5,12 +5,12 @@ Begin
   dbms_metadata.set_transform_param(dbms_metadata.session_transform,'STORAGE', FALSE);
   dbms_metadata.set_transform_param(dbms_metadata.session_transform,'TABLESPACE',TRUE);
 End;
-/ 
+/
 
 SET LONG 1000000
 SET LONGCHUNK 1000000
 SET LINESIZE 200
 SET PAGESIZE 0
 
-select  dbms_metadata.get_ddl('TABLESPACE', '&tbsp_name') 
-from    dual; 
+SELECT  dbms_metadata.get_ddl('TABLESPACE', '&tbsp_name')
+FROM    dual; 
