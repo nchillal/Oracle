@@ -1,4 +1,4 @@
-set lines 230 pages 200 
-col directory_path for a80
+set lines 230 pages 200
+column directory_path format a80
 select  * 
-from    dba_directories; 
+from    dba_directories;
