@@ -1,7 +1,7 @@
 set lines 230 pages 200
-select    owner, 
-          count(*) 
-from      dba_objects 
-where     status='INVALID' 
-group by  owner 
-order by  2 desc;
+SELECT    owner,
+          COUNT(*)
+FROM      dba_objects
+WHERE     status='INVALID'
+GROUP BY  owner
+ORDER BY  2 desc;
