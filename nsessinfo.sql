@@ -26,15 +26,15 @@ SELECT  ' Sid, Serial#, Aud sid : '|| s.sid||' , '||s.serial#||' , '||
 	   '   Action / Module     : '||s.action||'  / '||s.module||chr(10) ||'User Name : '
 FROM    gv$process p,gv$session s
 WHERE   p.addr = s.paddr
-AND     s.sid = nvl('&SID',s.sid)
-AND     nvl(s.terminal,' ') = nvl('&Terminal',nvl(s.terminal,' '))
-AND     nvl(s.process,-1) = nvl('&Process',nvl(s.process,-1))
-AND     p.spid = nvl('&spid',p.spid)
+AND     s.sid = NVL('&SID',s.sid)
+AND     NVL(s.terminal,' ') = NVL('&Terminal',NVL(s.terminal,' '))
+AND     NVL(s.process,-1) = NVL('&Process',NVL(s.process,-1))
+AND     p.spid = NVL('&spid',p.spid)
 AND     s.inst_id=p.inst_id
-AND     s.username = nvl('&username',s.username)
-AND     nvl(s.osuser,' ') = nvl('&OSUser',nvl(s.osuser,' '))
-AND     nvl(s.machine,' ') = nvl('&machine',nvl(s.machine,' '))
-AND     nvl('&SID',nvl('&TERMINAL',nvl('&PROCESS',nvl('&SPID',nvl('&USERNAME',
-        nvl('&OSUSER',nvl('&MACHINE','NO VALUES'))))))) <> 'NO VALUES'
+AND     s.username = NVL('&username',s.username)
+AND     NVL(s.osuser,' ') = NVL('&OSUser',NVL(s.osuser,' '))
+AND     NVL(s.machine,' ') = NVL('&machine',NVL(s.machine,' '))
+AND     NVL('&SID',NVL('&TERMINAL',NVL('&PROCESS',NVL('&SPID',NVL('&USERNAME',
+        NVL('&OSUSER',NVL('&MACHINE','NO VALUES'))))))) <> 'NO VALUES'
 /
 undefine sid

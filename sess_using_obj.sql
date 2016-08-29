@@ -1,5 +1,5 @@
-set lines 230 
-col object for a30
-select  * 
-from    gv$access 
-where   object='&obj_name';
+set lines 230
+COLUMN object FORMAT a30
+SELECT  *
+FROM    gv$access
+WHERE   object='&obj_name';
