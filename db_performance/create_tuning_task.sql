@@ -21,5 +21,9 @@ FROM    DBA_ADVISOR_LOG
 WHERE   TASK_NAME = '&task_name';
 
 # View the recommendation
+SET linesize 200
+SET LONG 999999999
+SET pages 1000
+SET longchunksize 20000
 SELECT  DBMS_SQLTUNE.REPORT_TUNING_TASK('&task_name') AS recommendations
 FROM    dual;
