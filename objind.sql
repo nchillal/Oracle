@@ -1,20 +1,31 @@
+SET LINESIZE 155 PAGESIZE 200 HEADING OFF
 COLUMN  column_name FOR a30
 
-SELECT  owner, 
-        index_name, 
-        index_type, 
-        uniqueness, 
-        status 
-FROM    dba_indexes 
-WHERE   table_name='&table_name'
+-- Create bind variable for storing table_name
+VARIABLE  v_table_name VARCHAR2(30);
+variable  v_table_owner VARCHAR2(30);
+
+-- Referencing the bind variable
+exec :v_table_name := upper('&table_name');
+exec :v_table_owner := upper('&table_owner');
+
+-- List indexes defined on the table.
+SELECT  index_name,
+        index_type,
+        uniqueness,
+        status
+FROM    dba_indexes
+WHERE   table_name=:v_table_name
+AND     owner=:v_table_owner
 /
 
-SELECT  index_owner, 
-        index_name, 
-        column_name, 
-        column_position, 
+-- List columns on which these indexes are defined. 
+SELECT  index_owner,
+        index_name,
+        column_name,
+        column_position,
         column_length
 FROM    dba_ind_columns
-WHERE   table_name='&tname'
-AND     table_owner='&owner'
+WHERE   table_name=:v_table_name
+AND     table_owner=:v_table_owner
 /
