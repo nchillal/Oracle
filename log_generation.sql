@@ -1,13 +1,13 @@
-select    to_char(FIRST_TIME, 'DD-MON-YYYY'), count(*)
-from      v$log_history
-where     to_char(FIRST_TIME, 'DD-MON-YYYY') >= to_char(SYSDATE - &num_days, 'DD-MON-YYYY')
-group by  to_char(FIRST_TIME, 'DD-MON-YYYY')
-order by  1
+SELECT    TO_CHAR(first_time, 'DD-MON-YYYY'), COUNT(*)
+FROM      v$log_history
+WHERE     TO_CHAR(first_time, 'DD-MON-YYYY') >= to_char(SYSDATE - &num_days, 'DD-MON-YYYY')
+GROUP BY  TO_CHAR(first_time, 'DD-MON-YYYY')
+ORDER BY  1
 /
 
-select    to_char(FIRST_TIME, 'HH24'), count(*)
+select    TO_CHAR(first_time, 'HH24'), COUNT(*)
 from      v$log_history
-where     to_char(FIRST_TIME, 'DD-MON-YYYY') = to_char(SYSDATE - &num_days, 'DD-MON-YYYY')
-group by  to_char(FIRST_TIME, 'HH24')
+where     TO_CHAR(first_time, 'DD-MON-YYYY') = to_char(SYSDATE - &num_days, 'DD-MON-YYYY')
+group by  TO_CHAR(first_time, 'HH24')
 order by  1
 /
