@@ -1,3 +1,5 @@
+SET numwidth 3
+
 SELECT    *
 FROM      (
           SELECT  first_time, TO_CHAR(first_time, 'DD-MON-YYYY') AS d, TO_CHAR(first_time, 'HH24') AS h
