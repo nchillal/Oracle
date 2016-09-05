@@ -23,5 +23,5 @@ PIVOT     (
           COUNT(status)
           FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
           )
-ORDER BY  username, sql_id
+ORDER BY  sql_id, username
 ;
