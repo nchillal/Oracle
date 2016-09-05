@@ -1,4 +1,4 @@
-SET numwidth 3
+SET numwidth 5
 
 SELECT    *
 FROM      (
