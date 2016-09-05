@@ -1,6 +1,6 @@
 SELECT * 
 FROM  (
-      SELECT  first_time, TO_CHAR(first_time, 'DD-MON-YYYY') as d, TO_CHAR(first_time, 'HH24') as h
+      SELECT  first_time, TO_CHAR(first_time, 'DD-MON-YYYY') AS d, TO_CHAR(first_time, 'HH24') AS h
       FROM    v$log_history      
       )
 PIVOT (
