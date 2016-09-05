@@ -2,7 +2,7 @@ SET numwidth 3
 
 SELECT    *
 FROM      (
-          SELECT  first_time, TO_CHAR(first_time, 'DD-MON-YYYY') AS d, TO_CHAR(first_time, 'HH24') AS h
+          SELECT  first_time, TO_CHAR(first_time, 'DD-MON-YYYY') AS day, TO_CHAR(first_time, 'HH24') AS h
           FROM    v$log_history
           )
 PIVOT     (
@@ -34,5 +34,5 @@ PIVOT     (
                     '23' as H23
                     )
 )
-ORDER BY  TO_DATE(d)
+ORDER BY  TO_DATE(day)
 /
