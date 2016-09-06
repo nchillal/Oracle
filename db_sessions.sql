@@ -14,12 +14,12 @@ ORDER BY  username
 
 -- This query returns machine, username and their status count
 SELECT    *
-FROM      (
+FROM     (
 	       SELECT  machine, username, status
 	       FROM    v$session
 	       WHERE   username LIKE '%_USER'
 	       )
-PIVOT     (
+PIVOT    (
 	       COUNT(status)
 	       FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
 	       )
