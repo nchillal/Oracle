@@ -4,6 +4,6 @@ COLUMN owner FORMAT a20
 COLUMN username FORMAT a20
 COLUMN host FORMAT a40
 
-SELECT  * 
-FROM    dba_db_links 
-WHERE   db_link like '&db_link';
+SELECT  *
+FROM    dba_db_links
+WHERE   db_link LIKE '&db_link';

@@ -1,4 +1,4 @@
-select    thread#, 
-          MAX(sequence#) 
-from      v$log_history 
-group by  thread#;
+SELECT    thread#,
+          MAX(sequence#)
+FROM      v$log_history
+GROUP BY  thread#;

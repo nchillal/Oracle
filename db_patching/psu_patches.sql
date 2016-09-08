@@ -1,4 +1,4 @@
-set lines 230 pages 50
+set linesize 230 pagesize 50
 
 COLUMN action_time FORMAT a30
 COLUMN comments FORMAT a50
