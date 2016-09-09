@@ -4,7 +4,7 @@ COLUMN value FORMAT a80
 
 SELECT  name, value
 FROM    v$spparameter
-WHERE   REGEXP_LIKE(name, 'log_archive_dest_\d+') AND regexp_like (value, 'service=*')
+WHERE   REGEXP_LIKE(name, 'log_archive_dest_\d+') AND REGEXP_LIKE (value, 'service=*')
 UNION
 SELECT  name, value
 FROM    v$spparameter
