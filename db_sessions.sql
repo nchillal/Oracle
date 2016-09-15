@@ -42,7 +42,7 @@ ORDER BY  sql_id, username
 -- This query returns username, logon_time and their count
 SELECT    *
 FROM      (
-          SELECT  username, status, TO_CHAR(LOGON_TIME, 'DD-MON-YYYY HH24:MI')
+          SELECT  username, status, TO_CHAR(LOGON_TIME, 'DD-MON-YYYY HH24:MI') LOGON_TIME
           FROM    v$session
           WHERE   username LIKE '%_USER'
           )
