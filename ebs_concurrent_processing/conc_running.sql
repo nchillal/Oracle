@@ -1,6 +1,6 @@
-set pages 66
-set feed on
-set line 200
+set pagesize 66
+set feedback on
+set linesize 200
 COLUMN  user_name FORMAT a40 word_wrapped
 COLUMN	ProgName	FORMAT a55 word_wrapped
 COLUMN  requestId	FORMAT 99999999999

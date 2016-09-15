@@ -38,3 +38,17 @@ PIVOT     (
           )
 ORDER BY  sql_id, username
 ;
+
+-- This query returns username, logon_time and their count
+SELECT    *
+FROM      (
+          SELECT  username, status, TO_CHAR(LOGON_TIME, 'DD-MON-YYYY HH24:MI')
+          FROM    v$session
+          WHERE   username LIKE '%_USER'
+          )
+PIVOT     (
+          COUNT(status)
+          FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
+          )
+ORDER BY  username
+;

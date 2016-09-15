@@ -3,7 +3,7 @@ SELECT    NVL(b.tablespace_name, NVL(a.tablespace_name,'UNKNOWN')) "Tablespace",
           kbytes_alloc "Allocated MB",
           kbytes_alloc-NVL(kbytes_free,0) "Used MB",
           NVL(kbytes_free,0) "Free MB",
-          ((kbytes_alloc-NVL(kbytes_free,0))/kbytes_alloc) "Used",
+          TRUNC(((kbytes_alloc-NVL(kbytes_free,0))/kbytes_alloc) * 100, 2) "Used %",
           data_files "Data Files"
 FROM      ( SELECT    SUM(bytes)/1024/1024 Kbytes_free,
                       MAX(bytes)/1024/1024 largest,

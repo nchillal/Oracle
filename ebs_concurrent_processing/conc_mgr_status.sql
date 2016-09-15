@@ -1,5 +1,5 @@
-set lines 280 pages 200
-col USER_CONCURRENT_QUEUE_NAME for a60
+set linesize 280 pagesize 200
+COLUMN user_concurrent_queue_name FORMAT a60
 SELECT    USER_CONCURRENT_QUEUE_NAME,
           TARGET_PROCESSES,
           RUNNING_PROCESSES,
