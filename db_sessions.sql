@@ -24,6 +24,7 @@ PIVOT    (
 	       FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
 	       )
 ORDER BY  machine
+;
 
 -- This query returns username, sql they are executing and their status count
 SELECT    *
