@@ -1,9 +1,9 @@
-set lines 230 
-col dest_name for a30
+set linesize 230
+COLUMN dest_name FORMAT a30
 
-select  dest_id, 
-        dest_name, 
-        status, 
-        error 
-from    V$ARCHIVE_DEST_STATUS 
-where   dest_id < 3;
+SELECT  dest_id,
+        dest_name,
+        status,
+        error
+FROM    V$ARCHIVE_DEST_STATUS
+WHERE   dest_id < 3;

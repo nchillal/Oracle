@@ -1,9 +1,9 @@
 set pagesize 111
 set linesize 211
-set trims on
-set head on
-set veri off
-set feed off
+set trimspool on
+set heading on
+set verify off
+set feedback off
 
 column "Event Name" format A38
 column snapshot_end_time format A27
@@ -16,7 +16,7 @@ SELECT 		begin_snap_id,
 			    time "Wait Time (s)",
 			    avgwait "Avg Wait (ms)",
 			    TRUNC((time/dbtime.total)*100) "% DB Time"
-FROM 		(
+FROM 			(
 			    SELECT 		b.snap_id begin_snap_id,
 						        b.snap_id+1 end_snap_id,
 						        dhs.END_INTERVAL_TIME snapshot_end_time,
@@ -29,6 +29,7 @@ FROM 		(
 						        dba_hist_system_event e,
 						        dba_hist_snapshot dhs
      			WHERE		  b.snap_id = (SELECT MAX(snap_id)-1 FROM dba_hist_snapshot WHERE DBID=(SELECT dbid FROM v$database))
+<<<<<<< HEAD
                   	AND e.snap_id = (SELECT MAX(snap_id) FROM dba_hist_snapshot WHERE DBID=(SELECT dbid FROM v$database))
                   	AND b.dbid(+) = e.dbid
                   	AND dhs.DBID =e.dbid
@@ -41,17 +42,40 @@ FROM 		(
                   	AND b.event_name IN ('log file sync')
 		    ) evnt,
     		(
+=======
+                  	AND 		e.snap_id = (SELECT MAX(snap_id) FROM dba_hist_snapshot WHERE DBID=(SELECT dbid FROM v$database))
+                  	AND 		b.dbid(+) = e.dbid
+                  	AND 		dhs.DBID =e.dbid
+		              	AND 		dhs.DBID = (select DBID from v$database)
+                  	AND 		b.instance_number(+)  = e.instance_number
+                  	AND 		b.event_id(+) = e.event_id
+                  	AND 		e.total_waits > NVL(b.total_waits,0)
+                  	AND 		e.wait_class          <> 'Idle'
+                  	AND 		e.snap_id=dhs.snap_id
+                  	AND 		b.event_name IN ('log file sync')
+		    	) evnt,
+    			(
+>>>>>>> 2bb7f6985984d078bdf5be2d6fb8fd0c4b90c3d6
 			    SELECT 		SUM(TRUNC((e.time_waited_micro - NVL(b.time_waited_micro,0))/1000000)) total
      			FROM 		  dba_hist_system_event b,
 					          dba_hist_system_event e
 	     		WHERE 		b.snap_id = (SELECT MAX(snap_id)-1 FROM dba_hist_snapshot WHERE dbid=(SELECT dbid FROM v$database))
           AND 		  e.snap_id = (SELECT MAX(snap_id) FROM dba_hist_snapshot WHERE dbid=(SELECT dbid FROM v$database))
+<<<<<<< HEAD
                   	AND b.dbid(+) = e.dbid
                   	AND b.instance_number(+)  = e.instance_number
                   	AND b.event_id(+) = e.event_id
                   	AND e.total_waits > NVL(b.total_waits,0)
                   	AND e.wait_class <> 'Idle'
         ) dbtime
+=======
+                  	AND 		b.dbid(+) = e.dbid
+                  	AND 		b.instance_number(+)  = e.instance_number
+                  	AND 		b.event_id(+) = e.event_id
+                  	AND 		e.total_waits > NVL(b.total_waits,0)
+                  	AND 		e.wait_class <> 'Idle'
+        	) dbtime
+>>>>>>> 2bb7f6985984d078bdf5be2d6fb8fd0c4b90c3d6
 WHERE 		time > 0
 AND 		  avgwait >= 10
 ORDER BY 	5 DESC;

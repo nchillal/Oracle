@@ -1,5 +1,5 @@
-set lines 230
-col APPLICATION_SHORT_NAME for a6 heading ASN
-select  * 
-from    apps.ad_bugs 
-where   bug_number='&bug_number';
+set linesize 230
+COLUMN APPLICATION_SHORT_NAME FORMAT a6 HEADING ASN
+SELECT  *
+FROM    apps.ad_bugs
+WHERE   bug_number='&bug_number';

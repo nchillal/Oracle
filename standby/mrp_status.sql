@@ -1,7 +1,7 @@
-select  process, 
-        status, 
-        thread#, 
-        sequence#, 
-        block#, 
-        blocks 
-from    v$managed_standby;
+SELECT  process,
+        status,
+        thread#,
+        sequence#,
+        block#,
+        blocks
+FROM    v$managed_standby;
