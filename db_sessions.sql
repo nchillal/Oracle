@@ -53,3 +53,17 @@ PIVOT     (
           )
 ORDER BY  username
 ;
+
+-- This query returns username, event, status and their count
+SELECT    *
+FROM      (
+          SELECT  username, event, status
+          FROM    v$session
+          WHERE   username LIKE '%_USER'
+          )
+PIVOT     (
+          COUNT(status)
+          FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
+          )
+ORDER BY  username
+;
