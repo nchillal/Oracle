@@ -29,6 +29,20 @@ FROM 			(
 						        dba_hist_system_event e,
 						        dba_hist_snapshot dhs
      			WHERE		  b.snap_id = (SELECT MAX(snap_id)-1 FROM dba_hist_snapshot WHERE DBID=(SELECT dbid FROM v$database))
+<<<<<<< HEAD
+                  	AND e.snap_id = (SELECT MAX(snap_id) FROM dba_hist_snapshot WHERE DBID=(SELECT dbid FROM v$database))
+                  	AND b.dbid(+) = e.dbid
+                  	AND dhs.DBID =e.dbid
+		              	AND dhs.DBID = (SELECT dbid FROM v$database)
+                  	AND b.instance_number(+)  = e.instance_number
+                  	AND b.event_id(+) = e.event_id
+                  	AND e.total_waits > NVL(b.total_waits,0)
+                  	AND e.wait_class <> 'Idle'
+                  	AND e.snap_id=dhs.snap_id
+                  	AND b.event_name IN ('log file sync')
+		    ) evnt,
+    		(
+=======
                   	AND 		e.snap_id = (SELECT MAX(snap_id) FROM dba_hist_snapshot WHERE DBID=(SELECT dbid FROM v$database))
                   	AND 		b.dbid(+) = e.dbid
                   	AND 		dhs.DBID =e.dbid
@@ -41,17 +55,27 @@ FROM 			(
                   	AND 		b.event_name IN ('log file sync')
 		    	) evnt,
     			(
+>>>>>>> 2bb7f6985984d078bdf5be2d6fb8fd0c4b90c3d6
 			    SELECT 		SUM(TRUNC((e.time_waited_micro - NVL(b.time_waited_micro,0))/1000000)) total
      			FROM 		  dba_hist_system_event b,
 					          dba_hist_system_event e
 	     		WHERE 		b.snap_id = (SELECT MAX(snap_id)-1 FROM dba_hist_snapshot WHERE dbid=(SELECT dbid FROM v$database))
           AND 		  e.snap_id = (SELECT MAX(snap_id) FROM dba_hist_snapshot WHERE dbid=(SELECT dbid FROM v$database))
+<<<<<<< HEAD
+                  	AND b.dbid(+) = e.dbid
+                  	AND b.instance_number(+)  = e.instance_number
+                  	AND b.event_id(+) = e.event_id
+                  	AND e.total_waits > NVL(b.total_waits,0)
+                  	AND e.wait_class <> 'Idle'
+        ) dbtime
+=======
                   	AND 		b.dbid(+) = e.dbid
                   	AND 		b.instance_number(+)  = e.instance_number
                   	AND 		b.event_id(+) = e.event_id
                   	AND 		e.total_waits > NVL(b.total_waits,0)
                   	AND 		e.wait_class <> 'Idle'
         	) dbtime
+>>>>>>> 2bb7f6985984d078bdf5be2d6fb8fd0c4b90c3d6
 WHERE 		time > 0
 AND 		  avgwait >= 10
 ORDER BY 	5 DESC;
