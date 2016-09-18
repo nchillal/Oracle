@@ -1,4 +1,4 @@
-set lines 230 pages 200
+set linesize 230 pagesize 200
 SELECT    NVL(b.tablespace_name, NVL(a.tablespace_name,'UNKNOWN')) "Tablespace",
           kbytes_alloc "Allocated MB",
           kbytes_alloc-NVL(kbytes_free,0) "Used MB",

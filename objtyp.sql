@@ -1,4 +1,4 @@
-SET lines 230
+SET linesize 230
 COLUMN object_name FOR a30
 
 SELECT  owner, 

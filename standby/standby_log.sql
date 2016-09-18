@@ -5,7 +5,7 @@ SELECT  inst_id,
         status
 FROM gv$standby_log;
 
-set lines 230 pages 200
+set linesize 230 pagesize 200
 col member for a70
 
 SELECT  inst_id,

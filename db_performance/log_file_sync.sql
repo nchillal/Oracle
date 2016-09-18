@@ -32,7 +32,7 @@ FROM 			(
                   	AND 		e.snap_id = (SELECT MAX(snap_id) FROM dba_hist_snapshot WHERE DBID=(SELECT dbid FROM v$database))
                   	AND 		b.dbid(+) = e.dbid
                   	AND 		dhs.DBID =e.dbid
-		              	AND 		dhs.DBID = (select DBID from v$database)
+		              	AND 		dhs.DBID = (SELECT DBID FROM v$database)
                   	AND 		b.instance_number(+)  = e.instance_number
                   	AND 		b.event_id(+) = e.event_id
                   	AND 		e.total_waits > NVL(b.total_waits,0)

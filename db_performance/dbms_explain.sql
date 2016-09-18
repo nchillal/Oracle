@@ -1,4 +1,4 @@
-SET lines 230 pages 200
+SET linesize 230 pagesize 200
 COLUMN plan_table_output FORMAT a140
 
 SELECT  * 

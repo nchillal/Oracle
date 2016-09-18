@@ -8,7 +8,7 @@ col start format a18
 col end format a18
 col argument_text format a30
 
-select  request_id,
+SELECT  request_id,
         user_name,
         p.user_concurrent_program_name progName,
         argument_text,
@@ -17,7 +17,7 @@ select  request_id,
         r.logfile_name, 
         TO_CHAR(actual_start_date,'DD-MON-YY HH24:MI:SS') "Start",
         TO_CHAR(actual_completion_date,'DD-MON-YY HH24:MI:SS') "End" 
-from    applsys.fnd_concurrent_requests r,apps.fnd_user u,apps.fnd_concurrent_programs_tl p, gv$session s 
+FROM    applsys.fnd_concurrent_requests r,apps.fnd_user u,apps.fnd_concurrent_programs_tl p, gv$session s 
 where   request_id = &reqid 
 and     p.concurrent_program_id = r.concurrent_program_id 
 and     r.requested_by=u.user_id 

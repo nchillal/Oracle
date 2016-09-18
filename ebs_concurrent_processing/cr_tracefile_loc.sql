@@ -7,8 +7,8 @@ column tracename format a80
 column user_concurrent_program_name format a40   
 column execname format a15   
 column enable_trace format a12   
-set lines 80   
-set pages 22   
+set linesize 80   
+set pagesize 22   
 set head off  
 
 SELECT  'Request id: '||request_id ,  
@@ -21,7 +21,7 @@ SELECT  'Request id: '||request_id ,
         ||'-'||DECODE(status_code,'R','Normal'),  
         'SID Serial: '||ses.sid||','|| ses.serial#,  
         'Module : '||ses.module  
-from    apps.fnd_concurrent_requests req, 
+FROM    apps.fnd_concurrent_requests req, 
         v$session ses, 
         v$process proc,  
         v$parameter dest, 

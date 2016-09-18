@@ -25,5 +25,5 @@ AND     event NOT IN  (
                       'rdbms ipc message',
                       'shared server idle wait',
                       'smon timer',
-                      'SQL*Net message from client'
+                      'SQL*Net message FROM client'
                       );

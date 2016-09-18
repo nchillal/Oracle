@@ -1,4 +1,4 @@
-set pages 100
+set pagesize 100
 set verify off
 set echo off
 set linesize 200
@@ -16,19 +16,19 @@ column user_nm format a10
 alter session set nls_date_format='DD-MON-YYYY HH24:MI:SS'
 /
 
-select    b.user_concurrent_program_name NAME,
+SELECT    b.user_concurrent_program_name NAME,
           c.user_name USER_NM,
           a.request_id,
           (a.actual_completion_date - a.actual_start_date)*24*60 "EX_TIME",
           ARGUMENT_TEXT,
           a.actual_start_date "START_DT",
           a.actual_completion_date "COMPLETION_DT"
-from      apps.fnd_concurrent_requests a, 
+FROM      apps.fnd_concurrent_requests a, 
           apps.fnd_concurrent_programs_tl b, 
           apps.fnd_user c
 where     a.concurrent_program_id=b.concurrent_program_id
 and       b.user_concurrent_program_name ='&prg_nm'
 and       TRUNC(a.actual_start_date) > SYSDATE - 46
 and       a.requested_by=c.user_id
-order by  a.actual_start_date
+ORDER BY  a.actual_start_date
 /

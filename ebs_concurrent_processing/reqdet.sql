@@ -186,7 +186,7 @@ BEGIN
         --return;
     END;
   END IF;
-  l_parm_cnt_q := 'select count(form_left_prompt) from apps.fnd_descr_flex_col_usage_vl  where application_id=' || reqdet.paid || ' and  descriptive_flexfield_name = ''$SRS$.' || reqdet.pname || '''';
+  l_parm_cnt_q := 'SELECT count(form_left_prompt) FROM apps.fnd_descr_flex_col_usage_vl  where application_id=' || reqdet.paid || ' and  descriptive_flexfield_name = ''$SRS$.' || reqdet.pname || '''';
   EXECUTE IMMEDIATE l_parm_cnt_q
     INTO l_parm_cnt_o;
   dbms_output.put_line(rpad('Number of User Args', 25,' ') || ' : ' || l_parm_cnt_o);

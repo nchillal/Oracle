@@ -55,5 +55,5 @@ AND       fcr.controlling_manager=fcpr.concurrent_process_id
 AND       fcpr.session_id = sess.audsid
 AND       fcr.oracle_process_id IS NULL
 AND       proc.addr=sess.paddr
-order by  6,4,8
+ORDER BY  6,4,8
 /

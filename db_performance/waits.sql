@@ -8,7 +8,7 @@ column    username format a12
 column    seconds_in_wait format 999999
 column    p1 format 999999999999
 
-select    b.inst_id,
+SELECT    b.inst_id,
           b.sid,
           b.event,
           SUBSTR(a.action,1,1)||'-'||a.module module ,
@@ -17,10 +17,10 @@ select    b.inst_id,
           b.p2,
           b.p3,
           b.seconds_in_wait
-from      gv$session_wait b, gv$session a
+FROM      gv$session_wait b, gv$session a
 where     b.event not in  (
                           'slave wait',
-                          'SQL*Net message from client',
+                          'SQL*Net message FROM client',
                           'rdbms ipc message',
                           'pmon timer',
                           'smon timer',
@@ -38,4 +38,4 @@ where     b.event not in  (
                           )
 and       a.sid  = b.sid
 and       a.inst_id = b.inst_id
-order by  1, Last_call_ET;
+ORDER BY  1, Last_call_ET;

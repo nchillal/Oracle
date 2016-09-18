@@ -8,9 +8,9 @@ col "Actual DOP" for 9999
 col "Slaveset" for A8
 col "Slave INST" for A9
 col "QC INST" for A6
-set pages 300
-set lines 200 
-select
+set pagesize 300
+set linesize 200 
+SELECT
 decode(px.qcinst_id,NULL,username, 
 ' - '||lower(substr(pp.SERVER_NAME,
 length(pp.SERVER_NAME)-4,4) ) )"Username",
@@ -22,7 +22,7 @@ decode(px.qcinst_id, NULL ,to_char(s.sid) ,px.qcsid) "QC SID",
 to_char(px.qcinst_id) "QC INST",
 px.req_degree "Req. DOP",
 px.degree "Actual DOP"
-from gv$px_session px,
+FROM gv$px_session px,
 gv$session s ,
 gv$px_process pp
 where px.sid=s.sid (+)
@@ -30,7 +30,7 @@ and px.serial#=s.serial#(+)
 and px.inst_id = s.inst_id(+)
 and px.sid = pp.sid (+)
 and px.serial#=pp.serial#(+)
-order by 6 , 1 desc
+ORDER BY 6 , 1 desc
 /
 
 clear columns 

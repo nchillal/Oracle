@@ -1,2 +1,2 @@
-set pages 100
-select * from v$nls_parameters;
+set pagesize 100
+SELECT * FROM v$nls_parameters;

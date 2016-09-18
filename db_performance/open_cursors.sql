@@ -1,4 +1,4 @@
-SET pages 230 lines 110 trims on 
+SET pagesize 230 linesize 110 trims on 
 COLUMN name FORMAT a30  
 COLUMN username FORMAT a30 
 BREAK ON username NODUP SKIP 1 

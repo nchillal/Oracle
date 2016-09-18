@@ -6,7 +6,7 @@ COLUMN process FORMAT 9999999
 COLUMN spid FORMAT 999999
 COLUMN logon_time FORMAT a13
 
-set lines 150
+set linesize 150
 
 set heading off
 set verify off

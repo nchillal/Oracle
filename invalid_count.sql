@@ -1,4 +1,4 @@
-set lines 230 pages 200
+set linesize 230 pagesize 200
 SELECT    owner,
           COUNT(*)
 FROM      dba_objects
