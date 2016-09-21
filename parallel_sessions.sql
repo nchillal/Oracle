@@ -40,8 +40,8 @@ AND       s.sid = w.sid (+)
 AND       s.inst_id = w.inst_id (+)
 AND       s.paddr = p.addr (+)
 AND       s.inst_id = p.inst_id (+)
-ORDER BY  DECODE(px.QCINST_ID,  NULL, px.INST_ID,  px.QCINST_ID),
-          px.QCSID,
-          DECODE(px.SERVER_GROUP, NULL, 0, px.SERVER_GROUP),
-          px.SERVER_SET,
-          px.INST_ID;
+ORDER BY  DECODE(px.qcinst_id,  NULL, px.inst_id,  px.qcinst_id),
+          px.qcsid,
+          DECODE(px.server_group, NULL, 0, px.server_group),
+          px.server_set,
+          px.inst_id;
