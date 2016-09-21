@@ -1,4 +1,4 @@
-# Purpose: Monitor transaction recovery by SMON.
+-- Purpose: Monitor transaction recovery by SMON.
 SELECT  usn,
         state,
         undoblockstotal "Total",
