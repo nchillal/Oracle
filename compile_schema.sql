@@ -1,1 +1,1 @@
-EXEC DBMS_UTILITY.compile_schema(schema => '&schema_name');
+EXEC DBMS_UTILITY.COMPILE_SCHEMA(schema => '&schema_name');
