@@ -3,7 +3,7 @@ SELECT  inst_id,
         GROUP#,
         bytes/1024/1024,
         status
-FROM gv$standby_log;
+FROM    gv$standby_log;
 
 set linesize 230 pagesize 200
 col member for a70
