@@ -18,4 +18,4 @@ FROM      ( SELECT    SUM(bytes)/1024/1024 Kbytes_free,
             GROUP BY  tablespace_name
           ) b
 WHERE     a.tablespace_name (+) = b.tablespace_name
-ORDER BY  1 ;
+ORDER BY  1;

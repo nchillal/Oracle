@@ -3,7 +3,7 @@ set feedback on
 set linesize 200
 COLUMN  user_name FORMAT a40 word_wrapped
 COLUMN	ProgName	FORMAT a55 word_wrapped
-COLUMN  requestId	FORMAT 99999999999
+COLUMN  requestid	FORMAT 99999999999
 COLUMN  StartDate	FORMAT a20 word_Wrapped
 COLUMN  SERVER    FORMAT a6
 COLUMN  CLIENT    FORMAT a6

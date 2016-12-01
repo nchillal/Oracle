@@ -26,20 +26,6 @@ PIVOT    (
 ORDER BY  machine
 ;
 
--- This query returns username, sql they are executing and their status count
-SELECT    *
-FROM      (
-          SELECT  username, sql_id, status
-          FROM    v$session
-          WHERE   username like '%_USER'
-          )
-PIVOT     (
-          COUNT(status)
-          FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
-          )
-ORDER BY  sql_id, username
-;
-
 -- This query returns username, logon_time and their count
 SELECT    *
 FROM      (
@@ -66,4 +52,18 @@ PIVOT     (
           FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
           )
 ORDER BY  username
+;
+
+-- This query returns username, sql they are executing and their status count
+SELECT    *
+FROM      (
+          SELECT  username, sql_id, status
+          FROM    v$session
+          WHERE   username like '%_USER'
+          )
+PIVOT     (
+          COUNT(status)
+          FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
+          )
+ORDER BY  sql_id, username
 ;
