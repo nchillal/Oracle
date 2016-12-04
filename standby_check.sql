@@ -1,5 +1,9 @@
 sqlplus -s "/as sysdba" <<-EOF
 SET LINESIZE 160 PAGESIZE 100
+-- This is used to value of service_names init parameter.
+show parameter service_names
+show parameter unique
+
 -- This query display dataguard process status.
 SELECT    inst_id, pid, delay_mins, process, status, group#, thread#, sequence#, block#, blocks
 FROM      gv\$managed_standby

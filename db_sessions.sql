@@ -57,7 +57,7 @@ ORDER BY  username
 -- This query returns username, sql they are executing and their status count
 SELECT    *
 FROM      (
-          SELECT  username, sql_id, status
+          SELECT  username, event, sql_id, status
           FROM    v$session
           WHERE   username like '%_USER'
           )
@@ -65,5 +65,5 @@ PIVOT     (
           COUNT(status)
           FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
           )
-ORDER BY  sql_id, username
+ORDER BY  username, sql_id, event
 ;

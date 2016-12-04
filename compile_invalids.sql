@@ -1,33 +1,53 @@
-set pagesize 0 head off feedb off echo off
+set pagesize 0 heading off feedback off echo off termout off
 spool validate_all.sql
+SELECT    'set echo on' FROM dual;
 
 SELECT    'ALTER '||object_type||' '||owner||'.'||object_name||' COMPILE;'
 FROM      dba_objects
 WHERE     object_type IN ('PROCEDURE','FUNCTION','VIEW','TRIGGER','MATERIALIZED VIEW')
 AND       status='INVALID'
-ORDER BY  owner
-/
+ORDER BY  owner;
+
 SELECT    'ALTER PACKAGE '||owner||'.'||object_name||' COMPILE PACKAGE;'
 FROM      dba_objects
 WHERE     object_type IN ('PACKAGE')
 AND       status='INVALID'
-ORDER BY  owner
-/
+ORDER BY  owner;
+
 SELECT    'ALTER PACKAGE '||owner||'.'||object_name||' COMPILE BODY;'
 FROM      dba_objects
 WHERE     object_type IN ('PACKAGE BODY')
 AND       status='INVALID'
-ORDER BY  owner
-/
+ORDER BY  owner;
+
 SELECT    'ALTER JAVA SOURCE "' || object_name || '" COMPILE;'
-FROM      user_objects
+FROM      dba_objects
 WHERE     object_type = 'JAVA SOURCE'
 AND       status = 'INVALID';
-/
+
 SELECT    'ALTER JAVA CLASS "' || object_name || '" RESOLVE;'
-FROM      user_objects
+FROM      dba_objects
 WHERE     object_type = 'JAVA CLASS'
 AND       status = 'INVALID';
-/
+
+SELECT    'ALTER TYPE '||owner||'.'||object_name||' COMPILE;'
+FROM      dba_objects
+WHERE     object_type IN ('TYPE')
+AND       status='INVALID'
+ORDER BY  owner;
+
+SELECT    'ALTER TYPE '||owner||'.'||object_name||' COMPILE BODY;'
+FROM      dba_objects
+WHERE     object_type IN ('TYPE BODY')
+AND       status='INVALID'
+ORDER BY  owner;
+
+SELECT    decode(owner, 'SYS', 'ALTER SYNONYM '||owner||'.'||object_name||' COMPILE;',
+                        'PUBLIC', 'ALTER PUBLIC SYNONYM '||object_name||' COMPILE;'
+                )
+FROM      dba_objects
+WHERE     object_type = 'SYNONYM'
+AND       status = 'INVALID';
+
 spool off
 exit
