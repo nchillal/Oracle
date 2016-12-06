@@ -29,7 +29,7 @@ ORDER BY  6, 1 DESC
 /
 
 CLEAR COLUMNS
-COLUMNUMN "Wait Event" FORMAT a50
+COLUMN "Wait Event" FORMAT a50
 SELECT    px.sid "SID", p.pid, p.spid "SPID", px.inst_id "Inst",
           px.server_group "Group", px.server_set "Set",
           px.degree "Degree", px.req_degree "Req Degree", w.event "Wait Event"
