@@ -42,7 +42,7 @@ WHERE     object_type IN ('TYPE BODY')
 AND       status='INVALID'
 ORDER BY  owner;
 
-SELECT    decode(owner, 'SYS', 'ALTER SYNONYM '||owner||'.'||object_name||' COMPILE;',
+SELECT    DECODE(owner, 'SYS', 'ALTER SYNONYM '||owner||'.'||object_name||' COMPILE;',
                         'PUBLIC', 'ALTER PUBLIC SYNONYM '||object_name||' COMPILE;'
                 )
 FROM      dba_objects
