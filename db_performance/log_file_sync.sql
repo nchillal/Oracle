@@ -5,8 +5,8 @@ set heading on
 set verify off
 set feedback off
 
-column "Event Name" format A38
-column snapshot_end_time format A27
+COLUMN "Event Name" FORMAT A38
+COLUMN snapshot_end_time FORMAT A27
 
 SELECT 		begin_snap_id,
 			    end_snap_id,
