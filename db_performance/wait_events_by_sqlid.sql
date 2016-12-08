@@ -21,10 +21,10 @@ SELECT    event,
           CASE WHEN time_waited = 0 THEN
             0
           ELSE
-            round(time_waited*100 / sum(time_waited) Over(), 2)
+            ROUND(time_waited*100 / SUM(time_waited) OVER(), 2)
           END "percentage"
 from      (
-          SELECT event, sum(time_waited) time_waited
+          SELECT event, SUM(time_waited) time_waited
           FROM dba_hist_active_sess_history
           WHERE sql_id = '&sql_id'
           GROUP BY event
