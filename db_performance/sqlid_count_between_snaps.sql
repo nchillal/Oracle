@@ -1,3 +1,4 @@
+set serveroutput on
 declare
 	min_snapid number(10);
 	max_snapid number(10);
