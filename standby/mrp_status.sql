@@ -4,4 +4,5 @@ SELECT  process,
         sequence#,
         block#,
         blocks
-FROM    v$managed_standby;
+FROM    v$managed_standby
+WHERE   process like 'MRP%';
