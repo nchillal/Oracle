@@ -7,5 +7,5 @@ SELECT  dest_id,
         status,
         error
 FROM    v\$archive_dest_status
-WHERE   dest_id < 3;
+WHERE   dest_id < 5;
 EOF
