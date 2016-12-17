@@ -4,7 +4,15 @@ WHERE     TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') > TO_CHAR(SYSDATE - &num_days, 'DD-
 GROUP BY  TO_CHAR(FIRST_TIME, 'DD-MON-YYYY')
 ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY'));
 
-SELECT    begin_time, end_time, intsize_csec, value, metric_unit
-FROM      v$sysmetric_history
-WHERE     metric_name = 'Redo Generated Per Sec'
-ORDER BY  begin_time;
+SELECT    *
+FROM      (
+          SELECT    begin_time, end_time, value/1024/1024 "REDO (MB)"
+          FROM      dba_hist_sysmetric_history
+          WHERE     metric_name = 'Redo Generated Per Sec'
+          UNION
+          SELECT    begin_time, end_time, value/1024/1024 "REDO (MB)"
+          FROM      v$sysmetric_history
+          WHERE     metric_name = 'Redo Generated Per Sec'
+          ORDER BY  begin_time
+          )
+WHERE     begin_time > SYSDATE - &mins/1440;
