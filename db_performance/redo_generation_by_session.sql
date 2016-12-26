@@ -4,7 +4,7 @@ COLUMN redo_MB FORMAT 999G990 HEADING "Redo |Size MB"
 COLUMN sid_serial FORMAT a13;
 
 SELECT  b.inst_id,
-        LPAD((b.SID || ',' || LPAD(b.serial#,5)),11) sid_serial,
+        LPAD((b.sid || ',' || LPAD(b.serial#,5)),11) sid_serial,
         b.username,
         machine,
         b.osuser,
