@@ -1,15 +1,15 @@
 -- This query returns username and their status count
 SELECT    *
 FROM      (
-          SELECT  username, status
-          FROM    v$session
+          SELECT  inst_id, username, status
+          FROM    gv$session
           WHERE   username LIKE '%_USER'
           )
 PIVOT     (
           COUNT(status)
           FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
           )
-ORDER BY  username
+ORDER BY  inst_id, username
 ;
 
 -- This query returns machine, username and their status count
