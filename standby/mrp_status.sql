@@ -1,8 +1,9 @@
-SELECT  process,
+SELECT  inst_id,
+        process,
         status,
         thread#,
         sequence#,
         block#,
         blocks
-FROM    v$managed_standby
+FROM    gv$managed_standby
 WHERE   process like 'MRP%';
