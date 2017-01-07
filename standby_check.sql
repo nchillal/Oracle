@@ -35,6 +35,6 @@ WHERE     al.thrd = lh.thrd
 
 SELECT    value, time_computed
 FROM      v\$dataguard_stats
-WHERE     name='apply lag'
+WHERE     name in ('transport lag', 'apply lag');
 /
 EOF

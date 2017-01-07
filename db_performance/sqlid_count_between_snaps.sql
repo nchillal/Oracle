@@ -4,9 +4,7 @@ DECLARE
 	max_snapid NUMBER(10);
 BEGIN
 	SELECT MIN(snap_id), MAX(snap_id) INTO min_snapid, max_snapid FROM dba_hist_active_sess_history WHERE SAMPLE_TIME > SYSDATE - &min/1440;
-	IF min_snapid = max_snapid THEN
-		min_snapid := min_snapid - 1;
-	END IF;
+	SELECT MAX(snap_id) into max_snapid from dba_hist_active_sess_history where SAMPLE_TIME > SYSDATE - &end_min/1440;
 
 	dbms_output.put_line(chr(10)||'Min snapid: '||min_snapid);
 	dbms_output.put_line('Max snapid: '||max_snapid);
