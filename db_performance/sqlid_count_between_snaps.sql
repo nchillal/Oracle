@@ -1,9 +1,9 @@
 set serveroutput on
-declare
-	min_snapid number(10);
-	max_snapid number(10);
-begin
-	select min(snap_id), max(snap_id) into min_snapid, max_snapid from dba_hist_active_sess_history where SAMPLE_TIME > SYSDATE - &min/1440;
+DECLARE
+	min_snapid NUMBER(10);
+	max_snapid NUMBER(10);
+BEGIN
+	SELECT MIN(snap_id), MAX(snap_id) INTO min_snapid, max_snapid FROM dba_hist_active_sess_history WHERE SAMPLE_TIME > SYSDATE - &min/1440;
 	IF min_snapid = max_snapid THEN
 		min_snapid := min_snapid - 1;
 	END IF;
@@ -11,7 +11,7 @@ begin
 	dbms_output.put_line(chr(10)||'Min snapid: '||min_snapid);
 	dbms_output.put_line('Max snapid: '||max_snapid);
 	dbms_output.put_line(chr(10)||'Top SQL_ID being executed between snapshots '||min_snapid||' and '||max_snapid);
-	dbms_output.put_line(chr(10)||'--------------------------------------------------------');
+	dbms_output.put_line('--------------------------------------------------------');
 	dbms_output.put_line(RPAD('SQL_ID', 15, ' ')||'        '||RPAD('Child Number', 15, ' ')||'        '||'Count');
 	dbms_output.put_line('--------------------------------------------------------');
   FOR row IN  (
@@ -29,5 +29,5 @@ begin
   LOOP
     dbms_output.put_line(RPAD(row.sql_id, 15, ' ')||'        '||RPAD(row.sql_child_number, 15, ' ')||'        '||row.count);
   END LOOP;
-end;
+END;
 /
