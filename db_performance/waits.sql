@@ -1,12 +1,12 @@
 set linesize 150
 set feedback on
 set pagesize 1000
-column    sid format 99999
-column    event format a30
-column    module format a35
-column    username format a12
-column    seconds_in_wait format 999999
-column    p1 format 999999999999
+COLUMN sid FORMAT 99999
+COLUMN event FORMAT a30
+COLUMN module FORMAT a35
+COLUMN username FORMAT a12
+COLUMN seconds_in_wait FORMAT 999999
+COLUMN p1 FORMAT 999999999999
 
 SELECT    b.inst_id,
           b.sid,
@@ -18,7 +18,7 @@ SELECT    b.inst_id,
           b.p3,
           b.seconds_in_wait
 FROM      gv$session_wait b, gv$session a
-where     b.event not in  (
+WHERE     b.event NOT IN  (
                           'slave wait',
                           'SQL*Net message FROM client',
                           'rdbms ipc message',
@@ -36,6 +36,6 @@ where     b.event not in  (
                           'Streams AQ: qmn slave idle wait',
                           'Streams AQ: qmn coordinator idle wait'
                           )
-and       a.sid  = b.sid
-and       a.inst_id = b.inst_id
+AND       a.sid  = b.sid
+AND       a.inst_id = b.inst_id
 ORDER BY  1, Last_call_ET;
