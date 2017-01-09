@@ -1,4 +1,4 @@
--- To check if your session you connected is via TCPS.
+-- To check if your connection to database is via TCPS.
 set serveroutput on
 BEGIN
   IF SYS_CONTEXT('USERENV','NETWORK_PROTOCOL')!='tcps' THEN
