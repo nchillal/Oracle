@@ -1,6 +1,6 @@
 SET linesize 230 echo off pagesize 200
-COLUMN object_name FOR a30
-COLUMN segment_name FOR a30
+COLUMN object_name FORMAT a30
+COLUMN segment_name FORMAT a30
 ACCEPT ONAME PROMPT 'Enter Object Name:'
 
 SELECT    owner,
