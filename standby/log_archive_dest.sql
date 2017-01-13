@@ -1,6 +1,7 @@
 SET linesize 155 pagesize 200
-COLUMN name FORMAT a40
-COLUMN value FORMAT a80
+COLUMN name FORMAT a30
+COLUMN value FORMAT a120
+
 
 SELECT  name, value
 FROM    v$spparameter
@@ -9,10 +10,9 @@ UNION
 SELECT  name, value
 FROM    v$spparameter
 WHERE   REGEXP_LIKE(name, 'log_archive_dest_state_+\d')
-AND     value IS NOT NULL
-/
-
-SELECT  value
-FROM    v$parameter
-WHERE   name='&param_name'
+AND     name IN (
+                  SELECT  'log_archive_dest_state_'||REGEXP_SUBSTR(name, '[0-9]+')
+                  FROM    v$spparameter
+                  WHERE   REGEXP_LIKE(name, 'log_archive_dest_\d+') AND REGEXP_LIKE (value, 'service=*')
+)
 /
