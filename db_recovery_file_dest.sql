@@ -12,3 +12,8 @@ SELECT    name,
 FROM      v$recovery_file_dest
 ORDER BY  name
 /
+
+SELECT    *
+FROM      v$flash_recovery_area_usage
+ORDER BY  2
+/
