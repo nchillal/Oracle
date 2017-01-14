@@ -16,8 +16,3 @@ AND     name IN (
                   WHERE   REGEXP_LIKE(name, 'log_archive_dest_\d+') AND REGEXP_LIKE (value, 'service=*')
 )
 /
-
-SELECT    *
-FROM      v$flash_recovery_area_usage
-ORDER BY  2
-/
