@@ -1,18 +1,5 @@
 COLUMN name FORMAT a32
 COLUMN size_alloc_mb FORMAT 999,999,999
-COLUMN used_mb FORMAT 999,999,999
-COLUMN pct_used FORMAT 999
-
-SELECT    name,
-          CEIL(space_limit/1024/1024) SIZE_ALLOC_MB,
-          CEIL( space_used/1024/1024) USED_MB,
-          DECODE(NVL(space_used, 0), 0, 0, CEIL((space_used/space_limit) * 100)) PCT_USED
-FROM      v$recovery_file_dest
-ORDER BY  name
-/
-
-COLUMN name FORMAT a32
-COLUMN size_alloc_mb FORMAT 999,999,999
 COLUMN reclaimable_mb FORMAT 999,999,999
 COLUMN used_mb FORMAT 999,999,999
 COLUMN pct_used FORMAT 999
