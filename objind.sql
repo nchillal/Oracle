@@ -1,4 +1,5 @@
-SET LINESIZE 155 PAGESIZE 200 HEADING OFF
+SET LINESIZE 155 PAGESIZE 200 HEADING OFF PAUSE ON
+SET PAUSE "Press ENTER to continue . . . "
 COLUMN  column_name FORMAT a30
 
 -- Create bind variable for storing table_name
@@ -29,3 +30,5 @@ FROM    dba_ind_columns
 WHERE   table_name=:v_table_name
 AND     table_owner=:v_table_owner
 /
+
+SET PAUSE OFF
