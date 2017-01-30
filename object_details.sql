@@ -1,4 +1,5 @@
-SET linesize 230 echo off pagesize 200
+SET LINESIZE 230 ECHO OFF PAGESIZE 200 PAUSE ON 
+SET PAUSE "Press ENTER to continue . . . "
 COLUMN object_name FORMAT a30
 COLUMN segment_name FORMAT a30
 ACCEPT ONAME PROMPT 'Enter Object Name:'
