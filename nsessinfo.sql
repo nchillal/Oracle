@@ -7,7 +7,7 @@ rem ********************************************************************
 def aps_prog    = 'sessinfo.sql'
 def aps_title   = 'Session information'
 
-col "Session Info" form A85
+COLUMN "Session Info" FORMAT A85
 set verify off
 ACCEPT sid      PROMPT 'Please enter the value for Sid if known            : '
 ACCEPT terminal PROMPT 'Please enter the value for terminal if known       : '
