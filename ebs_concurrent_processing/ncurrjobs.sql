@@ -1,11 +1,10 @@
-set pagesize 66
-set line 172
-COLUMN  ProgName FORMAT a55 word_wrapped
-COLUMN  user_name FORMAT a20 word_wrapped
+SET PAGESIZE 66 LINESIZE 172
+COLUMN  ProgName FORMAT a55 WORD_WRAPPED
+COLUMN  user_name FORMAT a20 WORD_WRAPPED
 COLUMN  requestId FORMAT 99999999
 COLUMN  oracle_process_id FORMAT a8
 COLUMN  os_process_id FORMAT a8
-COLUMN  StartDate FORMAT a15 word_Wrapped
+COLUMN  StartDate FORMAT a15 WORD_wRAPPED
 SELECT    sess.inst_id, fcp.user_concurrent_program_name progName,
           SUBSTR(fusr.description,1,19) user_name,
           TO_CHAR(actual_Start_date,'DD-MON HH24:MI:SS') StartDate,
