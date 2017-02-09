@@ -1,4 +1,5 @@
-set lines 155 pages 200
+SET LINESIZE 155 PAGESIZE 200 PAUSE ON
+SET PAUSE "Press ENTER to continue . . . "
 ACCEPT TNAME PROMPT 'Enter Table Name:'
 ACCEPT SNAME PROMPT 'Enter Schema Name:'
 ACCEPT CNAME PROMPT 'Enter Column Name:'

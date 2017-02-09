@@ -18,7 +18,7 @@ SELECT    file_name,
           CEIL(blocks*&&blksize/1024/1024) - CEIL((NVL(hwm,1)*&&blksize)/1024/1024) savings
 FROM      dba_data_files a,
           (
-          SELECT file_id, max(block_id+blocks-1) hwm
+          SELECT file_id, MAX(block_id+blocks-1) hwm
           FROM dba_extents
           GROUP BY file_id
           ) b
