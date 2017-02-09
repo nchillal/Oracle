@@ -32,5 +32,5 @@ FROM      dba_cons_columns a, dba_constraints b
 WHERE     a.constraint_name = b.constraint_name
 AND       b.table_name = '&TNAME'
 AND       b.owner = '&SNAME'
-AND       a.column_name = '&CNAME'
+AND       a.column_name LIKE '&CNAME'
 /
