@@ -1,7 +1,7 @@
 SET LINESIZE 155 PAGESIZE 200 PAUSE ON
 SET PAUSE "Press ENTER to continue . . . "
-ACCEPT TNAME PROMPT 'Enter Table Name:'
-ACCEPT SNAME PROMPT 'Enter Schema Name:'
+ACCEPT TNAME PROMPT 'Enter Table Name: '
+ACCEPT SNAME PROMPT 'Enter Schema Name: '
 
 
 COLUMN owner FORMAT a20
@@ -25,7 +25,8 @@ WHERE     table_name = '&TNAME'
 AND       owner = '&SNAME'
 /
 
-ACCEPT CNAME PROMPT 'Enter Column Name:'
+SET PAUSE OFF
+ACCEPT CNAME PROMPT 'Enter Column Name: '
 
 SELECT    b.owner, a.constraint_name, b.table_name, a.column_name, b.search_condition, b.validated
 FROM      dba_cons_columns a, dba_constraints b
