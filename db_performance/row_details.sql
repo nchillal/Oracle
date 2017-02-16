@@ -6,7 +6,7 @@
   ;
 
 -- Detail of row based on object, file, block and row number.
-SELECT  ownerid
+SELECT  *
 FROM    &table_name
 WHERE   rowid = dbms_rowid.rowid_create(&rowid_type, &row_wait_obj, &row_wait_file, &row_wait_block, &row_wait_row)
 ;
