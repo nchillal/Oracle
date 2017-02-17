@@ -33,7 +33,7 @@ BREAK ON inst_id SKIP 1
 SELECT    *
 FROM      (
           SELECT  inst_id, username, status, TO_CHAR(LOGON_TIME, 'DD-MON-YYYY HH24:MI') LOGON_TIME
-          FROM    v$session
+          FROM    gv$session
           WHERE   type <> 'BACKGROUND'
           )
 PIVOT     (
