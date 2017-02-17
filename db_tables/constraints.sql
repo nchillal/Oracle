@@ -3,7 +3,6 @@ SET PAUSE "Press ENTER to continue . . . "
 ACCEPT TNAME PROMPT 'Enter Table Name: '
 ACCEPT SNAME PROMPT 'Enter Schema Name: '
 
-
 COLUMN owner FORMAT a20
 COLUMN column_name FORMAT a20
 COLUMN search_condition FORMAT a35
