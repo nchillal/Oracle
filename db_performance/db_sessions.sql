@@ -1,4 +1,5 @@
 -- This query returns username and their status count
+BREAK ON inst_id SKIP 1
 SELECT    *
 FROM      (
           SELECT  inst_id, username, status
