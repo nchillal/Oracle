@@ -3,8 +3,13 @@ declare
 	min_snapid number(10);
 	max_snapid number(10);
 begin
-	SELECT MIN(snap_id) into min_snapid from dba_hist_active_sess_history where SAMPLE_TIME > SYSDATE - &start_min/1440;
-	SELECT MAX(snap_id) into max_snapid from dba_hist_active_sess_history where SAMPLE_TIME > SYSDATE - &end_min/1440;
+	SELECT 	MIN(snap_id) INTO min_snapid FROM dba_hist_active_sess_history
+	WHERE 	dbid = (SELECT dbid FROM v$database)
+	AND			TO_CHAR(sample_time, 'DD-MON-YYYY HH24:MI') > '&start_time';
+
+	SELECT 	MAX(snap_id) into max_snapid from dba_hist_active_sess_history
+	WHERE 	dbid = (SELECT dbid FROM v$database)
+	AND			TO_CHAR(sample_time, 'DD-MON-YYYY HH24:MI') > '&end_time';
 
   dbms_output.put_line(chr(10)||'Min snapid: '||min_snapid);
   dbms_output.put_line('Max snapid: '||max_snapid);
