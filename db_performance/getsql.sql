@@ -2,8 +2,8 @@ break on hash_value
 set pagesize 1000
 set long 2000000
 
-SELECT 		sql_fulltext
-FROM 			v$sqlarea
+SELECT 		inst_id, sql_fulltext
+FROM 			gv$sqlarea
 WHERE			sql_id = '&sql_id'
 /
 
