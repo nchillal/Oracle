@@ -1,4 +1,4 @@
-# Create the tuning task
+-- Create the tuning task
 SET SERVEROUTPUT ON
 
 DECLARE
@@ -9,18 +9,18 @@ BEGIN
 END;
 /
 
-# Run the SQL TUNING TASK
+-- Run the SQL TUNING TASK
 BEGIN
   DBMS_SQLTUNE.EXECUTE_TUNING_TASK(task_name => '&task_name');
 END;
 /
 
-# Monitor the processing of the tuning task with the statement
+-- Monitor the processing of the tuning task with the statement
 SELECT  TASK_NAME, STATUS
 FROM    DBA_ADVISOR_LOG
 WHERE   TASK_NAME = '&task_name';
 
-# View the recommendation
+-- View the recommendation
 SET linesize 200
 SET LONG 999999999
 SET pagesize 1000
