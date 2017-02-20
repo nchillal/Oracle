@@ -32,9 +32,10 @@ ORDER BY  inst_id, machine
 BREAK ON inst_id SKIP 1
 SELECT    *
 FROM      (
-          SELECT  inst_id, username, status, TO_CHAR(LOGON_TIME, 'DD-MON-YYYY HH24:MI') LOGON_TIME
+          SELECT  inst_id, username, status, TO_CHAR(LOGON_TIME, 'DD-MON-YYYY HH24:MI:SS') LOGON_TIME
           FROM    gv$session
           WHERE   type <> 'BACKGROUND'
+          AND     TO_CHAR(LOGON_TIME, 'DD-MON-YYYY HH24:MI:SS') > SYSDATE - &min/1440
           )
 PIVOT     (
           COUNT(status)
@@ -50,6 +51,7 @@ FROM      (
           SELECT  inst_id, username, event, sql_id, status
           FROM    gv$session
           WHERE   type <> 'BACKGROUND'
+          AND     last_call_et > 0
           )
 PIVOT     (
           COUNT(status)

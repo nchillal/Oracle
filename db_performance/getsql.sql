@@ -1,6 +1,6 @@
-break on hash_value
-set pagesize 1000
-set long 2000000
+BREAK ON hash_value SKIP 1
+SET PAGESIZE 1000 LINESIZE 160
+COLUMN sql_fulltext FORMAT a140
 
 SELECT 		inst_id, sql_fulltext
 FROM 			gv$sqlarea
