@@ -5,6 +5,11 @@ WHERE   event='&event_name'
 AND     state='WAITING'
 ;
 
+-- Get object_name from object_id
+SELECT  object_name
+FROM    dba_objects
+WHERE   object_id='&object_id';
+
 -- Detail of row based on object, file, block and row number.
 SELECT  *
 FROM    &table_name
