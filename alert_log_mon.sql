@@ -1,3 +1,4 @@
+SET LINESIZE 200
 COLUMN originating_timestamp FORMAT a40
 COLUMN message_text FORMAT a160
 
