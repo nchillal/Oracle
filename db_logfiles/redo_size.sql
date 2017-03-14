@@ -9,7 +9,9 @@ ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY'));
 -- Query to obtain redo generation per hour.
 SET PAGESIZE 200 LINESIZE 155
 BREAK ON DAY SKIP 1
-COMPUTE SUM LABEL 'TOTAL' OF "REDO (MB)" ON DAY
+COMPUTE SUM LABEL 'TOTAL' -
+        AVG LABEL 'AVERAGE' -
+        OF "REDO (MB)" ON DAY
 SELECT    TO_CHAR(BEGIN_TIME, 'DD-MON-YYYY') "Day", TO_CHAR(BEGIN_TIME, 'HH24') "HR", SUM(value) "REDO (MB)"
 FROM      (
           SELECT    begin_time, value/1024/1024 value
