@@ -2,7 +2,7 @@
 SELECT    TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') as "Date", SUM(blocks * block_size)/1024/1024/1024 as "Total Redo (GB)"
 FROM      v$archived_log
 WHERE     DEST_ID = 1
-AND       TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') > TO_CHAR(SYSDATE - &num_days, 'DD-MON-YYYY')
+AND       FIRST_TIME > SYSDATE - interval '&days' day
 GROUP BY  TO_CHAR(FIRST_TIME, 'DD-MON-YYYY')
 ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY'));
 
@@ -13,7 +13,7 @@ COMPUTE SUM LABEL 'TOTAL' AVG LABEL 'AVERAGE' OF "Total Redo (GB)" ON DAY
 SELECT    TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') as "Day", TO_CHAR(FIRST_TIME, 'HH24') as "Hour", SUM(blocks * block_size)/1024/1024/1024 as "Total Redo (GB)"
 FROM      v$archived_log
 WHERE     DEST_ID = 1
-AND       TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY')) > TO_DATE(TO_CHAR(SYSDATE - &num_days, 'DD-MON-YYYY'))
+AND       FIRST_TIME > SYSDATE - interval '&hours' hour
 GROUP BY  TO_CHAR(FIRST_TIME, 'DD-MON-YYYY'), TO_CHAR(FIRST_TIME, 'HH24')
 ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY')), TO_CHAR(FIRST_TIME, 'HH24');
 
@@ -29,4 +29,4 @@ FROM      (
           WHERE     metric_name = 'Redo Generated Per Sec'
           ORDER BY  begin_time
           )
-WHERE     begin_time > SYSDATE - &mins/1440;
+WHERE     begin_time > SYSDATE - interval '&mins' minute;
