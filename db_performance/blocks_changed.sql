@@ -9,7 +9,7 @@ WHERE     dhs.snap_id = dhss.snap_id
 AND       dhs.instance_number = dhss.instance_number
 AND       dhss.obj# = dhso.obj#
 AND       dhss.dataobj# = dhso.dataobj#
-AND       begin_interval_time BETWEEN TO_DATE('&start_time','YY-MM-DD HH24:MI') AND TO_DATE('&end_time','YY-MM-DD HH24:MI')
+AND       begin_interval_time > SYSDATE - interval '&mins' minute
 GROUP BY  TO_CHAR(begin_interval_time,'YY-MM-DD HH24'), dhso.object_name
 HAVING    SUM(db_block_changes_delta) > 0
 ORDER BY  SUM(db_block_changes_delta) DESC;
@@ -29,7 +29,7 @@ AND       LTRIM(UPPER(dhst.sql_text)) NOT LIKE 'SELECT%'
 AND       dhss.snap_id = dhs.snap_id
 AND       dhss.instance_number = dhs.instance_number
 AND       dhss.sql_id = dhst.sql_id
-AND       begin_interval_time BETWEEN TO_DATE('&start_time','YY-MM-DD HH24:MI') AND TO_DATE('&end_time','YY-MM-DD HH24:MI')
+AND       begin_interval_time > SYSDATE - interval '&mins' minute
 ORDER BY  rows_proc_delta;
 
 -- Block change count for a specfic object over a period of time.
