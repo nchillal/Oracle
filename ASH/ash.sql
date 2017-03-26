@@ -1,4 +1,3 @@
-
 COLUMN  event FORMAT a40
 SELECT  *
 FROM    (
