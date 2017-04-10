@@ -55,7 +55,7 @@ SELECT    event,
           ELSE
             ROUND(time_waited*100 / SUM(time_waited) OVER(), 2)
           END "percentage"
-from      (
+FROM      (
           SELECT event, SUM(time_waited) time_waited
           FROM dba_hist_active_sess_history
           WHERE sql_id = '&sql_id'
@@ -70,7 +70,7 @@ SELECT    event,
           ELSE
             ROUND(time_waited*100 / SUM(time_waited) OVER(), 2)
           END "percentage"
-from      (
+FROM      (
           SELECT    event, SUM(time_waited) time_waited
           FROM      dba_hist_active_sess_history
           WHERE     sql_id = '&sql_id'
@@ -87,7 +87,7 @@ SELECT    event,
           ELSE
             ROUND(time_waited*100 / SUM(time_waited) OVER(), 2)
           END "percentage"
-from      (
+FROM      (
           SELECT    event, SUM(time_waited) time_waited
           FROM      dba_hist_active_sess_history
           WHERE     sample_time > TO_DATE('&start_datetime','MMDDYYHH24MI')
