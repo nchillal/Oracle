@@ -7,7 +7,7 @@ AND       du.user_id <> 0
 AND       sample_time >= TO_DATE('&start_datetime','MMDDYYHH24MI')
 AND       sample_time <= TO_DATE('&end_datetime','MMDDYYHH24MI')
 GROUP BY  du.username, TO_CHAR(sample_time,'MON-DD-YYYY'), TO_CHAR(sample_time,'HH24:MI')
-ORDER BY  2,3;
+ORDER BY  1,2,3;
 
 SET LINESIZE 155 PAGESIZE 2000
 BREAK on username SKIP 1
@@ -18,4 +18,4 @@ AND       du.user_id <> 0
 AND       sample_time >= TO_DATE('&start_datetime','MMDDYYHH24MI')
 AND       sample_time <= TO_DATE('&end_datetime','MMDDYYHH24MI')
 GROUP BY  du.username, TO_CHAR(sample_time,'MON-DD-YYYY'), TO_CHAR(sample_time,'HH24:MI')
-ORDER BY  2,3;
+ORDER BY  1,2,3;
