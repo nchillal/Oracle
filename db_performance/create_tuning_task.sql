@@ -1,6 +1,5 @@
 -- Create the tuning task
 SET SERVEROUTPUT ON PAUSE ON
-SET PAUSE "Press ENTER to continue . . . "
 
 DECLARE
   stmt_task VARCHAR2(40);
@@ -28,5 +27,3 @@ SET pagesize 1000
 SET longchunksize 20000
 SELECT  DBMS_SQLTUNE.REPORT_TUNING_TASK('&task_name') AS recommendations
 FROM    dual;
-
-SET PAUSE OFF
