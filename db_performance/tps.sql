@@ -11,8 +11,7 @@ AS  (
             instance_number,
             snap_id,
             stat_name,
-            VALUE - LAG (VALUE) OVER (PARTITION BY dbid,instance_number,stat_name ORDER BY snap_id)
-            delta_value
+            VALUE - LAG (VALUE) OVER (PARTITION BY dbid,instance_number,stat_name ORDER BY snap_id) delta_value
     FROM    dba_hist_sysstat
     WHERE stat_name IN ('user commits', 'user rollbacks')
     )
