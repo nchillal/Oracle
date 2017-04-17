@@ -13,3 +13,7 @@ FROM 			v$sqltext
 WHERE 		hash_value = (SELECT sql_hash_value FROM v$session WHERE sid = &sid)
 ORDER BY 	piece
 /
+
+SELECT 		sql_id, sql_child_number 
+FROM 			v$session
+WHERE			sid=&sid;
