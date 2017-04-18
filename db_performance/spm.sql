@@ -3,7 +3,7 @@ SET SERVEROUTPUT ON
 DECLARE
   l_plans_loaded  PLS_INTEGER;
 BEGIN
-  l_plans_loaded := DBMS_SPM.load_plans_from_cursor_cache(sql_id => '131rujqv0agfj');
+  l_plans_loaded := DBMS_SPM.LOAD_PLANS_FROM_CURSOR_CACHE(sql_id => '131rujqv0agfj');
   DBMS_OUTPUT.put_line('Plans Loaded: ' || l_plans_loaded);
 END;
 /
@@ -21,7 +21,7 @@ SET SERVEROUTPUT ON
 DECLARE
   l_plans_packed  PLS_INTEGER;
 BEGIN
-  l_plans_packed := DBMS_SPM.pack_stgtab_baseline
+  l_plans_packed := DBMS_SPM.PACK_STGTAB_BASELINE
     (
     table_name      => 'sqlplan_staging_tab',
     table_owner     => 'dbamaint_user',
@@ -42,7 +42,7 @@ SET SERVEROUTPUT ON
 DECLARE
   l_plans_unpacked  PLS_INTEGER;
 BEGIN
-  l_plans_unpacked := DBMS_SPM.unpack_stgtab_baseline
+  l_plans_unpacked := DBMS_SPM.UNPACK_STGTAB_BASELINE
     (
     table_name      => 'sqlplan_staging_tab',
     table_owner     => 'dbamaint_user',
