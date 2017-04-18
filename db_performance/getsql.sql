@@ -8,7 +8,7 @@ WHERE			sql_id = '&sql_id'
 /
 
 SELECT		hash_value,
-					sql_text
+					DBMS_LOB.SUBSTR(sql_text, 5000, 1) sql_text
 FROM 			v$sqltext
 WHERE 		hash_value = (SELECT sql_hash_value FROM v$session WHERE sid = &sid)
 ORDER BY 	piece
