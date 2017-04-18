@@ -1,3 +1,5 @@
+SET SERVEROUTOUT ON
+
 -- STEP 1: Verify that the table is a candidate for online redefinition
 BEGIN
 DBMS_REDEFINITION.CAN_REDEF_TABLE('&schema_owner','&original_table_name');
