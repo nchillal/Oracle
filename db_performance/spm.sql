@@ -3,7 +3,7 @@ SET SERVEROUTPUT ON
 DECLARE
   l_plans_loaded  PLS_INTEGER;
 BEGIN
-  l_plans_loaded := DBMS_SPM.LOAD_PLANS_FROM_CURSOR_CACHE(sql_id => '131rujqv0agfj');
+  l_plans_loaded := DBMS_SPM.LOAD_PLANS_FROM_CURSOR_CACHE(sql_id => '&sql_id');
   DBMS_OUTPUT.put_line('Plans Loaded: ' || l_plans_loaded);
 END;
 /
