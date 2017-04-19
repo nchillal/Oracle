@@ -2,7 +2,11 @@ SET SERVEROUTOUT ON
 
 -- STEP 1: Verify that the table is a candidate for online redefinition
 BEGIN
-DBMS_REDEFINITION.CAN_REDEF_TABLE('&schema_owner','&original_table_name');
+  DBMS_REDEFINITION.CAN_REDEF_TABLE
+  (
+    '&schema_owner',
+    '&original_table_name'
+  );
 END;
 /
 
@@ -10,31 +14,58 @@ END;
 
 -- Step 3: Start the redefinition process
 BEGIN
-DBMS_REDEFINITION.START_REDEF_TABLE('&schema_owner', '&original_table_name','&interim_table_name');
+  DBMS_REDEFINITION.START_REDEF_TABLE
+  (
+    '&schema_owner',
+    '&original_table_name',
+    '&interim_table_name'
+  );
 END;
 /
 
 -- Step 4: Copy dependent objects
 DECLARE
-num_errors PLS_INTEGER;
+  num_errors PLS_INTEGER;
 BEGIN
-DBMS_REDEFINITION.COPY_TABLE_DEPENDENTS('&schema_owner', '&original_table_name','&interim_table_name', DBMS_REDEFINITION.CONS_ORIG_PARAMS, TRUE, TRUE, TRUE, TRUE, num_errors);
+  DBMS_REDEFINITION.COPY_TABLE_DEPENDENTS
+  (
+    '&schema_owner',
+    '&original_table_name',
+    '&interim_table_name',
+    DBMS_REDEFINITION.CONS_ORIG_PARAMS,
+    TRUE,
+    TRUE,
+    TRUE,
+    TRUE,
+    num_errors
+  );
 END;
 /
 
 -- Step 5: Query the DBA_REDEFINITION_ERRORS view to check for errors
 COLUMN sql FORMAT a90
-select object_name, base_table_name, DBMS_LOB.SUBSTR(ddl_txt, 2000, 1) sql from dba_redefinition_errors;
+SELECT  object_name, base_table_name, DBMS_LOB.SUBSTR(ddl_txt, 2000, 1) sql
+FROM    dba_redefinition_errors;
 
 -- Step 6: Optionally, synchronize the interim table
 BEGIN
-DBMS_REDEFINITION.SYNC_INTERIM_TABLE('&schema_owner', '&original_table_name', '&interim_table_name');
+  DBMS_REDEFINITION.SYNC_INTERIM_TABLE
+  (
+    '&schema_owner',
+    '&original_table_name',
+    '&interim_table_name'
+  );
 END;
 /
 
 -- Step 7: Complete the redefinition
 BEGIN
-DBMS_REDEFINITION.FINISH_REDEF_TABLE('&schema_owner', '&original_table_name', '&interim_table_name');
+  DBMS_REDEFINITION.FINISH_REDEF_TABLE
+  (
+    '&schema_owner',
+    '&original_table_name',
+    '&interim_table_name'
+  );
 END;
 /
 
@@ -46,6 +77,11 @@ DROP TABLE &schema_owner.&interim_table_name;
 
 -- If there is a need to ABORT Redefinition use below SQL.
 BEGIN
-DBMS_REDEFINITION.ABORT_REDEF_TABLE (uname => '&schema_name', orig_table => '&original_table_name', int_table => '&interim_table_name');
+  DBMS_REDEFINITION.ABORT_REDEF_TABLE
+  (
+    '&schema_name',
+    '&original_table_name',
+    '&interim_table_name'
+  );
 END;
 /
