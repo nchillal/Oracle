@@ -1,4 +1,3 @@
-set linesize 1000 pagesize 100
 COLUMN path FORMAT a40
 COLUMN name FORMAT a15
 COLUMN "Disk Name" FORMAT a20
