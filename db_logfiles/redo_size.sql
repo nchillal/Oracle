@@ -17,7 +17,7 @@ AND       FIRST_TIME > SYSDATE - interval '&hours' hour
 GROUP BY  TO_CHAR(FIRST_TIME, 'DD-MON-YYYY'), TO_CHAR(FIRST_TIME, 'HH24')
 ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY')), TO_CHAR(FIRST_TIME, 'HH24');
 
--- Query to obtain redo generation per hour.
+-- Query to obtain redo generation per minute.
 SET PAGESIZE 1000 LINESIZE 155
 BREAK ON DAY SKIP 1
 COMPUTE SUM LABEL 'TOTAL' AVG LABEL 'AVERAGE' OF "Total Redo (GB)" ON DAY
