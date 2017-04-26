@@ -1,5 +1,5 @@
 COLUMN "Session Information" FORMAT A120
-SET VERIFY OFF
+SET VERIFY OFF LINESIZE 155 PAGESIZE 2000
 ACCEPT sid      PROMPT 'Please enter the value for Sid if known            : '
 ACCEPT terminal PROMPT 'Please enter the value for terminal if known       : '
 ACCEPT machine  PROMPT 'Please enter the machine name if known             : '
@@ -18,14 +18,13 @@ SELECT  'Inst ID, Sid, Serial#                    : '||s.inst_id||', '||s.sid||'
         'Row Details (Obj#, File#, Block#, Row#)  : '||s.row_wait_obj#||', '||s.row_wait_file#||', '||s.row_wait_block#||', '||s.row_wait_row#|| CHR(10) "Session Information"
 FROM    gv$process p, gv$session s
 WHERE   p.addr = s.paddr
-AND     s.sid = NVL('&SID',s.sid)
-AND     NVL(s.terminal,' ') = NVL('&Terminal',NVL(s.terminal,' '))
-AND     NVL(s.process,-1) = NVL('&Process',NVL(s.process,-1))
+AND     s.sid = NVL('&sid',s.sid)
+AND     NVL(s.terminal,' ') = NVL('&terminal',NVL(s.terminal,' '))
+AND     NVL(s.process,-1) = NVL('&process',NVL(s.process,-1))
 AND     p.spid = NVL('&spid',p.spid)
-AND     s.inst_id=p.inst_id
+AND     s.inst_id = p.inst_id
 AND     s.username = NVL('&username',s.username)
-AND     NVL(s.osuser,' ') = NVL('&OSUser',NVL(s.osuser,' '))
+AND     NVL(s.osuser,' ') = NVL('&osuser',NVL(s.osuser,' '))
 AND     NVL(s.machine,' ') = NVL('&machine',NVL(s.machine,' '))
-AND     NVL('&SID',NVL('&TERMINAL',NVL('&PROCESS',NVL('&SPID',NVL('&USERNAME',
-        NVL('&OSUSER',NVL('&MACHINE','NO VALUES'))))))) <> 'NO VALUES'
+AND     NVL('&sid',NVL('&terminal',NVL('&process',NVL('&spid',NVL('&username', NVL('&osuser',NVL('&machine','NO VALUES'))))))) <> 'NO VALUES'
 /
