@@ -1,4 +1,4 @@
-set pagesize 0 heading off feedback off echo off termout off
+SET PAGESIZE 0 HEADING OFF FEEDBACK OFF ECHO OFF TERMOUT OFF
 spool validate_all.sql
 SELECT    'set echo on' FROM dual;
 

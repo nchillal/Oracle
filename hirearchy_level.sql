@@ -1,5 +1,5 @@
-SELECT  PROFILE_OPTION_NAME,
-        HIERARCHY_TYPE
+SELECT  profile_option_name,
+        hierarchy_type
 FROM    fnd_profile_options
 WHERE   profile_option_name IN (
                                 'APPS_WEB_AGENT',

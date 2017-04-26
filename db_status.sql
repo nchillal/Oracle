@@ -1,4 +1,4 @@
-set linesize 200 numwidth 20
+SET LINESIZE 200 NUMWIDTH 20
 COLUMN host_name FORMAT a40
 COLUMN open_mode FORMAT a10
 
