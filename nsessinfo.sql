@@ -2,11 +2,11 @@ COLUMN "Session Information" FORMAT A155
 SET VERIFY OFF LINESIZE 155 PAGESIZE 2000
 
 ACCEPT sid      PROMPT 'Please enter the value for Sid if known            : '
+ACCEPT event    PROMPT 'Please enter the value for Event if known          : '
 ACCEPT spid     PROMPT 'Please enter the value for Server Process if known : '
 ACCEPT process  PROMPT 'Please enter the value for Client Process if known : '
 ACCEPT osuser   PROMPT 'Please enter the value for OS User if known        : '
 ACCEPT username PROMPT 'Please enter the value for DB User if known        : '
-ACCEPT event    PROMPT 'Please enter the value for Event if known          : '
 ACCEPT machine  PROMPT 'Please enter the machine name if known             : '
 
 SELECT  'Inst ID / Sid,Serial# / Status           : '||s.inst_id||' / '||s.sid||','||s.serial#||' / '||s.status|| CHR(10) ||
@@ -22,11 +22,11 @@ SELECT  'Inst ID / Sid,Serial# / Status           : '||s.inst_id||' / '||s.sid||
         'Row Details (Obj#, File#, Block#, Row#)  : '||s.row_wait_obj#||', '||s.row_wait_file#||', '||s.row_wait_block#||', '||s.row_wait_row#|| CHR(10) "Session Information"
 FROM    gv$process p, gv$session s
 WHERE   p.addr = s.paddr
-AND     s.sid = NVL('&sid',s.sid)
-AND     REGEXP_LIKE(s.event, '&event|+')
+AND     s.inst_id = p.inst_id
+AND     s.sid = NVL('&sid', s.sid)
+AND     s.event = NVL('&event', s.event)
 AND     NVL(s.process,-1) = NVL('&process',NVL(s.process,-1))
 AND     p.spid = NVL('&spid',p.spid)
-AND     s.inst_id = p.inst_id
 AND     s.username = NVL('&username',s.username)
 AND     NVL(s.osuser,' ') = NVL('&osuser',NVL(s.osuser,' '))
 AND     NVL(s.machine,' ') = NVL('&machine',NVL(s.machine,' '))
