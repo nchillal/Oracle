@@ -1,7 +1,7 @@
 COLUMN  event FORMAT a40
 SELECT  *
 FROM    (
-        SELECT    session_id, event, session_state, username, sql_id, count(*)
+        SELECT    session_id, event, session_state, username, sql_id, COUNT(*)
         FROM      v$active_session_history ash, dba_users du
         WHERE     ash.user_id=du.user_id
         AND       sample_time > SYSDATE - interval '&mins' minute
