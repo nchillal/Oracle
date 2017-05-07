@@ -1,4 +1,4 @@
-set linesize 280 pagesize 200
+SET LINESIZE 280 PAGESIZE 200
 COLUMN user_concurrent_queue_name FORMAT a60
 SELECT    user_concurrent_queue_name,
           target_processes,

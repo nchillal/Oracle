@@ -1,11 +1,8 @@
-set pagesize 100
-set verify off
-set echo off
-set linesize 200
-prompt Enter concurrent program name in full or part in correct case
-prompt
-accept prg_nm prompt 'PROGRAM_NAME->'
-prompt
+SET PAGESIZE 100 VERIFY OFF ECHO OFF LINESIZE 200
+PROMPT Enter concurrent program name in full or part in correct case
+PROMPT
+ACCEPT prg_nm PROMPT 'PROGRAM_NAME->'
+PROMPT
 COLUMN request_id FORMAT 99999999
 COLUMN argument_text FORMAT a50
 COLUMN name FORMAT a50

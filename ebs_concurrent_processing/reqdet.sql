@@ -1,12 +1,7 @@
-set echo off
-set linesize 150
-set serveroutput on size 1000000
-set heading off
-set feed off
-set veri off
+SET ECHO OFF LINESIZE 150 SERVEROUTPUT ON SIZE 1000000 HEADING OFF FEED OFF VERIFY OFF
 undefine reqid
 /* Script Prepared by Vikram Hebbar on 08-10-2002 */
-accept reqid prompt 'Request ID: '
+ACCEPT reqid PROMPT 'Request ID: '
 DECLARE
 TYPE reqdet_rec IS RECORD( request_date DATE,
                             requested_start_date DATE,
@@ -142,7 +137,7 @@ BEGIN
          p.application_id = ptl.application_id AND
          p.concurrent_program_id = ptl.concurrent_program_id AND
          req.responsibility_application_id = r.application_id AND
-         req.responsibility_id = r.responsibility_id AND 
+         req.responsibility_id = r.responsibility_id AND
          ROWNUM = 1;
 
   dbms_output.put_line(rpad('=',110, '='));
@@ -176,9 +171,9 @@ BEGIN
              apps.fnd_concurrent_processes pr
       WHERE  pr.concurrent_process_id = reqdet.cmgr AND
              pr.queue_application_id = q.application_id AND
-             pr.concurrent_queue_id = q.concurrent_queue_id AND 
+             pr.concurrent_queue_id = q.concurrent_queue_id AND
              ROWNUM = 1;
-             
+
       dbms_output.put_line(rpad('Conc Queue Dtls', 25, ' ') || ' : ' || que.qname || ' - ' || que.quname || ' - w' || reqdet.cmgr);
     EXCEPTION
       WHEN no_data_found THEN

@@ -1,5 +1,5 @@
 SET PAGESIZE 0 HEADING OFF FEEDBACK OFF ECHO OFF TERMOUT OFF
-spool validate_all.sql
+SPOOL validate_all.sql
 SELECT    'set echo on' FROM dual;
 
 SELECT    'ALTER '||object_type||' '||owner||'.'||object_name||' COMPILE;'
@@ -49,5 +49,5 @@ FROM      dba_objects
 WHERE     object_type = 'SYNONYM'
 AND       status = 'INVALID';
 
-spool off
-exit
+SPOOL OFF
+EXIT

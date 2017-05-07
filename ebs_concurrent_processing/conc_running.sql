@@ -1,6 +1,4 @@
-set pagesize 66
-set feedback on
-set linesize 200
+SET PAGESIZE 66 FEEDBACK ON LINESIZE 200
 COLUMN  user_name FORMAT a40 word_wrapped
 COLUMN	ProgName	FORMAT a55 word_wrapped
 COLUMN  requestid	FORMAT 99999999999

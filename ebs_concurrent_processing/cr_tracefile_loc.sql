@@ -1,15 +1,14 @@
-prompt
-accept request prompt 'Please enter the concurrent request id for the appropriate concurrent program:'
-prompt
+PROMPT
+ACCEPT request PROMPT 'Please enter the concurrent request id for the appropriate concurrent program:'
+PROMPT
 
-column traceid format a8
-column tracename format a80
-column user_concurrent_program_name format a40
-column execname format a15
-column enable_trace format a12
-set linesize 80
-set pagesize 22
-set head off
+COLUMN traceid FORMAT a8
+COLUMN tracename FORMAT a80
+COLUMN user_concurrent_program_name FORMAT a40
+COLUMN execname FORMAT a15
+COLUMN enable_trace FORMAT a12
+
+SET LINESIZE 80 PAGESIZE 22 HEADING OFF
 
 SELECT  'Request id: '||request_id ,
         'Trace id: '||oracle_Process_id,
@@ -37,4 +36,4 @@ and     req.concurrent_program_id = prog.concurrent_program_id
 and     req.program_application_id = prog.application_id
 --- and prog.application_id = execname.application_id
 and     prog.executable_application_id = execname.application_id
-and     prog.executable_id=execname.executable_id; 
+and     prog.executable_id=execname.executable_id;
