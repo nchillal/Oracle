@@ -79,9 +79,9 @@ prompt #####################################################################
 prompt #######################LOCAL TEMP SQLS##############################
 prompt #####################################################################
 prompt
-SELECT    S.sid || ',' || S.serial# sid_serial, S.username, Q.sql_id, Q.sql_text, T.blocks * TBS.block_size / 1024 / 1024 mb_used, T.tablespace
-FROM      v$tempseg_usage T, v$session S, v$sqlarea Q, dba_tablespaces TBS
-WHERE     T.session_addr = S.saddr
-AND       T.sqladdr = Q.address
-AND       T.tablespace = TBS.tablespace_name
+SELECT    s.sid ||','|| s.serial# sid_serial, s.username, q.sql_id, q.sql_text, t.blocks * TBS.block_size / 1024 / 1024 mb_used, t.tablespace
+FROM      v$tempseg_usage t, v$session s, v$sqlarea q, dba_tablespaces tbs
+WHERE     t.session_addr = s.saddr
+AND       t.sqladdr = q.address
+AND       t.tablespace = tbs.tablespace_name
 ORDER BY  mb_used;
