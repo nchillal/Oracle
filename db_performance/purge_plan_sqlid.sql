@@ -1,4 +1,4 @@
-SELECT 	address, hash_value, plan_hash_value
+SELECT 	first_load_time, address, hash_value, plan_hash_value
 FROM 	  v$sqlarea
 WHERE 	sql_id='&sql_id';
 
