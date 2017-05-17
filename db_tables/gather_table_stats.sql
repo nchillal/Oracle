@@ -1,1 +1,5 @@
-EXEC DBMS_STATS.GATHER_TABLE_STATS('&owner', '&table_name', estimate_percent => dbms_stats.auto_sample_size, cascade => TRUE, method_opt => 'FOR ALL COLUMNS SIZE AUTO');
+SELECT DBMS_STATS.GET_PREFS('&pname', '&schema', '&table') FROM dual;
+
+EXEC DBMS_STATS.SET_TABLE_PREFS('&schema', '&table', '&pname', '&value');
+
+EXEC DBMS_STATS.GATHER_TABLE_STATS('&owner', '&table', estimate_percent => &est_percent);
