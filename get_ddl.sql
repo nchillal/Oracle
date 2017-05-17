@@ -5,7 +5,7 @@ BEGIN
   dbms_metadata.set_transform_param(dbms_metadata.session_transform,'STORAGE', FALSE);
   dbms_metadata.set_transform_param(dbms_metadata.session_transform,'TABLESPACE',TRUE);
 END;
-/ 
+/
 
 SET LONG 1000000
 SET LONGCHUNK 1000000
