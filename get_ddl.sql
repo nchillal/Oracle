@@ -11,5 +11,5 @@ SET LONG 1000000
 SET LONGCHUNK 1000000
 SET LINESIZE 200
 SET PAGESIZE 0
-SELECT  dbms_metadata.get_ddl('&OBJECT_TYPE','&OBJECT_NAME','&SCHEMA_NAME')
+SELECT  DBMS_METADATA.GET_DDL('&object_type','&object_name','&schema_name')
 FROM    dual;
