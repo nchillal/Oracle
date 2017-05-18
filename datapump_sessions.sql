@@ -2,7 +2,7 @@ SET LINESIZE 150 PAGESIZE 100 NUMWIDTH 7
 COLUMN program FORMAT a38
 COLUMN username FORMAT a10
 COLUMN spid FORMAT a7
-SELECT    TO_CHAR(SYSDATE,'YYYY-MM-DD HH24:MI:SS') "DATE",
+SELECT    TO_CHAR(SYSDATE, 'YYYY-MM-DD HH24:MI:SS') "DATE",
           s.program,
           s.sid,
           s.status,
