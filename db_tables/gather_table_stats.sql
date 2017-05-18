@@ -1,5 +1,5 @@
-SELECT DBMS_STATS.GET_PREFS('&pname', '&schema', '&table') FROM dual;
+SELECT DBMS_STATS.get_prefs('&pname', '&schema', '&table') FROM dual;
 
-EXEC DBMS_STATS.SET_TABLE_PREFS('&schema', '&table', '&pname', '&value');
+EXEC DBMS_STATS.set_table_prefs('&schema', '&table', '&pname', '&value');
 
-EXEC DBMS_STATS.GATHER_TABLE_STATS('&owner', '&table', estimate_percent => &est_percent);
+EXEC DBMS_STATS.gather_table_stats('&owner', '&table', estimate_percent => &est_percent);
