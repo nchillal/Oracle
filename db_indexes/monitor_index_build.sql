@@ -7,7 +7,7 @@ SELECT    sess.sid AS "Session ID",
           longops.elapsed_seconds/60 AS "Runtime Mins",
           longops.time_remaining/60 AS "ETA Mins"
 FROM      v$session sess, v$sql sql, v$session_longops longops
-WHERE     sess.sid=longops.sid
+WHERE     sess.sid = longops.sid
 AND       sess.sql_address = sql.address
 AND       sess.sql_address = longops.sql_address
 AND       sess.status  = 'ACTIVE'
