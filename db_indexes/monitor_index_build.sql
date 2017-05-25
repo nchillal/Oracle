@@ -1,7 +1,7 @@
-COLUMN "Index Operation" FORMAT a60 trunc
+COLUMN "Index Operation" FORMAT a60 TRUNC
 COLUMN "ETA Mins" FORMAT 9999.99
 COLUMN "Runtime Mins" FORMAT 9999.99
-select    sess.sid AS "Session ID",
+SELECT    sess.sid AS "Session ID",
           sql.sql_text AS "Index Operation",
           longops.totalwork, longops.sofar,
           longops.elapsed_seconds/60 AS "Runtime Mins",
