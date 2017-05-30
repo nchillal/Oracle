@@ -38,4 +38,5 @@ WHERE     b.event NOT IN  (
                           )
 AND       a.sid  = b.sid
 AND       a.inst_id = b.inst_id
-ORDER BY  1, Last_call_ET;
+AND       a.status = 'ACTIVE'
+ORDER BY  1, last_call_et;
