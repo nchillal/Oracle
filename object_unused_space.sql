@@ -1,12 +1,12 @@
 SET SERVEROUTPUT ON
 DECLARE
-  total_blocks              number;
-  total_bytes               number;
-  unused_blocks             number;
-  unused_bytes              number;
-  last_used_extent_file_id  number;
-  last_used_extent_block_id number;
-  last_used_block           number;
+  total_blocks              NUMBER;
+  total_bytes               NUMBER;
+  unused_blocks             NUMBER;
+  unused_bytes              NUMBER;
+  last_used_extent_file_id  NUMBER;
+  last_used_extent_block_id NUMBER;
+  last_used_block           NUMBER;
 BEGIN
   dbms_space.unused_space('&schema','&object','&type', total_blocks, total_bytes, unused_blocks, unused_bytes, last_used_extent_file_id, last_used_extent_block_id, last_used_block);
   dbms_output.put_line('-----------------------------------');
