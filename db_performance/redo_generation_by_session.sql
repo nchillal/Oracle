@@ -1,12 +1,13 @@
 COLUMN machine FORMAT a45
 COLUMN username FORMAT a20
-COLUMN redo_MB FORMAT 999G990 HEADING "Redo|Size MB"
+COLUMN redo_MB FORMAT 999G999G990 HEADING "Redo|Size MB"
 COLUMN sid_serial FORMAT a13;
 
 SELECT  b.inst_id,
         LPAD((b.sid || ',' || LPAD(b.serial#,5)),11) sid_serial,
         b.username,
         machine,
+        sql_id,
         b.osuser,
         b.status,
         a.redo_mb
