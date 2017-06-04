@@ -26,8 +26,9 @@ SET SERVEROUTPUT ON
 DECLARE
   su NUMBER;
   sa NUMBER;
+  cp NUMBER;
 BEGIN
-  dbms_space.object_space_usage('&segment_owner', '&segment_name', '&segment_type', NULL, su, sa);
+  dbms_space.object_space_usage('&segment_owner', '&segment_name', '&segment_type', NULL, su, sa, cp);
   dbms_output.put_line('Space Used: '||ROUND(TO_CHAR(su)/1024, 2)||' K');
   dbms_output.put_line('Space Allocated: '||ROUND(TO_CHAR(sa)/1024, 2)||' K');
 END;
