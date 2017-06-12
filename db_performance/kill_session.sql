@@ -7,3 +7,8 @@ SELECT  'ALTER SYSTEM KILL SESSION '||Chr(39)||SID||','||SERIAL#||Chr(39)||' imm
 FROM    v$session
 WHERE   username='&username'
 /
+
+SELECT  'ALTER SYSTEM KILL SESSION '||Chr(39)||SID||','||SERIAL#||Chr(39)||' immediate;'
+FROM    v$session
+WHERE   event='&event'
+/
