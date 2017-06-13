@@ -68,7 +68,7 @@ PIVOT     (
 ORDER BY  inst_id, username, sql_id, event
 ;
 
--- This query to display SQL_ID and the plan hash value being used.
+-- This query to display plan hash value being used for a SQL_ID.
 SELECT  vs.inst_id, username, event, vs.sql_id, plan_hash_value, status
 FROM    gv$session vs, gv$sql_plan vp
 WHERE   type <> 'BACKGROUND'
