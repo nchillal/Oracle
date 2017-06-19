@@ -1,4 +1,5 @@
 SET LINESIZE 230
-SELECT  name, value, time_computed
-FROM		v$dataguard_stats
+BREAK ON inst_id SKIP 1
+SELECT  inst_id, name, value, time_computed
+FROM		gv$dataguard_stats
 WHERE 	name IN ('transport lag', 'apply lag');
