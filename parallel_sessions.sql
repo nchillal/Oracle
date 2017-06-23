@@ -8,24 +8,30 @@ COLUMN "Actual DOP" FORMAT 9999
 COLUMN "Slaveset" FORMAT A8
 COLUMN "Slave INST" FORMAT A9
 COLUMN "QC INST" FORMAT A6
-set pagesize 300
-set linesize 200
-SELECT    DECODE(px.qcinst_id,NULL,username,' - '||LOWER(SUBSTR(pp.server_name, LENGTH(pp.server_name)-4,4) ) )"Username",
+COLUMN "SPID" FORMAT A6
+SET PAGESIZE 300
+SET LINESIZE 200
+SELECT    s.logon_time "Logon Time",
+          DECODE(px.qcinst_id,NULL,username,' - '||LOWER(SUBSTR(pp.server_name, LENGTH(pp.server_name)-4,4) ) )"Username",
           DECODE(px.qcinst_id,NULL, 'QC', '(Slave)') "QC/Slave" ,
           TO_CHAR( px.server_set) "SlaveSet",
           TO_CHAR(s.sid) "SID",
+          s.status "Status",
           TO_CHAR(px.inst_id) "Slave INST",
           decode(px.qcinst_id, NULL, TO_CHAR(s.sid), px.qcsid) "QC SID",
+          pp.spid "SPID",
           TO_CHAR(px.qcinst_id) "QC INST",
           px.req_degree "Req. DOP",
-          px.degree "Actual DOP"
+          px.degree "Actual DOP",
+          s.sql_id "SQL_ID",
+          s.sql_child_number "Child Number"
 FROM      gv$px_session px, gv$session s, gv$px_process pp
 where     px.sid=s.sid (+)
 AND       px.serial#=s.serial#(+)
 AND       px.inst_id = s.inst_id(+)
 AND       px.sid = pp.sid (+)
 AND       px.serial#=pp.serial#(+)
-ORDER BY  6, 1 DESC
+ORDER BY  8, 2 DESC
 /
 
 CLEAR COLUMNS
