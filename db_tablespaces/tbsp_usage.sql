@@ -1,8 +1,8 @@
 set linesize 230 pagesize 200
 SELECT    NVL(b.tablespace_name, NVL(a.tablespace_name,'UNKNOWN')) "Tablespace",
-          kbytes_alloc "Allocated MB",
-          kbytes_alloc-NVL(kbytes_free,0) "Used MB",
-          NVL(kbytes_free,0) "Free MB",
+          ROUND(kbytes_alloc, 2) "Allocated MB",
+          ROUND(kbytes_alloc-NVL(kbytes_free,0), 2) "Used MB",
+          ROUND(NVL(kbytes_free,0), 2) "Free MB",
           TRUNC(((kbytes_alloc-NVL(kbytes_free,0))/kbytes_alloc) * 100, 2) "Used %",
           data_files "Data Files"
 FROM      ( SELECT    SUM(bytes)/1024/1024 Kbytes_free,
