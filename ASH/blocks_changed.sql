@@ -45,3 +45,25 @@ AND       dhss.dataobj# = dhso.dataobj#
 AND       dhso.object_name = '&object_name'
 GROUP BY  TO_CHAR(begin_interval_time,'YY-MM-DD HH24:MI')
 ORDER BY  TO_CHAR(begin_interval_time,'YY-MM-DD HH24:MI');
+
+-- Block Changes Per Sec from AWR
+BREAK ON snap_id SKIP 1
+SELECT    snap_id,
+          instance_number,
+          end_time,
+          ROUND(DB_BLOCK_CHANGES_PER_SEC, 2)
+FROM      (
+          SELECT  snap_id,
+                  instance_number,
+                  end_time,
+                  metric_name,
+                  maxval
+          FROM    dba_hist_sysmetric_summary
+          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
+          AND     REGEXP_LIKE(instance_number, '&instance_number')
+          )
+PIVOT     (
+          MAX(maxval)
+          FOR metric_name IN ('DB Block Changes Per Sec' AS DB_BLOCK_CHANGES_PER_SEC)
+          )
+ORDER BY  snap_id;
