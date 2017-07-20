@@ -6,4 +6,5 @@ SELECT  inst_id,
         block#,
         blocks
 FROM    gv$managed_standby
-WHERE   process like 'MRP%';
+WHERE   process LIKE 'MRP%'
+OR      client_process ='LGWR';
