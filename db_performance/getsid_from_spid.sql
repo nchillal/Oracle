@@ -3,7 +3,7 @@ SET PAGESIZE 1000 LINESIZE 260
 COLUMN "SID, SERIAL#" FORMAT a15
 COLUMN module FORMAT a50
 COLUMN spid FORMAT a7
-COLUMN username FORMAT a20
+COLUMN username FORMAT a25
 COLUMN event FORMAT a50
 
 SELECT  sid||','||serial# "SID, SERIAL#", b.spid, username, status, logon_time, last_call_et, sql_id, sql_child_number, event, module
