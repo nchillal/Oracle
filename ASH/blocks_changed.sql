@@ -51,7 +51,7 @@ BREAK ON snap_id SKIP 1
 SELECT    snap_id,
           instance_number,
           end_time,
-          ROUND(DB_BLOCK_CHANGES_PER_SEC, 2)
+          ROUND(DB_BLOCK_CHANGES_PER_SEC, 2) "DB_BLOCK_CHANGES_PER_SEC"
 FROM      (
           SELECT  snap_id,
                   instance_number,
