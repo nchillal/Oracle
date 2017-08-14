@@ -1,5 +1,5 @@
 -- To check if your connection to database is via TCPS.
-set serveroutput on
+SET SERVEROUTPUT ON
 BEGIN
   IF SYS_CONTEXT('USERENV','NETWORK_PROTOCOL')!='tcps' THEN
     DBMS_OUTPUT.PUT_LINE(chr(10)||'TCPS is not enabled.');
@@ -10,9 +10,9 @@ END;
 /
 
 -- To check if TCPS is enabled for the database.
-set serveroutput on
+SET SERVEROUTPUT ON
 DECLARE
-  tcps_count number(5);
+  tcps_count NUMBER(5);
 BEGIN
   SELECT COUNT(*) INTO tcps_count
   FROM
@@ -40,9 +40,9 @@ WHERE     protocol = 'TCPS'
 GROUP BY  protocol;
 
   IF tcps_count > 0 THEN
-    DBMS_OUTPUT.PUT_LINE(chr(10)||'TCPS is enabled.');
+    DBMS_OUTPUT.PUT_LINE(CHR(10)||'TCPS is enabled.');
   ELSE
-    DBMS_OUTPUT.PUT_LINE(chr(10)||'TCPS is not enabled.');
+    DBMS_OUTPUT.PUT_LINE(CHR(10)||'TCPS is not enabled.');
   END IF;
 END;
 /
