@@ -1,4 +1,4 @@
-set linesize 230
+SET LINESIZE 230
 COLUMN object FORMAT a30
 SELECT  *
 FROM    gv$access
