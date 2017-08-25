@@ -1,9 +1,9 @@
-set linesize 150
+set linesize 260
 set feedback on
 set pagesize 1000
 COLUMN sid FORMAT 99999
-COLUMN event FORMAT a30
-COLUMN module FORMAT a35
+COLUMN event FORMAT a50
+COLUMN module FORMAT a60
 COLUMN username FORMAT a12
 COLUMN seconds_in_wait FORMAT 999999
 COLUMN p1 FORMAT 999999999999999
