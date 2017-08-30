@@ -29,13 +29,14 @@ GROUP BY  TO_CHAR(FIRST_TIME, 'DD-MON-YYYY'), TO_CHAR(FIRST_TIME, 'HH24:MI')
 ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY')), TO_CHAR(FIRST_TIME, 'HH24:MI');
 
 -- Query to obtain redo generation per sec.
+COLUMN redo_bytes FORMAT 999,999,999
 SELECT    *
 FROM      (
-          SELECT    begin_time, end_time, value/1024/1024 "REDO (MB)"
+          SELECT    begin_time, end_time, ROUND(value, 2) "REDO_BYTES"
           FROM      dba_hist_sysmetric_history
           WHERE     metric_name = 'Redo Generated Per Sec'
           UNION
-          SELECT    begin_time, end_time, value/1024/1024 "REDO (MB)"
+          SELECT    begin_time, end_time, ROUND(value,2) "REDO_BYTES"
           FROM      v$sysmetric_history
           WHERE     metric_name = 'Redo Generated Per Sec'
           ORDER BY  begin_time
