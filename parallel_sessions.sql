@@ -35,9 +35,13 @@ ORDER BY  3 DESC
 
 CLEAR COLUMNS
 COLUMN "Wait Event" FORMAT a50
-SELECT    px.sid "SID", p.pid, p.spid "SPID", px.inst_id "Inst",
-          px.server_group "Group", px.server_set "Set",
-          px.degree "Degree", px.req_degree "Req Degree", w.event "Wait Event"
+COLUMN "SPID" FORMAT A8
+SELECT    px.sid "SID",
+          p.spid "SPID",
+          px.inst_id "Inst",
+          px.req_degree "Requested Degree",
+          px.degree "Actual Degree",
+          w.event "Wait Event"
 FROM      gv$session s, gv$px_session px, gv$process p, gv$session_wait w
 WHERE     s.sid (+) = px.sid
 AND       s.inst_id (+) = px.inst_id
