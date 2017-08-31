@@ -1,26 +1,25 @@
 COLUMN username FORMAT a12
 COLUMN username FORMAT a12
-COLUMN "QC SID" FORMAT A6
-COLUMN sid FORMAT A6
+COLUMN "QC SID" FORMAT 999999
+COLUMN sid FORMAT 999999
 COLUMN "QC/Slave" FORMAT A8
 COLUMN "Requested DOP" FORMAT 9999
 COLUMN "Actual DOP" FORMAT 9999
-COLUMN "Slaveset" FORMAT A8
-COLUMN "Slave INST" FORMAT A9
-COLUMN "QC INST" FORMAT A6
+COLUMN "Slaveset" FORMAT 999999
+COLUMN "Slave INST" FORMAT 999999
+COLUMN "QC INST" FORMAT 9999
 COLUMN "SPID" FORMAT A6
 SET PAGESIZE 300
 SET LINESIZE 200
 SELECT    s.logon_time "Logon Time",
           DECODE(px.qcinst_id,NULL,username,' - '||LOWER(SUBSTR(pp.server_name, LENGTH(pp.server_name)-4,4) ) )"Username",
-          DECODE(px.qcinst_id,NULL, 'QC', '(Slave)') "QC/Slave" ,
-          TO_CHAR( px.server_set) "SlaveSet",
-          TO_CHAR(s.sid) "SID",
+          DECODE(px.qcinst_id,NULL, 'QC', 'Slave') "QC/Slave" ,
           s.status "Status",
-          TO_CHAR(px.inst_id) "Slave INST",
-          decode(px.qcinst_id, NULL, TO_CHAR(s.sid), px.qcsid) "QC SID",
+          px.qcinst_id "QC INST",
+          px.inst_id "Slave INST",
+          decode(px.qcinst_id, NULL, s.sid, px.qcsid) "QC SID",
+          s.sid "SID",
           pp.spid "SPID",
-          TO_CHAR(px.qcinst_id) "QC INST",
           px.req_degree "Req. DOP",
           px.degree "Actual DOP",
           s.sql_id "SQL_ID",
@@ -31,7 +30,7 @@ AND       px.serial#=s.serial#(+)
 AND       px.inst_id = s.inst_id(+)
 AND       px.sid = pp.sid (+)
 AND       px.serial#=pp.serial#(+)
-ORDER BY  8, 2 DESC
+ORDER BY  3
 /
 
 CLEAR COLUMNS
