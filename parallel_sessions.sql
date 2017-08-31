@@ -12,8 +12,8 @@ COLUMN "SPID" FORMAT A6
 SET PAGESIZE 300
 SET LINESIZE 200
 SELECT    s.logon_time "Logon Time",
-          DECODE(px.qcinst_id,NULL,username,' - '||LOWER(SUBSTR(pp.server_name, LENGTH(pp.server_name)-4,4) ) )"Username",
-          DECODE(px.qcinst_id,NULL, 'QC', 'Slave') "QC/Slave" ,
+          DECODE(px.qcinst_id, NULL, username,' - '||LOWER(SUBSTR(pp.server_name, LENGTH(pp.server_name)-4,4) ) )"Username",
+          DECODE(px.qcinst_id, NULL, 'QC', ' - Slave') "QC/Slave" ,
           s.status "Status",
           px.qcinst_id "QC INST",
           px.inst_id "Slave INST",
@@ -30,7 +30,7 @@ AND       px.serial#=s.serial#(+)
 AND       px.inst_id = s.inst_id(+)
 AND       px.sid = pp.sid (+)
 AND       px.serial#=pp.serial#(+)
-ORDER BY  3
+ORDER BY  3 DESC
 /
 
 CLEAR COLUMNS
