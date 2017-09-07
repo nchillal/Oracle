@@ -33,6 +33,7 @@ ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY')), TO_CHAR(FIRST_TIME, 'HH24
 -- Query to obtain redo generation per sec.
 BREAK ON REPORT
 COMPUTE  AVG LABEL 'Average Bytes => ' OF "REDO_BYTES" ON REPORT
+COLUMN redo_bytes FORMAT 999,999,999,999
 SELECT    *
 FROM      (
           SELECT    begin_time, end_time, value "REDO_BYTES"
