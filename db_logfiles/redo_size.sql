@@ -1,5 +1,6 @@
 -- Query to obtain redo generation per day.
-SELECT    TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') as "Date", SUM(blocks * block_size)/1024/1024/1024 as "Total Redo (GB)"
+COLUMN redo_bytes FORMAT 999,999,999,999
+SELECT    TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') as "Day", SUM(blocks * block_size) as "REDO_BYTES"
 FROM      v$archived_log
 WHERE     DEST_ID = 1
 AND       FIRST_TIME > SYSDATE - interval '&days' day
@@ -9,8 +10,8 @@ ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY'));
 -- Query to obtain redo generation per hour.
 SET PAGESIZE 1000 LINESIZE 155
 BREAK ON DAY SKIP 1
-COMPUTE SUM LABEL 'TOTAL' AVG LABEL 'AVERAGE' OF "Total Redo (GB)" ON DAY
-SELECT    TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') as "Day", TO_CHAR(FIRST_TIME, 'HH24') as "Hour", SUM(blocks * block_size)/1024/1024/1024 as "Total Redo (GB)"
+COMPUTE SUM LABEL 'Total Bytes => ' AVG LABEL 'Average Bytes => ' OF "REDO_BYTES" ON DAY
+SELECT    TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') as "Day", TO_CHAR(FIRST_TIME, 'HH24') as "Hour", SUM(blocks * block_size) as "REDO_BYTES"
 FROM      gv$archived_log
 WHERE     DEST_ID = 1
 AND       FIRST_TIME > SYSDATE - interval '&hours' hour
@@ -20,8 +21,9 @@ ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY')), TO_CHAR(FIRST_TIME, 'HH24
 -- Query to obtain redo generation per minute.
 SET PAGESIZE 1000 LINESIZE 155
 BREAK ON DAY SKIP 1
-COMPUTE SUM LABEL 'TOTAL' AVG LABEL 'AVERAGE' OF "Total Redo (GB)" ON DAY
-SELECT    TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') as "Day", TO_CHAR(FIRST_TIME, 'HH24:MI') as "Hour", SUM(blocks * block_size)/1024/1024/1024 as "Total Redo (GB)"
+COMPUTE SUM LABEL 'Total Bytes => ' AVG LABEL 'Average Bytes => ' OF "REDO_BYTES" ON DAY
+COLUMN redo_bytes FORMAT 999,999,999,999
+SELECT    TO_CHAR(FIRST_TIME, 'DD-MON-YYYY') as "Day", TO_CHAR(FIRST_TIME, 'HH24:MI') as "Hour", SUM(blocks * block_size) as "REDO_BYTES"
 FROM      gv$archived_log
 WHERE     DEST_ID = 1
 AND       FIRST_TIME > SYSDATE - interval '&hours' hour
@@ -29,15 +31,15 @@ GROUP BY  TO_CHAR(FIRST_TIME, 'DD-MON-YYYY'), TO_CHAR(FIRST_TIME, 'HH24:MI')
 ORDER BY  TO_DATE(TO_CHAR(FIRST_TIME, 'DD-MON-YYYY')), TO_CHAR(FIRST_TIME, 'HH24:MI');
 
 -- Query to obtain redo generation per sec.
-SET PAGESIZE 2000 LINESIZE 260
-COLUMN redo_bytes FORMAT 999,999,999
+BREAK ON REPORT
+COMPUTE  AVG LABEL 'Average Bytes => ' OF "REDO_BYTES" ON REPORT
 SELECT    *
 FROM      (
-          SELECT    begin_time, end_time, ROUND(value, 2) "REDO_BYTES"
+          SELECT    begin_time, end_time, value "REDO_BYTES"
           FROM      dba_hist_sysmetric_history
           WHERE     metric_name = 'Redo Generated Per Sec'
           UNION
-          SELECT    begin_time, end_time, ROUND(value,2) "REDO_BYTES"
+          SELECT    begin_time, end_time, value "REDO_BYTES"
           FROM      v$sysmetric_history
           WHERE     metric_name = 'Redo Generated Per Sec'
           ORDER BY  begin_time
