@@ -31,3 +31,14 @@ SELECT 		inst_id, DBMS_LOB.SUBSTR(sql_fulltext, 5000, 1) sql_fulltext
 FROM 			gv$sqlarea
 WHERE			sql_id = '&sql_id'
 /
+
+SELECT  username,
+        sql_id,
+        sql_exec_id,
+        SYSDATE,
+        sql_exec_start,
+        EXTRACT(HOUR FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'HOUR'))) "HOUR",
+        EXTRACT(MINUTE FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'MINUTE'))) "MINUTE",
+        EXTRACT(SECOND FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'SECOND'))) "SECONDS"
+FROM    v$session
+WHERE   status = 'ACTIVE' AND type <> 'BACKGROUND' AND username <> 'SYS';
