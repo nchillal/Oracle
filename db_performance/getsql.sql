@@ -37,8 +37,9 @@ SELECT  username,
         sql_exec_id,
         SYSDATE,
         sql_exec_start,
-        EXTRACT(HOUR FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'HOUR'))) "HOUR",
-        EXTRACT(MINUTE FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'MINUTE'))) "MINUTE",
-        EXTRACT(SECOND FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'SECOND'))) "SECONDS"
+        EXTRACT(DAY FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'DAY'))) "DAYS",
+        EXTRACT(HOUR FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'HOUR'))) "HOURS",
+        EXTRACT(MINUTE FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'MINUTE'))) "MINUTES",
+        ROUND(EXTRACT(SECOND FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'SECOND'))), 4) "SECONDS"
 FROM    v$session
 WHERE   status = 'ACTIVE' AND type <> 'BACKGROUND' AND username <> 'SYS';
