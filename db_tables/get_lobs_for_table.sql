@@ -21,6 +21,7 @@ AND       l.table_name='&table_name';
 BREAK ON day SKIP 1
 COMPUTE SUM LABEL 'TOTAL_BYTES' OF BYTES ON day
 COLUMN bytes FORMAT 999,999,999,999,999
+
 ACCEPT table_name CHAR PROMPT 'Enter table name: '
 SELECT 	TO_CHAR(SYSDATE, 'HH24:MI:SS') DAY, segment_name, bytes FROM dba_segments WHERE segment_name IN (
 	SELECT '&table_name' "object" FROM dual
