@@ -1,7 +1,8 @@
 BEGIN
   dbms_metadata.set_transform_param(dbms_metadata.session_transform,'PRETTY',TRUE);
   dbms_metadata.set_transform_param(dbms_metadata.session_transform,'SQLTERMINATOR',TRUE);
-  dbms_metadata.set_transform_param(dbms_metadata.session_transform,'CONSTRAINTS_AS_ALTER',TRUE);
+  dbms_metadata.set_transform_param(dbms_metadata.session_transform,'CONSTRAINTS',TRUE);
+  dbms_metadata.set_transform_param(dbms_metadata.session_transform,'REF_CONSTRAINTS',TRUE);
   dbms_metadata.set_transform_param(dbms_metadata.session_transform,'STORAGE', FALSE);
   dbms_metadata.set_transform_param(dbms_metadata.session_transform,'TABLESPACE',TRUE);
 END;
