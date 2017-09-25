@@ -34,3 +34,11 @@ FROM    (
         ) a,
         (SELECT value FROM v$parameter WHERE name='db_block_size') b
 ORDER BY 1,2,3;
+
+SELECT  sql.sql_text "SQL_TEXT",
+        t.used_urec "RECORDS",
+        t.used_ublk "BLOCKS",
+        (t.used_ublk*8192) "BYTES"
+FROM    v$transaction t, v$session s, v$sql sql
+WHERE   t.addr = s.taddr
+AND     s.sql_id = sql.sql_id;
