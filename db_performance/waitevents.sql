@@ -1,4 +1,4 @@
-SET linesize 230 pagesize 200
+SET linesize 230 pagesize 2000
 
 BREAK ON inst_id
 
@@ -27,3 +27,15 @@ AND     event NOT IN  (
                       'smon timer',
                       'SQL*Net message from client'
                       );
+
+SET linesize 230 pagesize 2000
+BREAK ON REPORT
+COMPUTE SUM OF total_wait_time ON REPORT
+
+SELECT    NVL(a.event, 'ON CPU') AS event,
+          COUNT(*) AS total_wait_time
+FROM      v$active_session_history a
+WHERE     sample_time > TO_DATE('&start_time','MMDDYYHH24MI')
+AND       sample_time < TO_DATE('&end_time','MMDDYYHH24MI')
+GROUP BY  event
+ORDER BY  total_wait_time DESC;
