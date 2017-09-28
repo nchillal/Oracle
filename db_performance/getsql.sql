@@ -24,7 +24,8 @@ AND 			s.sql_id='&sql_id';
 
 SELECT    sid, username, sql_id, sql_exec_id, module, status, TO_CHAR(sql_exec_start,'DD-MON-YY HH24:MI:SS') sql_exec_start, sql_plan_hash_value, elapsed_time  buffer_gets, disk_reads
 FROM      v$sql_monitor
-WHERE     sid IN (SELECT sid FROM v$session WHERE status='ACTIVE');
+WHERE     sid IN (SELECT sid FROM v$session WHERE status='ACTIVE')
+AND       status = 'EXECUTING';
 
 COLUMN sql_fulltext FORMAT a140
 SELECT 		inst_id, DBMS_LOB.SUBSTR(sql_fulltext, 5000, 1) sql_fulltext
