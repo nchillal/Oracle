@@ -22,7 +22,7 @@ WHERE			s.sql_id = p.sql_id
 AND 			s.sql_child_number = p.child_number
 AND 			s.sql_id='&sql_id';
 
-SELECT    sid, username, sql_id, sql_exec_id, module, status, 
+SELECT    sid, username, sql_id, sql_exec_id, module, status,
           TRUNC(SYSDATE - ADD_MONTHS(sql_exec_start, MONTHS_BETWEEN(SYSDATE, sql_exec_start))) "DAYS",
           TRUNC(24*MOD(SYSDATE - sql_exec_start, 1)) "HOURS",
           TRUNC(MOD(MOD(SYSDATE - sql_exec_start,1)*24,1)*60 ) "MINUTES",
@@ -41,11 +41,12 @@ WHERE			sql_id = '&sql_id'
 SELECT  username,
         sql_id,
         sql_exec_id,
+        event,
         SYSDATE,
         sql_exec_start,
-        EXTRACT(DAY FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'DAY'))) "DAYS",
-        EXTRACT(HOUR FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'HOUR'))) "HOURS",
-        EXTRACT(MINUTE FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'MINUTE'))) "MINUTES",
-        ROUND(EXTRACT(SECOND FROM (NUMTODSINTERVAL((SYSDATE - sql_exec_start), 'SECOND'))), 4) "SECONDS"
+        TRUNC(SYSDATE - ADD_MONTHS(sql_exec_start, MONTHS_BETWEEN(SYSDATE, sql_exec_start))) "DAYS",
+        TRUNC(24*MOD(SYSDATE - sql_exec_start, 1)) "HOURS",
+        TRUNC(MOD(MOD(SYSDATE - sql_exec_start,1)*24,1)*60 ) "MINUTES",
+        MOD(MOD(MOD(SYSDATE - sql_exec_start, 1)*24,1)*60,1)*60 "SECONDS"
 FROM    v$session
 WHERE   status = 'ACTIVE' AND type <> 'BACKGROUND' AND username <> 'SYS';
