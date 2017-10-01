@@ -32,10 +32,11 @@ FROM      v$sql_monitor
 WHERE     sid IN (SELECT sid FROM v$session WHERE status='ACTIVE')
 AND       status = 'EXECUTING';
 
-COLUMN sql_fulltext FORMAT a140
-SELECT 		inst_id, DBMS_LOB.SUBSTR(sql_fulltext, 5000, 1) sql_fulltext
+COLUMN sql_text FORMAT a140
+SELECT 		DBMS_LOB.SUBSTR(sql_text, 5000, 1) sql_fulltext
 FROM 			gv$sqltext
 WHERE			sql_id = '&sql_id'
+ORDER  BY piece
 /
 
 SELECT  username,
