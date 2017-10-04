@@ -8,3 +8,7 @@ SELECT    blocking_session, sid, serial#, sql_id, p1text, p1, p2text, p2, p3text
 FROM      v$session
 WHERE     blocking_session IS NOT NULL
 ORDER BY  blocking_session;
+
+SELECT    sid||','||serial# "SID_SERIAL#", sql_id, blocking_session, blocking_session_status, status, event
+FROM      v$session
+WHERE     event ='cursor: pin S wait on X';
