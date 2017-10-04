@@ -27,6 +27,7 @@ AND     event NOT IN  (
                       'smon timer',
                       'SQL*Net message from client'
                       );
+                      
 
 SET linesize 230 pagesize 2000
 BREAK ON REPORT
@@ -41,10 +42,10 @@ GROUP BY  event
 ORDER BY  total_wait_time DESC;
 
 
-          SELECT    NVL(a.event, 'ON CPU') AS event,
-                    COUNT(*) AS total_wait_time
-          FROM      dba_hist_active_sess_history a
-          WHERE     sample_time > TO_DATE('&start_datetime','MMDDYYHH24MI')
-          AND       sample_time < TO_DATE('&end_datetime','MMDDYYHH24MI')
-          GROUP BY  event
-          ORDER BY  total_wait_time DESC;
+SELECT    NVL(a.event, 'ON CPU') AS event,
+          COUNT(*) AS total_wait_time
+FROM      dba_hist_active_sess_history a
+WHERE     sample_time > TO_DATE('&start_datetime','MMDDYYHH24MI')
+AND       sample_time < TO_DATE('&end_datetime','MMDDYYHH24MI')
+GROUP BY  event
+ORDER BY  total_wait_time DESC;

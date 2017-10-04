@@ -39,7 +39,9 @@ WHERE			sql_id = '&sql_id'
 ORDER  BY piece
 /
 
-SELECT  username,
+SELECT  inst_id,
+        sid||','||serial# "sid, serial#",
+        username,
         sql_id,
         sql_exec_id,
         event,
@@ -49,5 +51,5 @@ SELECT  username,
         TRUNC(24*MOD(SYSDATE - sql_exec_start, 1)) "HOURS",
         TRUNC(MOD(MOD(SYSDATE - sql_exec_start,1)*24,1)*60 ) "MINUTES",
         MOD(MOD(MOD(SYSDATE - sql_exec_start, 1)*24,1)*60,1)*60 "SECONDS"
-FROM    v$session
+FROM    gv$session
 WHERE   status = 'ACTIVE' AND type <> 'BACKGROUND' AND username <> 'SYS';
