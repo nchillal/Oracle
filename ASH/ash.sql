@@ -15,10 +15,10 @@ FROM    (
         SELECT    session_id,
                   username,
                   sql_id,
-                  SUM(DECODE(session_state,'ON CPU',1,0)) as CPU,
-                  SUM(DECODE(session_state,'WAITING',1,0)) - SUM(DECODE(session_state,'WAITING', DECODE(wait_class, 'User I/O',1,0),0)) as WAIT,
-                  SUM(DECODE(session_state,'WAITING', DECODE(wait_class, 'User I/O',1,0),0)) as IO,
-                  SUM(DECODE(session_state,'ON CPU',1,1)) as TOTAL
+                  SUM(DECODE(session_state,'ON CPU',1,0)) AS CPU,
+                  SUM(DECODE(session_state,'WAITING',1,0)) - SUM(DECODE(session_state,'WAITING', DECODE(wait_class, 'User I/O',1,0),0)) AS WAIT,
+                  SUM(DECODE(session_state,'WAITING', DECODE(wait_class, 'User I/O',1,0),0)) AS IO,
+                  SUM(DECODE(session_state,'ON CPU',1,1)) AS TOTAL
         from      v$active_session_history ash, dba_users du
         where     ash.user_id=du.user_id
         AND       sample_time > SYSDATE - interval '&mins' minute
