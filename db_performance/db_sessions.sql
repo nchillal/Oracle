@@ -10,7 +10,7 @@ FROM      (
           )
 PIVOT     (
           COUNT(status)
-          FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
+          FOR (status) IN ('ACTIVE' AS ACTIVE, 'INACTIVE' AS INACTIVE)
           )
 ORDER BY  inst_id, username
 ;
@@ -27,7 +27,7 @@ FROM     (
 	       )
 PIVOT    (
 	       COUNT(status)
-	       FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
+	       FOR (status) IN ('ACTIVE' AS ACTIVE, 'INACTIVE' AS INACTIVE)
 	       )
 ORDER BY  inst_id, machine
 ;
@@ -45,7 +45,7 @@ FROM      (
           )
 PIVOT     (
           COUNT(status)
-          FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
+          FOR (status) IN ('ACTIVE' AS ACTIVE, 'INACTIVE' AS INACTIVE)
           )
 ORDER BY  inst_id, username
 ;
@@ -63,7 +63,7 @@ FROM      (
           )
 PIVOT     (
           COUNT(status)
-          FOR (status) IN ('ACTIVE' as ACTIVE, 'INACTIVE' as INACTIVE)
+          FOR (status) IN ('ACTIVE' AS ACTIVE, 'INACTIVE' AS INACTIVE)
           )
 ORDER BY  inst_id, username, sql_id, event
 ;
