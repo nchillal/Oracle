@@ -85,3 +85,25 @@ WHERE     t.session_addr = s.saddr
 AND       t.sqladdr = q.address
 AND       t.tablespace = tbs.tablespace_name
 ORDER BY  mb_used;
+
+
+BREAK ON snap_id SKIP 1
+SELECT    snap_id,
+          instance_number,
+          end_time,
+          ROUND(TEMP_SPACE_USED, 2) "TEMP_SPACE_USED"
+FROM      (
+          SELECT  snap_id,
+                  instance_number,
+                  end_time,
+                  metric_name,
+                  maxval
+          FROM    dba_hist_sysmetric_summary
+          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
+          AND     REGEXP_LIKE(instance_number, '&instance_number')
+          )
+PIVOT     (
+          MAX(maxval)
+          FOR metric_name IN ('Temp Space Used' AS TEMP_SPACE_USED)
+          )
+ORDER BY  snap_id;
