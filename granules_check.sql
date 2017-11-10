@@ -1,6 +1,6 @@
 SET NUMWIDTH 15 LINESIZE 165
 COLUMN component FORMAT a30
-SELECT    inst_id, component, current_size, granule_size, 'Granules_Count - '||(current_size - user_specified_size)/granule_size granules_avail
+SELECT    inst_id, component, current_size, user_specified_size, granule_size, 'Granules_Count - '||(current_size - user_specified_size)/granule_size granules_avail
 FROM      gv$sga_dynamic_components
 WHERE     component LIKE 'DEFAULT buffer cache'
 ORDER BY  inst_id;
@@ -24,6 +24,8 @@ SELECT    pool, SUM(bytes) "BYTES"
 FROM      v$sgastat
 GROUP BY  pool;
 
+BREAK ON REPORT
+COMPUTE SUM OF BYTES ON REPORT
 SELECT    name, bytes, RANK() OVER(ORDER BY bytes DESC) "RANK"
 FROM      v$sgastat
 WHERE     pool='shared pool'
