@@ -10,8 +10,8 @@ FROM      (
           FROM      (
                     SELECT    sql_id, SUM(time_waited) time_waited
                     FROM      v$active_session_history
-                    WHERE     sample_time > TO_DATE('&start_datetime','MMDDYYHH24MI')
-                    AND       sample_time < TO_DATE('&end_datetime','MMDDYYHH24MI')
+                    WHERE     sample_time > TO_DATE('&start_datetime','DDMMRRHH24MI')
+                    AND       sample_time < TO_DATE('&end_datetime','DDMMRRHH24MI')
                     AND       user_id > 0
                     AND       event = '&event'
                     GROUP BY  sql_id
@@ -32,8 +32,8 @@ FROM      (
           FROM      (
                     SELECT    sql_id, SUM(time_waited) time_waited
                     FROM      dba_hist_active_sess_history
-                    WHERE     sample_time > TO_DATE('&start_datetime','MMDDYYHH24MI')
-                    AND       sample_time < TO_DATE('&end_datetime','MMDDYYHH24MI')
+                    WHERE     sample_time > TO_DATE('&start_datetime','DDMMRRHH24MI')
+                    AND       sample_time < TO_DATE('&end_datetime','DDMMRRHH24MI')
                     AND       user_id > 0
                     AND       event = '&event'
                     GROUP BY  sql_id
