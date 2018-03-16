@@ -72,6 +72,7 @@ ORDER BY  inst_id, username, sql_id, event
 SELECT  vs.inst_id, username, event, vs.sql_id, plan_hash_value, status
 FROM    gv$session vs, gv$sql_plan vp
 WHERE   type <> 'BACKGROUND'
+AND     vs.status='ACTIVE'
 AND     vs.sql_id = vp.sql_id
 AND     last_call_et > 0
 AND     vs.sql_id = '&sql_id';
