@@ -29,7 +29,7 @@ DECLARE
     (
       SELECT  TO_CHAR(begin_interval_time, 'DDMMRRHH24MI') stime, LEAD(TO_CHAR(begin_interval_time, 'DDMMRRHH24MI'), 1) OVER (ORDER BY begin_interval_time) etime
       FROM    dba_hist_snapshot
-      WHERE   begin_interval_time > SYSDATE - INTERVAL '&days' DAY
+      WHERE   TO_CHAR(begin_interval_time, 'DDMMRR') = '&day'
       AND     REGEXP_LIKE(TO_CHAR(begin_interval_time, 'MI'), '00|15|30|45')
     ) ash
     WHERE ash.stime < ash.etime;
