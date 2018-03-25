@@ -12,16 +12,6 @@ WHERE			s.sql_hash_value = p.hash_value
 AND       s.sql_address = p.address
 AND 			status='ACTIVE';
 
-BREAK ON username SKIP 1
-COLUMN username FORMAT a20
-COLUMN event FORMAT a45
-COLUMN "sid, serial#" FORMAT a15
-SELECT 		s.sid||','||s.serial# "sid, serial#", s.status, s.username, s.sql_id, s.sql_child_number, s.sql_hash_value, p.plan_hash_value
-FROM 			v$session s, v$sql_plan p
-WHERE			s.sql_id = p.sql_id
-AND 			s.sql_child_number = p.child_number
-AND 			s.sql_id='&sql_id';
-
 SELECT    sid, username, sql_id, sql_exec_id, module, status,
           TRUNC(SYSDATE - ADD_MONTHS(sql_exec_start, MONTHS_BETWEEN(SYSDATE, sql_exec_start))) "DAYS",
           TRUNC(24*MOD(SYSDATE - sql_exec_start, 1)) "HOURS",
