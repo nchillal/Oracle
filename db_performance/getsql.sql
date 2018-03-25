@@ -1,6 +1,6 @@
 SET PAGESIZE 1000 LINESIZE 260
 
-BREAK ON username
+BREAK ON username SKIP 1
 COLUMN username FORMAT a20
 COLUMN event FORMAT a45
 COLUMN module FORMAT a50
@@ -12,7 +12,7 @@ WHERE			s.sql_hash_value = p.hash_value
 AND       s.sql_address = p.address
 AND 			status='ACTIVE';
 
-BREAK ON username
+BREAK ON username SKIP 1
 COLUMN username FORMAT a20
 COLUMN event FORMAT a45
 COLUMN "sid, serial#" FORMAT a15
