@@ -12,7 +12,8 @@ SELECT 		s.sid||','||s.serial# "sid, serial#", s.username, s.module, s.client_in
 FROM 			v$session s, v$sqlarea p
 WHERE			s.sql_hash_value = p.hash_value
 AND       s.sql_address = p.address
-AND 			status='ACTIVE';
+AND 			status='ACTIVE'
+AND       type <> 'BACKGROUND';
 
 SELECT 		DBMS_LOB.SUBSTR(sql_text, 5000, 1) sql_fulltext
 FROM 			gv$sqltext
