@@ -1,15 +1,15 @@
---Corresponding Equivalent AWR table is DBA_HIST_SQLBIND.
+-- Get bind values FROM memory
 COLUMN sql_text FORMAT a120
 COLUMN bind_name FORMAT a10
 COLUMN bind_value FORMAT a25
-SELECT    t.sql_text sql_text,
-          b.name bind_name,
-          b.value_string bind_value
-FROM      v$sql t
-JOIN      v$sql_bind_capture b using (sql_id)
-WHERE     b.value_string is not null
+
+SELECT    name bind_name,
+          value_string bind_value
+FROM      v$sql_bind_capture
+WHERE     value_string is not null
 AND       sql_id = '&sql_id';
 
+-- Get bind values from AWR
 BREAK ON snap_id SKIP 1
 SELECT    snap_id, name bind_name, value_string bind_value
 FROM      dba_hist_sqlbind
