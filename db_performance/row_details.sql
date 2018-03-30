@@ -1,10 +1,11 @@
--- Details of the object / block / row that is causing wait.
+-- Details of the object, datafile, block and row that is causing wait.
 SELECT  row_wait_obj#, row_wait_file#, row_wait_block#, row_wait_row#
 FROM    v$session
 WHERE   event='&event_name'
 AND     state='WAITING'
 ;
 
+-- Details of the object, datafile, block and row that is causing wait from AWR.
 SELECT    inst_id, current_obj#, current_file#, current_block#, current_row#
 FROM      gv$active_session_history
 WHERE     event='&event_name'
