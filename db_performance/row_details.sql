@@ -5,6 +5,12 @@ WHERE   event='&event_name'
 AND     state='WAITING'
 ;
 
+SELECT    inst_id, current_obj#, current_file#, current_block#, current_row#
+FROM      gv$active_session_history
+WHERE     event='&event_name'
+AND       sample_time > SYSDATE - INTERVAL '&mins' MINUTE
+ORDER BY  inst_id;
+
 -- Get object_name from object_id
 SELECT  object_name
 FROM    dba_objects
