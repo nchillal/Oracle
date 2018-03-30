@@ -15,16 +15,15 @@ ORDER BY  SUM(db_block_changes_delta) DESC, dhso.object_name;
 
 -- SQL Statement generating high redo generation.
 SELECT    TO_CHAR(begin_interval_time,'YYYY_MM_DD HH24') WHEN,
-          dbms_lob.substr(sql_text,4000,1) SQL,
           dhss.instance_number INST_ID,
           dhss.sql_id,
+          dbss.sql_exec_id
           executions_delta exec_delta,
           rows_processed_delta rows_proc_delta
 FROM      dba_hist_sqlstat dhss,
           dba_hist_snapshot dhs,
           dba_hist_sqltext dhst
-WHERE     UPPER(dhst.sql_text) LIKE '%&sql_text%'
-AND       LTRIM(UPPER(dhst.sql_text)) NOT LIKE 'SELECT%'
+WHERE     LTRIM(UPPER(dhst.sql_text)) NOT LIKE 'SELECT%'
 AND       dhss.snap_id = dhs.snap_id
 AND       dhss.instance_number = dhs.instance_number
 AND       dhss.sql_id = dhst.sql_id
