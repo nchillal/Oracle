@@ -1,19 +1,11 @@
-SET LINESIZE 230 ECHO OFF PAGESIZE 200 PAUSE ON HEADING OFF
-SET PAUSE "Press ENTER to continue . . . "
-ACCEPT SCHEMA PROMPT 'Enter Schema Name: '
+SET LINESIZE 250 ECHO OFF PAGESIZE 2000
 
-PROMPT  *******************************************
-PROMPT        Public Synonym Creation For Tables
-PROMPT  *******************************************
+-- Public Synonym Creation For Tables
 SELECT  'CREATE PUBLIC SYNONYM '||table_name||' FOR '||owner||'.'||table_name||';'
 FROM    dba_tables
-WHERE   owner='&SCHEMA';
+WHERE   owner='&&SCHEMA';
 
-PROMPT  *******************************************
-PROMPT       Public Synonym Creation For Sequences
-PROMPT  *******************************************
+-- Public Synonym Creation For Sequences
 SELECT  'CREATE PUBLIC SYNONYM '||sequence_name||' FOR '||sequence_owner||'.'||sequence_name||';'
 FROM    dba_sequences
-WHERE   sequence_owner='&SCHEMA';
-
-SET ECHO ON PAUSE OFF HEADING ON
+WHERE   sequence_owner='&&SCHEMA';
