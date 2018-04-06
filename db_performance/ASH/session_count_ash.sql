@@ -15,7 +15,6 @@ SELECT    du.username username, TO_CHAR(sample_time,'MON-DD-YYYY') DAY, TO_CHAR(
 FROM      dba_hist_active_sess_history dash, dba_users du
 WHERE     dash.user_id = du.user_id
 AND       du.user_id <> 0
-AND       sample_time >= TO_DATE('&start_datetime','DDMMRRHH24MI')
-AND       sample_time <= TO_DATE('&end_datetime','DDMMRRHH24MI')
+AND       snap_id BETWEEN '&begin_snap' AND '&end_snap'
 GROUP BY  du.username, TO_CHAR(sample_time,'MON-DD-YYYY'), TO_CHAR(sample_time,'HH24:MI')
 ORDER BY  1,2,3;
