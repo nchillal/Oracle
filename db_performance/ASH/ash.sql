@@ -5,6 +5,7 @@ FROM    (
         FROM      v$active_session_history ash, dba_users du
         WHERE     ash.user_id=du.user_id
         AND       sample_time > SYSDATE - interval '&mins' minute
+        AND       sql_id IS NOT NULL
         GROUP BY  session_id, event, session_state, username, sql_id
         ORDER BY  6 DESC
         )
