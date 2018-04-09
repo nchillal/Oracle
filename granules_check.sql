@@ -26,7 +26,11 @@ GROUP BY  pool;
 
 BREAK ON REPORT
 COMPUTE SUM OF BYTES ON REPORT
-SELECT    name, bytes, RANK() OVER(ORDER BY bytes DESC) "RANK"
-FROM      v$sgastat
-WHERE     pool='shared pool'
-AND       rownum < 20;
+SELECT    name, bytes, percentage
+FROM      (
+          SELECT    name, bytes, ROUND(100*RATIO_TO_REPORT(bytes) OVER(), 2.2) "PERCENTAGE"
+          FROM      v$sgastat
+          WHERE     pool='shared pool'
+          ORDER BY  bytes DESC
+          )
+WHERE     rownum < 20;
