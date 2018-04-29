@@ -13,6 +13,6 @@ AND       sql_id = '&sql_id';
 BREAK ON snap_id SKIP 1
 SELECT    snap_id, name bind_name, value_string bind_value
 FROM      dba_hist_sqlbind
-WHERE     sql_id = '&sql_id'
-AND       snap_id BETWEEN '&begin_snap' AND '&end_snap'
+WHERE     sql_id = '&&sql_id'
+AND       snap_id BETWEEN '&&begin_snap' AND '&&end_snap'
 ORDER BY  snap_id, bind_name;
