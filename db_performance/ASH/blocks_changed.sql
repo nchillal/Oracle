@@ -17,7 +17,6 @@ ORDER BY  SUM(db_block_changes_delta) DESC, dhso.object_name;
 SELECT    TO_CHAR(begin_interval_time,'YYYY_MM_DD HH24') WHEN,
           dhss.instance_number INST_ID,
           dhss.sql_id,
-          dbss.sql_exec_id
           executions_delta exec_delta,
           rows_processed_delta rows_proc_delta
 FROM      dba_hist_sqlstat dhss,
