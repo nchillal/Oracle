@@ -7,7 +7,7 @@ SELECT    name bind_name,
           value_string bind_value
 FROM      v$sql_bind_capture
 WHERE     value_string is not null
-AND       sql_id = '&sql_id';
+AND       sql_id = '&&sql_id';
 
 -- Get bind values from AWR
 BREAK ON snap_id SKIP 1

@@ -11,7 +11,7 @@ SELECT    sql_id,
           MAX(sample_time) "END_TIME",
           EXTRACT(HOUR FROM (MAX(sample_time) - MIN(sample_time)))||' Hour '||EXTRACT(MINUTE FROM (MAX(sample_time) - MIN(sample_time))) ||' Minute '||ROUND(EXTRACT(SECOND FROM (MAX(sample_time) - MIN(sample_time)))) ||' Second ' "TIME_TAKEN"
 FROM      dba_hist_active_sess_history
-WHERE     sql_id = '&sql_id'
+WHERE     sql_id = '&&sql_id'
 AND       sample_time >= SYSDATE - INTERVAL '&days' day
 AND       sql_exec_id IS NOT NULL
 GROUP BY  snap_id, sql_id, sql_exec_id, sql_plan_hash_value
