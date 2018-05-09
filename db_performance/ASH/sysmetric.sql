@@ -1,193 +1,20 @@
--- User commits per second from AWR.
+-- Important database metrics from AWR.
 BREAK ON snap_id SKIP 1
-SELECT    *
+SELECT    instance_number,
+          end_time,
+          AAS, UCPS, UTPS, EPS, DTPS, DBGPS, PRBPS, TSU, LRPS, PWBPS
 FROM      (
           SELECT  snap_id,
                   instance_number,
                   end_time,
                   metric_name,
-                  maxval
+                  ROUND(maxval) maxval
           FROM    dba_hist_sysmetric_summary
           WHERE   end_time >= SYSDATE - INTERVAL '&days' day
           AND     REGEXP_LIKE(instance_number, '&instance_number')
           )
 PIVOT     (
           MAX(maxval)
-          FOR metric_name IN ('User Commits Per Sec' AS USER_COMMITS_PER_SEC)
-          )
-ORDER BY  snap_id;
-
--- User transaction per second from AWR.
-BREAK ON snap_id SKIP 1
-SELECT    snap_id,
-          instance_number,
-          end_time,
-          ROUND(user_transaction_per_sec, 2)
-FROM      (
-          SELECT  snap_id,
-                  instance_number,
-                  end_time,
-                  metric_name,
-                  maxval
-          FROM    dba_hist_sysmetric_summary
-          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
-          AND     REGEXP_LIKE(instance_number, '&instance_number')
-          )
-PIVOT     (
-          MAX(maxval)
-          FOR metric_name IN ('User Transaction Per Sec' AS USER_TRANSACTION_PER_SEC)
-          )
-ORDER BY  snap_id;
-
--- Executions per second from AWR.
-BREAK ON snap_id SKIP 1
-SELECT    snap_id,
-          instance_number,
-          end_time,
-          ROUND(EXEC_PER_SEC, 2) "EXEC_PER_SEC"
-FROM      (
-          SELECT  snap_id,
-                  instance_number,
-                  end_time,
-                  metric_name,
-                  maxval
-          FROM    dba_hist_sysmetric_summary
-          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
-          AND     REGEXP_LIKE(instance_number, '&instance_number')
-          )
-PIVOT     (
-          MAX(maxval)
-          FOR metric_name IN ('Executions Per Sec' AS EXEC_PER_SEC)
-          )
-ORDER BY  snap_id;
-
--- DB Time per second from AWR.
-SELECT    snap_id,
-          instance_number,
-          end_time,
-          ROUND(DB_TIME_PER_SEC, 2) "DB_TIME_PER_SEC"
-FROM      (
-          SELECT  snap_id,
-          instance_number,
-          end_time,
-          metric_name,
-          maxval
-          FROM    dba_hist_sysmetric_summary
-          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
-          AND     REGEXP_LIKE(instance_number, '&instance_number')
-          )
-PIVOT     (
-          MAX(maxval)
-          FOR metric_name IN ('Database Time Per Sec' AS DB_TIME_PER_SEC)
-          )
-ORDER BY  snap_id;
-
--- Block Gets per second from AWR.
-BREAK ON snap_id SKIP 1
-SELECT    snap_id,
-          instance_number,
-          end_time,
-          ROUND(DB_BLOCK_GETS_PER_SEC, 2) "DB_BLOCK_GETS_PER_SEC"
-FROM      (
-          SELECT  snap_id,
-                  instance_number,
-                  end_time,
-                  metric_name,
-                  maxval
-          FROM    dba_hist_sysmetric_summary
-          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
-          AND     REGEXP_LIKE(instance_number, '&instance_number')
-          )
-PIVOT     (
-          MAX(maxval)
-          FOR metric_name IN ('DB Block Gets Per Sec' AS DB_BLOCK_GETS_PER_SEC)
-          )
-ORDER BY  snap_id;
-
--- Physical Reads per second from AWR.
-BREAK ON snap_id SKIP 1
-SELECT    snap_id,
-          instance_number,
-          end_time,
-          ROUND(PHY_READ_BYTES_PER_SEC, 2) "PHY_READ_BYTES_PER_SEC"
-FROM      (
-          SELECT  snap_id,
-                  instance_number,
-                  end_time,
-                  metric_name,
-                  maxval
-          FROM    dba_hist_sysmetric_summary
-          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
-          AND     REGEXP_LIKE(instance_number, '&instance_number')
-          )
-PIVOT     (
-          MAX(maxval)
-          FOR metric_name IN ('Physical Read Bytes Per Sec' AS PHY_READ_BYTES_PER_SEC)
-          )
-ORDER BY  snap_id;
-
--- Temp Space Used per second from AWR.
-BREAK ON snap_id SKIP 1
-SELECT    snap_id,
-          instance_number,
-          end_time,
-          ROUND(TEMP_SPACE_USED, 2) "TEMP_SPACE_USED"
-FROM      (
-          SELECT  snap_id,
-                  instance_number,
-                  end_time,
-                  metric_name,
-                  maxval
-          FROM    dba_hist_sysmetric_summary
-          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
-          AND     REGEXP_LIKE(instance_number, '&instance_number')
-          )
-PIVOT     (
-          MAX(maxval)
-          FOR metric_name IN ('Temp Space Used' AS TEMP_SPACE_USED)
-          )
-ORDER BY  snap_id;
-
--- Logical Reads per second from AWR.
-BREAK ON snap_id SKIP 1
-SELECT    snap_id,
-          instance_number,
-          end_time,
-          ROUND(LOGICAL_READS_PER_SEC, 2) "LOGICAL_READS_PER_SEC"
-FROM      (
-          SELECT  snap_id,
-                  instance_number,
-                  end_time,
-                  metric_name,
-                  maxval
-          FROM    dba_hist_sysmetric_summary
-          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
-          AND     REGEXP_LIKE(instance_number, '&instance_number')
-          )
-PIVOT     (
-          MAX(maxval)
-          FOR metric_name IN ('Logical Reads Per Sec' AS LOGICAL_READS_PER_SEC)
-          )
-ORDER BY  snap_id;
-
--- Physical Write Bytes per second from AWR.
-BREAK ON snap_id SKIP 1
-SELECT    snap_id,
-          instance_number,
-          end_time,
-          ROUND(PHYSICAL_WRITE_BYTES_PER_SEC, 2) "PHYSICAL_WRITE_BYTES_PER_SEC"
-FROM      (
-          SELECT  snap_id,
-                  instance_number,
-                  end_time,
-                  metric_name,
-                  maxval
-          FROM    dba_hist_sysmetric_summary
-          WHERE   end_time >= SYSDATE - INTERVAL '&days' day
-          AND     REGEXP_LIKE(instance_number, '&instance_number')
-          )
-PIVOT     (
-          MAX(maxval)
-          FOR metric_name IN ('Physical Write Bytes Per Sec' AS PHYSICAL_WRITE_BYTES_PER_SEC)
+          FOR metric_name IN ('Average Active Sessions' AS AAS, 'User Commits Per Sec' AS UCPS, 'User Transaction Per Sec' AS UTPS, 'Executions Per Sec' AS EPS, 'Database Time Per Sec' AS DTPS, 'DB Block Gets Per Sec' AS DBGPS, 'Physical Read Bytes Per Sec' AS PRBPS, 'Temp Space Used' AS TSU, 'Logical Reads Per Sec' AS LRPS, 'Physical Write Bytes Per Sec' AS PWBPS)
           )
 ORDER BY  snap_id;
