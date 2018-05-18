@@ -28,7 +28,8 @@ FROM    (
         (SELECT value FROM v$parameter WHERE name='db_block_size') b
 ORDER BY 1,2,3;
 
-SELECT  sql.sql_text "SQL_TEXT",
+SELECT  s.sid, s.serial#, s.status,
+        sql.sql_id "SQL_ID",
         t.used_urec "RECORDS",
         t.used_ublk "BLOCKS",
         (t.used_ublk*8192) "BYTES"
