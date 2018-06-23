@@ -12,10 +12,11 @@ WHERE     event='&event_name'
 AND       sample_time > SYSDATE - INTERVAL '&mins' MINUTE
 ORDER BY  inst_id;
 
-SELECT    current_obj#, current_file#, current_block#, current_row#, COUNT(*)
+SELECT    current_obj#, current_file#, current_block#, current_row#, COUNT(*) CNT
 FROM      dba_hist_active_sess_history
 WHERE     event='&&event_name'
 AND       snap_id BETWEEN &&begin_snap AND &&end_snap
+HAVING    COUNT(*) > 1
 GROUP BY  current_obj#, current_file#, current_block#, current_row#
 ORDER BY  1, 2, 3, 4;
 
