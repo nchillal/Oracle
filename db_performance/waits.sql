@@ -10,6 +10,7 @@ COLUMN p1 FORMAT 999999999999999
 
 SELECT    b.inst_id,
           b.sid,
+          a.serial#,
           b.event,
           SUBSTR(a.action,1,1)||'-'||a.module module ,
           a.username ,
