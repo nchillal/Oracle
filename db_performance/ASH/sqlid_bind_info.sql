@@ -1,7 +1,7 @@
 -- Get bind values FROM memory
 COLUMN sql_text FORMAT a120
 COLUMN bind_name FORMAT a10
-COLUMN bind_value FORMAT a25
+COLUMN bind_value FORMAT a35
 
 SELECT    name bind_name,
           value_string bind_value
