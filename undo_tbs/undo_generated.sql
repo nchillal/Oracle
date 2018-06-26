@@ -1,4 +1,4 @@
-SELECT  a.begin_time "BEGIN_TIME", a.instance_number "INSTANCE_NUMBER", ROUND((a.undoblks * b.value)/1024/1024, 2) "UNDO_SIZE_MB"
+SELECT  a.begin_time "BEGIN_TIME", a.instance_number "INSTANCE_NUMBER", ROUND((a.undoblks * b.value)/1024/1024, 2.2) "UNDO_SIZE_MB"
 FROM    (
           SELECT    instance_number, TO_CHAR(begin_time, 'DD-MON-YYYY') "BEGIN_TIME", SUM(undoblks) "UNDOBLKS"
           FROM      dba_hist_undostat
@@ -8,7 +8,7 @@ FROM    (
         (SELECT value FROM v$parameter WHERE name='db_block_size') b
 ORDER BY 1,2,3;
 
-SELECT  a.day "DAY", a.hour_min "HOUR_MIN", a.instance_number "INSTANCE_NUMBER", ROUND((a.undoblks * b.value)/1024/1024, 2) "UNDO_SIZE_MB"
+SELECT  a.day "DAY", a.hour_min "HOUR_MIN", a.instance_number "INSTANCE_NUMBER", ROUND((a.undoblks * b.value)/1024/1024, 2.2) "UNDO_SIZE_MB"
 FROM    (
           SELECT    instance_number, TO_CHAR(begin_time, 'DD-MON-YYYY') "DAY", TO_CHAR(begin_time, 'HH24:MI') "HOUR_MIN", SUM(undoblks) "UNDOBLKS"
           FROM      dba_hist_undostat
@@ -18,7 +18,7 @@ FROM    (
         (SELECT value FROM v$parameter WHERE name='db_block_size') b
 ORDER BY 1,2,3;
 
-SELECT  a.day "DAY", a.hour_min "HOUR_MIN", a.inst_id "INSTANCE_NUMBER", ROUND((a.undoblks * b.value)/1024/1024, 2) "UNDO_SIZE_MB"
+SELECT  a.day "DAY", a.hour_min "HOUR_MIN", a.inst_id "INSTANCE_NUMBER", ROUND((a.undoblks * b.value)/1024/1024, 2.2) "UNDO_SIZE_MB"
 FROM    (
           SELECT inst_id, TO_CHAR(begin_time, 'DD-MON-YYYY') "DAY", TO_CHAR(begin_time, 'HH24:MI') "HOUR_MIN", SUM(undoblks) "UNDOBLKS"
           FROM gv$undostat
@@ -32,7 +32,7 @@ SELECT  s.sid, s.serial#, s.status,
         sql.sql_id "SQL_ID",
         t.used_urec "RECORDS",
         t.used_ublk "BLOCKS",
-        (t.used_ublk*8192) "BYTES"
+        ROUND((t.used_ublk*8192)/1024/1024/1024, 2.2) "MB"
 FROM    v$transaction t, v$session s, v$sql sql
 WHERE   t.addr = s.taddr
 AND     s.sql_id = sql.sql_id;
