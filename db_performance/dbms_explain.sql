@@ -6,8 +6,7 @@ SELECT * FROM table(DBMS_XPLAN.DISPLAY(FORMAT => 'ALL'));
 
 -- Display current execution plan of sql_id.
 SELECT  *
-FROM    table(DBMS_XPLAN.display_cursor('&sql_id', &child_number, FORMAT => 'ALL'))
-/
+FROM    table(DBMS_XPLAN.display_cursor('&sql_id', &child_number, FORMAT => 'ALL'));
 
 -- Display all execution plan for a sql_id.
 SELECT  *
