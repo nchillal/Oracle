@@ -14,3 +14,7 @@ SET LINESIZE 200
 SET PAGESIZE 0
 SELECT  dbms_metadata.get_ddl('&object_type','&object_name','&schema_name')
 FROM    dual;
+
+SELECT  dbms_metadata.get_ddl('TABLESPACE', tablespace_name)
+FROM    dba_tablespaces
+WHERE   tablespace_name = DECODE(UPPER('&tablespace_name'), 'ALL', tablespace_name, UPPER('&&tablespace_name'));

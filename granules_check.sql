@@ -5,7 +5,7 @@ FROM      gv$sga_dynamic_components
 WHERE     component LIKE 'DEFAULT buffer cache'
 ORDER BY  inst_id;
 
-SELECT    bytes
+SELECT    bytes/1024 "Granule Size KB"
 FROM      v$sgainfo
 WHERE     name LIKE 'Granule Size';
 
