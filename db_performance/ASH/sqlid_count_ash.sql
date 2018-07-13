@@ -13,7 +13,7 @@ WHERE   rownum <= 10;
 
 SELECT  *
 FROM    (
-        SELECT    username, sql_id,sql_child_number, COUNT(*)
+        SELECT    username, sql_id, sql_child_number, COUNT(*)
         FROM      dba_hist_active_sess_history ash, dba_users du
         WHERE     ash.user_id = du.user_id
         AND       snap_id BETWEEN &&begin_snap AND &&end_snap
