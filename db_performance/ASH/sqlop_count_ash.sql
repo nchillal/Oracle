@@ -1,6 +1,6 @@
 SELECT    *
 FROM      (
-          SELECT    TO_CHAR(sample_time, 'DD-MON-RR HH24:MI') "DAY_HOUR", sql_opname
+          SELECT    TO_CHAR(sample_time, 'DDMMRRHH24MI') "DAY_HOUR", sql_opname
           FROM      v$active_session_history
           WHERE     sample_time > SYSDATE - INTERVAL '&minutes' MINUTE
           )
@@ -23,7 +23,7 @@ ORDER BY  4;
 
 SELECT    *
 FROM      (
-          SELECT    TO_CHAR(sample_time, 'DD-MON-RR HH24:MI') "DAY_HOUR", sql_opname
+          SELECT    TO_CHAR(sample_time, 'DDMMRRHH24MI') "DAY_HOUR", sql_opname
           FROM      dba_hist_active_sess_history
           WHERE     snap_id BETWEEN &&begin_snap AND &&end_snap
           )
