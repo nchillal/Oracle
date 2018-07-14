@@ -11,4 +11,5 @@ ORDER BY  blocking_session;
 
 SELECT    inst_id, sid||','||serial# "SID_SERIAL#", sql_id, blocking_session, blocking_session_status, status, event
 FROM      gv$session
-WHERE     event ='cursor: pin S wait on X';
+WHERE     event ='&event_name'
+AND       blocking_session IS NOT NULL;

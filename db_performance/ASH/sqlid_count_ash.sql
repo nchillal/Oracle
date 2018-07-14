@@ -13,12 +13,12 @@ WHERE   rownum <= 10;
 
 SELECT  *
 FROM    (
-        SELECT    username, sql_id, sql_child_number, COUNT(*)
+        SELECT    instance_number, username, sql_id, sql_child_number, COUNT(*)
         FROM      dba_hist_active_sess_history ash, dba_users du
         WHERE     ash.user_id = du.user_id
         AND       snap_id BETWEEN &&begin_snap AND &&end_snap
         AND       ash.user_id > 0
-        GROUP BY  username, sql_id, sql_child_number
-        ORDER BY  COUNT(*)
+        GROUP BY  instance_number, username, sql_id, sql_child_number
+        ORDER BY  COUNT(*) DESC
         )
 WHERE   rownum <= 10;

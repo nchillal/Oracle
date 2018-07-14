@@ -56,7 +56,7 @@ COMPUTE SUM LABEL 'TOTAL' OF 'ACTIVE' ON inst_id
 COMPUTE SUM LABEL 'TOTAL' OF 'INACTIVE' ON inst_id
 SELECT    *
 FROM      (
-          SELECT  inst_id, username, event, sql_id, status
+          SELECT  inst_id, username, event, sql_id, sql_child_number, status
           FROM    gv$session
           WHERE   type <> 'BACKGROUND'
           AND     last_call_et > 0
@@ -65,11 +65,11 @@ PIVOT     (
           COUNT(status)
           FOR (status) IN ('ACTIVE' AS ACTIVE, 'INACTIVE' AS INACTIVE)
           )
-ORDER BY  inst_id, username, sql_id, event
+ORDER BY  inst_id, username, sql_id, sql_child_number, event
 ;
 
 -- This query to display plan hash value being used for a SQL_ID.
-SELECT  vs.inst_id, username, client_info, event, vs.sql_id, plan_hash_value, status
+SELECT  vs.inst_id, username, client_info, event, vs.sql_id, vs.sql_child_number, plan_hash_value, status
 FROM    gv$session vs, gv$sql_plan vp
 WHERE   type <> 'BACKGROUND'
 AND     vs.status='ACTIVE'
