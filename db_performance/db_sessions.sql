@@ -21,14 +21,14 @@ COMPUTE SUM LABEL 'TOTAL' OF 'ACTIVE' ON inst_id
 COMPUTE SUM LABEL 'TOTAL' OF 'INACTIVE' ON inst_id
 SELECT    *
 FROM     (
-	       SELECT  inst_id, machine, username, status
-	       FROM    gv$session
-	       WHERE   type <> 'BACKGROUND'
-	       )
+         SELECT  inst_id, machine, username, status
+         FROM    gv$session
+         WHERE   type <> 'BACKGROUND'
+         )
 PIVOT    (
-	       COUNT(status)
-	       FOR (status) IN ('ACTIVE' AS ACTIVE, 'INACTIVE' AS INACTIVE)
-	       )
+         COUNT(status)
+         FOR (status) IN ('ACTIVE' AS ACTIVE, 'INACTIVE' AS INACTIVE)
+         )
 ORDER BY  inst_id, machine
 ;
 
