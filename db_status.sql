@@ -16,6 +16,7 @@ SELECT    instance_name,
 FROM      gv$instance;
 
 SELECT    name,
+          db_unique_name,
           open_mode,
           database_role,
           log_mode,
