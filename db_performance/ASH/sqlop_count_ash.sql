@@ -1,7 +1,7 @@
-COMPUTE SUM LABEL "Total Inserts => " OF INSRT ON username
-COMPUTE SUM LABEL "Total Updates => " OF UPD ON username
-COMPUTE SUM LABEL "Total Delets => " OF DLT ON username
-COMPUTE SUM LABEL "Total Selects => " OF SLT ON username
+COMPUTE SUM LABEL "Total => " OF INSRT ON username
+COMPUTE SUM LABEL "Total => " OF UPD ON username
+COMPUTE SUM LABEL "Total => " OF DLT ON username
+COMPUTE SUM LABEL "Total => " OF SLT ON username
 
 SELECT    *
 FROM      (
