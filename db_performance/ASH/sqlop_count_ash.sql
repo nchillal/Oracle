@@ -1,3 +1,4 @@
+BREAK ON username SKIP 1
 COMPUTE SUM LABEL "Total => " OF INSRT ON username
 COMPUTE SUM LABEL "Total => " OF UPD ON username
 COMPUTE SUM LABEL "Total => " OF DLT ON username
