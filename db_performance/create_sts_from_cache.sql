@@ -25,12 +25,11 @@ COLUMN SQL_TEXT FORMAT a100
 COLUMN SCH FORMAT a20
 COLUMN ELAPSED FORMAT 999999999
 
-SELECT SQL_ID, PARSING_SCHEMA_NAME AS "SCH", SQL_TEXT,
-       ELAPSED_TIME AS "ELAPSED", BUFFER_GETS
+SELECT sql_id, parsing_schema_name AS "SCH", elapsed_time AS "ELAPSED", buffer_gets
 FROM   TABLE(DBMS_SQLTUNE.SELECT_SQLSET('&&sqlset_name'));
 
 -- In case you need to fix plan using STS, first
--- Loading Plans from SQL Tuning Sets and AWR Snapshots
+-- Loading all plans from SQL Tuning Sets
 DECLARE
     my_plans PLS_INTEGER;
 BEGIN
@@ -38,6 +37,7 @@ BEGIN
 END;
 /
 
+-- Loading specific SQL_ID plan from SQL Tuning Sets
 DECLARE
     my_plans PLS_INTEGER;
 BEGIN
@@ -45,6 +45,5 @@ BEGIN
 END;
 /
 
-
 -- To verify the execution Plan of a SQL_ID in the STS
-SELECT * FROM table(dbms_xplan.display_sqlset('&&sqlset_name','&&sql_id'));
+SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_SQLSET('&&sqlset_name','&&sql_id'));
