@@ -13,3 +13,13 @@ SELECT    inst_id, sid||','||serial# "SID_SERIAL#", sql_id, blocking_session, bl
 FROM      gv$session
 WHERE     event ='&event_name'
 AND       blocking_session IS NOT NULL;
+
+SELECT    session_id||','||session_serial# "SID_SERIAL#", sql_id, blocking_session, blocking_session_status, session_state, event
+FROM      v$active_session_history
+WHERE     blocking_session IS NOT NULL
+AND       sample_time > SYSDATE - INTERVAL '&minutes' MINUTE;
+
+SELECT    session_id||','||session_serial# "SID_SERIAL#", sql_id, blocking_session, blocking_session_status, session_state, event
+FROM      dba_hist_active_sess_history
+WHERE     blocking_session IS NOT NULL
+AND       snap_id BETWEEN &begin_snap AND &end_snap;
