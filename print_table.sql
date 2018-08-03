@@ -79,7 +79,7 @@ l_status := dbms_sql.execute(l_theCursor);
 -- bear in mind that dbms_output only prints 255 characters/line
 -- so we'll only see the first 200 characters by my design…
 dbms_output.put_line(chr(13));
-dbms_output.put_line( '—————–' );
+dbms_output.put_line( '----------------------------------------------------' );
 while (dbms_sql.fetch_rows(l_theCursor) > 0)
 loop
     for i in 1 .. l_colCnt loop
@@ -93,7 +93,7 @@ loop
             substr( l_columnValue, 1, 200 ) );
         end if;
     end loop;
-dbms_output.put_line( '—————–' );
+    dbms_output.put_line( '----------------------------------------------------' );
 end loop;
 
 -- now, restore the session state, no matter what
