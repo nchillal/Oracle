@@ -3,7 +3,8 @@ COMPUTE SUM LABEL "Total => " OF INSRT ON username
 COMPUTE SUM LABEL "Total => " OF UPD ON username
 COMPUTE SUM LABEL "Total => " OF DLT ON username
 COMPUTE SUM LABEL "Total => " OF SLT ON username
-COMPUTE SUM LABEL "Total => " OF PLSQL ON day_hour
+COMPUTE SUM LABEL "Total => " OF UPSRT ON username
+COMPUTE SUM LABEL "Total => " OF PLSQL ON username
 
 SELECT    *
 FROM      (
@@ -23,6 +24,7 @@ COMPUTE SUM LABEL "Total => " OF INSRT ON day_hour
 COMPUTE SUM LABEL "Total => " OF UPD ON day_hour
 COMPUTE SUM LABEL "Total => " OF DLT ON day_hour
 COMPUTE SUM LABEL "Total => " OF SLT ON day_hour
+COMPUTE SUM LABEL "Total => " OF UPSRT ON day_hour
 COMPUTE SUM LABEL "Total => " OF PLSQL ON day_hour
 
 SELECT    *
