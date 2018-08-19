@@ -8,5 +8,5 @@ SELECT  dest_id,
         status,
         error
 FROM    v\$archive_dest_status
-WHERE   dest_id < 5;
+WHERE   db_unique_name != 'NONE';
 EOF
