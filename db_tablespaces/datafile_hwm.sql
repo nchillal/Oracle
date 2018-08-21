@@ -54,6 +54,6 @@ FROM      dba_data_files a,
           GROUP BY file_id
           ) b
 WHERE     a.file_id = b.file_id(+)
-AND       tablespace_name='&tablespace_name'
+AND       tablespace_name='&&tablespace_name'
 ORDER BY  savings
 /
