@@ -53,23 +53,23 @@ PIVOT     (
           )
 ORDER BY  username, day_hour;
 
-SELECT    username, sql_id, sql_child_number, COUNT(*) CNT
+SELECT    username, sql_id, sql_child_number, sql_plan_hash_value, COUNT(*) CNT
 FROM      v$active_session_history ash, dba_users du
 WHERE     ash.user_id = du.user_id
 AND       sample_time > TO_DATE('&&start_datetime','DDMMRRHH24MI')
 AND       sample_time < TO_DATE('&&end_datetime','DDMMRRHH24MI')
 AND       ash.user_id > 0
 AND       sql_opname = '&sql_opname'
-GROUP BY  username, sql_id, sql_child_number
+GROUP BY  username, sql_id, sql_child_number, sql_plan_hash_value
 HAVING    COUNT(*) > 1
-ORDER BY  4;
+ORDER BY  5;
 
-SELECT    username, sql_id, sql_child_number, COUNT(*) CNT
+SELECT    username, sql_id, sql_child_number, sql_plan_hash_value, COUNT(*) CNT
 FROM      dba_hist_active_sess_history ash, dba_users du
 WHERE     ash.user_id = du.user_id
 AND       snap_id BETWEEN &&begin_snap AND &&end_snap
 AND       ash.user_id > 0
 AND       sql_opname = '&sql_opname'
-GROUP BY  username, sql_id, sql_child_number
+GROUP BY  username, sql_id, sql_child_number, sql_plan_hash_value
 HAVING    COUNT(*) > 1
-ORDER BY  4;
+ORDER BY  5;

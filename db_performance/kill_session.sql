@@ -16,9 +16,9 @@ WHERE   event='&event'
 SELECT  'ALTER SYSTEM KILL SESSION '||Chr(39)||SID||','||SERIAL#||',@'||INST_ID||Chr(39)||' IMMEDIATE;'
 FROM    gv$session
 WHERE   status = 'INACTIVE'
-AND     logon_time < SYSDATE - &hrs/1440
+AND     logon_time < SYSDATE - INTERVAL '&minutes' MINUTE
 AND     type <> 'BACKGROUND'
-AND     username = 'CONTENTNR_USER'
+AND     username = '&username'
 /
 
 SELECT  'ALTER SYSTEM KILL SESSION '||Chr(39)||SID||','||SERIAL#||',@'||INST_ID||Chr(39)||' IMMEDIATE;'
