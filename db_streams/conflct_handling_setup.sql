@@ -1,6 +1,6 @@
-EXEC strmadmin.gsd_streams_adm.set_tag(tag => HEXTORAW('17'));
+EXEC DBMS_STREAMS.SET_TAG('17');
 
-SET SERVEROUTPUT ON;
+SET SERVEROUTPUT ON FORMAT TRUNCATED FEED OFF LINES 250
 DECLARE
     LM_Column VARCHAR2(5000) DEFAULT NULL;
     LM_COUNT NUMBER;
@@ -10,16 +10,14 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(CHR(10));
     FOR rec IN cur
     LOOP
-        --dbms_output.put_line('The table name is ' || rec.table_name);
-        --dbms_output.put_line('The owner name is ' || rec.owner);
         LM_Column := null;
         DBMS_OUTPUT.PUT_LINE(chr(10));
         DBMS_OUTPUT.PUT_LINE('DECLARE');
-        DBMS_OUTPUT.PUT_LINE('cols dbms_utility.name_array;');
+        DBMS_OUTPUT.PUT_LINE('    '||'cols DBMS_UTILITY.NAME_ARRAY;');
         DBMS_OUTPUT.PUT_LINE('BEGIN');
         FOR i IN (SELECT owner, table_name, column_name, column_id FROM all_tab_columns atc WHERE atc.table_name=rec.table_name AND atc.owner=rec.owner ORDER BY column_id)
         LOOP
-            DBMS_OUTPUT.PUT_LINE('cols('||i.column_id||') :='''||i.column_name||''';');
+            DBMS_OUTPUT.PUT_LINE('    '||'cols('||i.column_id||') :='''||i.column_name||''';');
         END LOOP;
 
         BEGIN
@@ -31,12 +29,13 @@ BEGIN
             SELECT column_name INTO LM_Column FROM all_tab_columns atc WHERE atc.table_name=rec.table_name AND atc.owner=rec.owner AND atc.column_name IN ('LASTMODIFIED', 'LAST_MODIFIED');
         END;
 
-        DBMS_OUTPUT.PUT_LINE('dbms_apply_adm.set_update_conflict_handler(');
-        DBMS_OUTPUT.PUT_LINE('object_name         => '''||rec.owner||'.'||rec.table_name||''',');
-        DBMS_OUTPUT.PUT_LINE('method_name         => ''MAXIMUM'',');
-        DBMS_OUTPUT.PUT_LINE('resolution_column   => '''||LM_Column||''',');
-        DBMS_OUTPUT.PUT_LINE('column_list         => cols ');
-        DBMS_OUTPUT.PUT_LINE(');');
+        DBMS_OUTPUT.PUT_LINE('    '||'DBMS_APPLY_ADM.SET_UPDATE_CONFLICT_HANDLER');
+        DBMS_OUTPUT.PUT_LINE('    '||'(');
+        DBMS_OUTPUT.PUT_LINE('        '||'object_name         => '''||rec.owner||'.'||rec.table_name||''',');
+        DBMS_OUTPUT.PUT_LINE('        '||'method_name         => ''MAXIMUM'',');
+        DBMS_OUTPUT.PUT_LINE('        '||'resolution_column   => '''||LM_Column||''',');
+        DBMS_OUTPUT.PUT_LINE('        '||'column_list         => cols ');
+        DBMS_OUTPUT.PUT_LINE('    '||');');
         DBMS_OUTPUT.PUT_LINE('END;');
         DBMS_OUTPUT.PUT_LINE('/');
     END LOOP;
@@ -45,3 +44,5 @@ EXCEPTION
     DBMS_OUTPUT.PUT_LINE('THE ERROR MESSAGE IS '|| SUBSTR(SQLERRM,1,300));
 END;
 /
+
+EXEC DBMS_STREAMS.SET_TAG(null);
