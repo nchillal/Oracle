@@ -14,9 +14,9 @@ BEGIN
         --dbms_output.put_line('The owner name is ' || rec.owner);
         LM_Column := null;
         DBMS_OUTPUT.PUT_LINE(chr(10));
-        DBMS_OUTPUT.PUT_LINE('declare');
+        DBMS_OUTPUT.PUT_LINE('DECLARE');
         DBMS_OUTPUT.PUT_LINE('cols dbms_utility.name_array;');
-        DBMS_OUTPUT.PUT_LINE('begin');
+        DBMS_OUTPUT.PUT_LINE('BEGIN');
         FOR i IN (SELECT owner, table_name, column_name, column_id FROM all_tab_columns atc WHERE atc.table_name=rec.table_name AND atc.owner=rec.owner ORDER BY column_id)
         LOOP
             DBMS_OUTPUT.PUT_LINE('cols('||i.column_id||') :='''||i.column_name||''';');
@@ -37,7 +37,7 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('resolution_column   => '''||LM_Column||''',');
         DBMS_OUTPUT.PUT_LINE('column_list         => cols ');
         DBMS_OUTPUT.PUT_LINE(');');
-        DBMS_OUTPUT.PUT_LINE('end;');
+        DBMS_OUTPUT.PUT_LINE('END;');
         DBMS_OUTPUT.PUT_LINE('/');
     END LOOP;
 EXCEPTION
