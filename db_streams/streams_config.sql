@@ -20,6 +20,7 @@ SELECT queue_name, subscriber_name FROM v$buffered_subscribers WHERE queue_schem
 SELECT queue_name, sender_name, sender_address FROM v$buffered_publishers WHERE queue_schema = 'STRMADMIN';
 SELECT queue_name, dst_queue_name, dblink, propagation_name, state FROM v$propagation_sender WHERE queue_schema = 'STRMADMIN';
 
+BREAK ON streams_name ON table_owner skip 1
 SELECT streams_name, table_owner, table_name, streams_type, COUNT(*) CNT
 FROM dba_streams_table_rules
 GROUP BY streams_name, streams_type, table_name, table_owner
