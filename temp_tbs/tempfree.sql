@@ -1,5 +1,8 @@
 SET PAGESIZE 60 LINESIZE 300
 
+COLUMN mb_used FORMAT 999,999,999
+COLUMN mb_free FORMAT 999,999,999
+
 SELECT    a.tablespace_name tablespace,
           d.mb_total,
           SUM(a.used_blocks * d.block_size)/1024/1024 mb_used,
