@@ -13,7 +13,7 @@ SELECT    a.name,
           CASE
             WHEN ((a.checkpoint_change# - b.checkpoint_change#) = 0) THEN 'Startup Normal'
             WHEN ((b.checkpoint_change#) = 0) THEN 'File Missing?'
-            WHEN ((a.checkpoint_change# - b.checkpoint_change#) > 0) THEN 'Media Rec. Req.'
+            WHEN ((a.checkpoint_change# - b.checkpoint_change#) > 0) THEN 'Media Rec Req'
             WHEN ((a.checkpoint_change# - b.checkpoint_change#) < 0) THEN 'Old Control File'
           ELSE 'what the ?'
           END datafile_status

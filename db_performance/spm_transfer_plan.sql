@@ -27,7 +27,7 @@ BEGIN
     table_owner     => 'dbamaint_user',
     sql_handle      => 'SQL_ab6adfbe2d5b525b'
     );
-  DBMS_OUTPUT.put_line('Plans Packed: ' || l_plans_packed);
+  DBMS_OUTPUT.PUT_LINE('Plans Packed: ' || l_plans_packed);
 END;
 /
 
@@ -48,6 +48,6 @@ BEGIN
     table_owner     => 'dbamaint_user',
     sql_handle      => 'SQL_ab6adfbe2d5b525b'
     );
-  DBMS_OUTPUT.put_line('Plans Unpacked: ' || l_plans_unpacked);
+  DBMS_OUTPUT.PUT_LINE('Plans Unpacked: ' || l_plans_unpacked);
 END;
 /

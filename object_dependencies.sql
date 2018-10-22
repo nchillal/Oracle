@@ -22,4 +22,4 @@ SELECT  segment_owner,
         segment_name,
         segment_type,
         tablespace_name
-FROM    (TABLE(dbms_space.object_dependent_segments(objowner => '&schema', objname => '&object', partname => NULL, objtype => &type)));
+FROM    (TABLE(DBMS_SPACE.OBJECT_DEPENDENT_SEGMENTS(objowner => '&schema', objname => '&object', partname => NULL, objtype => &type)));

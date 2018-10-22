@@ -1,11 +1,11 @@
 set serveroutput on echo off
 DECLARE
   -- input variables
-  input_task_owner dba_advisor_tasks.owner%TYPE:='SYS';
-  input_task_name dba_advisor_tasks.task_name%TYPE:='&task_name';
+  input_task_owner DBA_ADVISOR_TASKS.OWNER%TYPE:='SYS';
+  input_task_name DBA_ADVISOR_TASKS.TASK_NAME%TYPE:='&task_name';
   input_show_outline boolean:=TRUE;
   -- local variables
-  task_id  dba_advisor_tasks.task_id%TYPE;
+  task_id  DBA_ADVISOR_TASKS.TASK_ID%TYPE;
   outline_data XMLTYPE;
   benefit NUMBER;
 BEGIN

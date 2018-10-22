@@ -28,5 +28,5 @@ WHERE   object_id='&object_id';
 -- Detail of row based on object, file, block and row number.
 SELECT  *
 FROM    &table_name
-WHERE   rowid = DBMS_ROWID.rowid_create(&rowid_type, &row_wait_obj, &row_wait_file, &row_wait_block, &row_wait_row)
+WHERE   rowid = DBMS_ROWID.ROWID_CREATE(&rowid_type, &row_wait_obj, &row_wait_file, &row_wait_block, &row_wait_row)
 ;

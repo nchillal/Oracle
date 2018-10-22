@@ -2,7 +2,7 @@ SET SERVEROUTOUT ON
 
 -- STEP 1: Verify that the table is a candidate for online redefinition
 BEGIN
-  DBMS_REDEFINITION.can_redef_table
+  DBMS_REDEFINITION.CAN_REDEF_TABLE
   (
     '&schema_owner',
     '&original_table_name'
@@ -14,7 +14,7 @@ END;
 
 -- Step 3: Start the redefinition process
 BEGIN
-  DBMS_REDEFINITION.start_redef_table
+  DBMS_REDEFINITION.START_REDEF_TABLE
   (
     '&schema_owner',
     '&original_table_name',
@@ -27,12 +27,12 @@ END;
 DECLARE
   num_errors PLS_INTEGER;
 BEGIN
-  DBMS_REDEFINITION.copy_table_dependents
+  DBMS_REDEFINITION.COPY_TABLE_DEPENDENTS
   (
     '&schema_owner',
     '&original_table_name',
     '&interim_table_name',
-    DBMS_REDEFINITION.cons_orig_params,
+    DBMS_REDEFINITION.CONS_ORIG_PARAMS,
     TRUE,
     TRUE,
     TRUE,
@@ -44,12 +44,12 @@ END;
 
 -- Step 5: Query the DBA_REDEFINITION_ERRORS view to check for errors
 COLUMN sql FORMAT a90
-SELECT  object_name, base_table_name, DBMS_LOB.substr(ddl_txt, 2000, 1) sql
+SELECT  object_name, base_table_name, DBMS_LOB.SUBSTR(ddl_txt, 2000, 1) sql
 FROM    dba_redefinition_errors;
 
 -- Step 6: Optionally, synchronize the interim table
 BEGIN
-  DBMS_REDEFINITION.sync_interim_table
+  DBMS_REDEFINITION.SYNC_INTERIM_TABLE
   (
     '&schema_owner',
     '&original_table_name',
@@ -60,7 +60,7 @@ END;
 
 -- Step 7: Complete the redefinition
 BEGIN
-  DBMS_REDEFINITION.finish_redef_table
+  DBMS_REDEFINITION.FINISH_REDEF_TABLE
   (
     '&schema_owner',
     '&original_table_name',
@@ -77,7 +77,7 @@ DROP TABLE &schema_owner.&interim_table_name;
 
 -- If there is a need to ABORT Redefinition use below SQL.
 BEGIN
-  DBMS_REDEFINITION.abort_redef_table
+  DBMS_REDEFINITION.ABORT_REDEF_TABLE
   (
     '&schema_name',
     '&original_table_name',

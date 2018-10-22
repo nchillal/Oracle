@@ -1,4 +1,4 @@
-SET PAGESIZE 1000 LINESIZE 260
+SET PAGESIZE 2000 LINESIZE 260
 
 BREAK ON username SKIP 1
 COLUMN username FORMAT a15
@@ -39,8 +39,8 @@ SELECT    inst_id,
           SYSDATE,
           sql_exec_start,
           TRUNC(SYSDATE - ADD_MONTHS(sql_exec_start, MONTHS_BETWEEN(SYSDATE, sql_exec_start))) "DAYS",
-          TRUNC(24*MOD(SYSDATE - sql_exec_start, 1)) "HOURS",
-          TRUNC(MOD(MOD(SYSDATE - sql_exec_start,1)*24,1)*60 ) "MINUTES",
-          MOD(MOD(MOD(SYSDATE - sql_exec_start, 1)*24,1)*60,1)*60 "SECONDS"
+          TRUNC(24 * MOD(SYSDATE - sql_exec_start, 1)) "HOURS",
+          TRUNC(MOD(MOD(SYSDATE - sql_exec_start, 1) * 24, 1) *60) "MINUTES",
+          MOD(MOD(MOD(SYSDATE - sql_exec_start, 1) * 24, 1) * 60, 1) * 60 "SECONDS"
 FROM      gv$session
 WHERE     status = 'ACTIVE' AND type <> 'BACKGROUND' AND username <> 'SYS';
