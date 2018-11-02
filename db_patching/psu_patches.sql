@@ -1,8 +1,9 @@
-set linesize 230 pagesize 50
+SET LINESIZE 230 PAGESIZE 50
 
 COLUMN action_time FORMAT a30
 COLUMN comments FORMAT a50
 COLUMN bundle FORMAT a6
+COLUMN id FORMAT a10
 
 SELECT  SUBSTR(action_time,1,30)
         action_time,
