@@ -1,5 +1,8 @@
-SELECT object_name FROM dba_objects WHERE object_name LIKE 'SYS%JOURNAL%';
+SELECT 'SELECT COUNT(*) FROM '||owner||'.'||object_name||';' table_count FROM dba_objects WHERE object_name LIKE 'SYS%JOURNAL%';
 
+SELECT owner, object_name FROM dba_objects WHERE object_name LIKE 'SYS%JOURNAL%';
+
+SELECT 'SELECT '
 SET SERVEROUTPUT ON
 DECLARE
   isClean BOOLEAN;
@@ -13,4 +16,4 @@ BEGIN
 END;
 /
 
-SELECT object_name FROM dba_objects WHERE object_name LIKE 'SYS%JOURNAL%';
+SELECT owner, object_name FROM dba_objects WHERE object_name LIKE 'SYS%JOURNAL%';

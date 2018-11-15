@@ -1,13 +1,14 @@
+BREAK ON sql_id ON sql_plan_hash_value SKIP 1
 COLUMN  event FORMAT a40
 SELECT  *
 FROM    (
-        SELECT    session_id, NVL(event, 'ON CPU') event, session_state, username, sql_id, COUNT(*)
+        SELECT    session_id, NVL(event, 'ON CPU') event, session_state, username, sql_id, sql_plan_hash_value, COUNT(*)
         FROM      v$active_session_history ash, dba_users du
         WHERE     ash.user_id=du.user_id
         AND       sample_time > SYSDATE - interval '&mins' minute
         AND       sql_id IS NOT NULL
-        GROUP BY  session_id, event, session_state, username, sql_id
-        ORDER BY  6 DESC
+        GROUP BY  session_id, event, session_state, username, sql_id, sql_plan_hash_value
+        ORDER BY  7 DESC
         )
 WHERE   rownum < 11;
 
