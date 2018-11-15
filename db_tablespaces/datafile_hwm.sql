@@ -50,7 +50,7 @@ FROM      dba_data_files a,
           (
           SELECT file_id, MAX(block_id+blocks-1) hwm
           FROM dba_extents
-          WHERE tablespace_name='&tablespace_name'
+          WHERE tablespace_name='&&tablespace_name'
           GROUP BY file_id
           ) b
 WHERE     a.file_id = b.file_id(+)
