@@ -37,9 +37,9 @@ BEGIN
 
     -- List indexes defined on the table.
     DBMS_OUTPUT.PUT_LINE(CHR(13));
-    DBMS_OUTPUT.PUT_LINE(LPAD('*', 150, '*'));
-    DBMS_OUTPUT.PUT_LINE(RPAD('index_name', 30)||RPAD('tablespace_name', 30)||RPAD('last_analyzed', 30)||RPAD('index_type', 15)||RPAD('uniqueness', 15)||RPAD('status', 15)||RPAD('partitioned', 30));
-    DBMS_OUTPUT.PUT_LINE(LPAD('*', 150, '*'));
+    DBMS_OUTPUT.PUT_LINE(LPAD('*', 155, '*'));
+    DBMS_OUTPUT.PUT_LINE(RPAD('index_name', 35)||RPAD('tablespace_name', 30)||RPAD('index_type', 15)||RPAD('uniqueness', 15)||RPAD('status', 15)||RPAD('partitioned', 15)||RPAD('last_analyzed', 30));
+    DBMS_OUTPUT.PUT_LINE(LPAD('*', 155, '*'));
     FOR row IN  (
                 SELECT  index_name, tablespace_name, last_analyzed, index_type, uniqueness, status, partitioned
                 FROM    dba_indexes
@@ -47,22 +47,22 @@ BEGIN
                 AND     owner = v_table_owner
                 )
     LOOP
-        DBMS_OUTPUT.PUT_LINE(RPAD(row.index_name, 30)||RPAD(row.tablespace_name, 30)||RPAD(row.last_analyzed, 30)||RPAD(row.index_type, 15)||RPAD(row.uniqueness, 15)||RPAD(row.status, 15)||RPAD(row.partitioned, 30));
+        DBMS_OUTPUT.PUT_LINE(RPAD(row.index_name, 35)||RPAD(row.tablespace_name, 30)||RPAD(row.index_type, 15)||RPAD(row.uniqueness, 15)||RPAD(row.status, 15)||RPAD(row.partitioned, 15)||RPAD(row.last_analyzed, 30));
     END LOOP;
 
     -- Index column details
     DBMS_OUTPUT.PUT_LINE(CHR(13));
-    DBMS_OUTPUT.PUT_LINE(LPAD('*', 100, '*'));
-    DBMS_OUTPUT.PUT_LINE(RPAD('index_name', 30)||RPAD('column_position', 30)||RPAD('column_name', 30)||RPAD('descend', 10));
-    DBMS_OUTPUT.PUT_LINE(LPAD('*', 100, '*'));
+    DBMS_OUTPUT.PUT_LINE(LPAD('*', 150, '*'));
+    DBMS_OUTPUT.PUT_LINE(RPAD('index_owner', 30)||RPAD('index_name', 35)||RPAD('column_position', 30)||RPAD('column_name', 30)||RPAD('descend', 10));
+    DBMS_OUTPUT.PUT_LINE(LPAD('*', 150, '*'));
     FOR row IN  (
-                SELECT  index_name, column_position, column_name, descend
+                SELECT  index_owner, index_name, column_position, column_name, descend
                 FROM    dba_ind_columns
                 WHERE   table_name = v_table_name
                 AND     table_owner = v_table_owner
                 )
     LOOP
-        DBMS_OUTPUT.PUT_LINE(RPAD(row.index_name, 30)||RPAD(row.column_position, 30)||RPAD(row.column_name, 30)||RPAD(row.descend, 5));
+        DBMS_OUTPUT.PUT_LINE(RPAD(row.index_owner, 30)||RPAD(row.index_name, 35)||RPAD(row.column_position, 30)||RPAD(row.column_name, 30)||RPAD(row.descend, 5));
     END LOOP;
 
     DBMS_OUTPUT.PUT_LINE(CHR(13));
