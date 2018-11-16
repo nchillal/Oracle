@@ -47,3 +47,13 @@ END;
 
 -- To verify the execution Plan of a SQL_ID in the STS
 SELECT * FROM TABLE(DBMS_XPLAN.DISPLAY_SQLSET('&&sqlset_name','&&sql_id'));
+
+
+SELECT  sql_id,
+        parsing_schema_name as "schema",
+        plan_hash_value, elapsed_time "elapsed",
+        buffer_gets, 
+        rows_processed,
+        disk_reads,
+        executions
+FROM    TABLE(DBMS_SQLTUNE.SELECT_SQLSET('&&sqlset_name'));
