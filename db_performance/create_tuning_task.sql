@@ -11,19 +11,19 @@ END;
 
 -- Run the SQL TUNING TASK
 BEGIN
-  DBMS_SQLTUNE.execute_tuning_task(task_name => '&task_name');
+  DBMS_SQLTUNE.execute_tuning_task(task_name => '&&task_name');
 END;
 /
 
 -- Monitor the processing of the tuning task with the statement
 SELECT  TASK_NAME, STATUS
 FROM    DBA_ADVISOR_LOG
-WHERE   TASK_NAME = '&task_name';
+WHERE   TASK_NAME = '&&task_name';
 
 -- View the recommendation
 SET linesize 200
 SET LONG 999999999
 SET pagesize 1000
 SET longchunksize 20000
-SELECT  DBMS_SQLTUNE.report_tuning_task('&task_name') AS recommendations
+SELECT  DBMS_SQLTUNE.report_tuning_task('&&task_name') AS recommendations
 FROM    dual;
