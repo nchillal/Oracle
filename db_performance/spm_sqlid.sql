@@ -1,4 +1,6 @@
 SET SERVEROUTPUT ON
+SET LONG 10000
+
 DECLARE
   l_plans_loaded  PLS_INTEGER;
 BEGIN
@@ -21,7 +23,6 @@ WHERE   signature IN (SELECT exact_matching_signature FROM v$sql WHERE sql_id='&
 SELECT *
 FROM   TABLE(DBMS_XPLAN.DISPLAY_SQL_PLAN_BASELINE(plan_name=>'&plan_name'));
 
-SET SERVEROUTPUT ON
 DECLARE
   l_plans_altered PLS_INTEGER;
 BEGIN
@@ -30,11 +31,18 @@ BEGIN
 END;
 /
 
-SET SERVEROUTPUT ON
 DECLARE
   l_plans_dropped  PLS_INTEGER;
 BEGIN
   l_plans_dropped := DBMS_SPM.DROP_SQL_PLAN_BASELINE(sql_handle => '&sql_handle', plan_name  => '&plan_name');
   DBMS_OUTPUT.PUT_LINE('Plans Dropped: ' ||l_plans_dropped);
+END;
+/
+
+DECLARE
+    report clob;
+BEGIN
+    report := DBMS_SPM.EVOLVE_SQL_PLAN_BASELINE(sql_handle => '&sql_handle');
+    DBMS_OUTPUT.PUT_LINE(report);
 END;
 /
