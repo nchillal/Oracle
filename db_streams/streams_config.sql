@@ -40,3 +40,26 @@ UNION
 SELECT  apply_name, NVL( (hwm_time-hwm_message_create_time)*86400, 0) LAG_SEC
 FROM    v$streams_apply_coordinator
 WHERE EXISTS (SELECT 1 FROM v$database WHERE database_role='PRIMARY');
+
+COLUMN parameter FORMAT a30
+COLUMN value FORMAT a50
+BREAK ON parameter SKIP 1
+SELECT distinct parameter, value FROM dba_apply_parameters ORDER BY parameter;
+SELECT distinct parameter, value FROM dba_capture_parameters ORDER BY parameter;
+
+-- Set APPLY tag value
+
+BEGIN
+  DBMS_APPLY_ADM.ALTER_APPLY(
+    apply_name => 'NTESTP_APPLY',
+    apply_tag => hextoraw('17'));
+END;
+/
+
+BEGIN
+  DBMS_APPLY_ADM.SET_PARAMETER(
+    apply_name => '&apply_name',
+    parameter  => '&parameter',
+    value      => &value);
+END;
+/
