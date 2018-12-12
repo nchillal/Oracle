@@ -48,18 +48,7 @@ SELECT distinct parameter, value FROM dba_apply_parameters ORDER BY parameter;
 SELECT distinct parameter, value FROM dba_capture_parameters ORDER BY parameter;
 
 -- Set APPLY tag value
+EXEC DBMS_APPLY_ADM.ALTER_APPLY(apply_name => '&apply_name', apply_tag => hextoraw('17'));
 
-BEGIN
-  DBMS_APPLY_ADM.ALTER_APPLY(
-    apply_name => 'NTESTP_APPLY',
-    apply_tag => hextoraw('17'));
-END;
-/
-
-BEGIN
-  DBMS_APPLY_ADM.SET_PARAMETER(
-    apply_name => '&apply_name',
-    parameter  => '&parameter',
-    value      => &value);
-END;
-/
+-- Set Apply Parameter
+EXEC DBMS_APPLY_ADM.SET_PARAMETER(apply_name => '&apply_name', parameter => '&parameter', value => &value);
