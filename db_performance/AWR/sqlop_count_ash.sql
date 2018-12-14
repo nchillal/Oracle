@@ -1,4 +1,5 @@
 BREAK ON username SKIP 1
+COLUMN username FORMAT a30
 COMPUTE SUM LABEL "Total => " OF INSRT ON username
 COMPUTE SUM LABEL "Total => " OF UPD ON username
 COMPUTE SUM LABEL "Total => " OF DLT ON username
@@ -20,6 +21,7 @@ PIVOT     (
 ORDER BY  username, day_hour;
 
 BREAK ON day_hour SKIP 1
+COLUMN username FORMAT a30
 COMPUTE SUM LABEL "Total => " OF INSRT ON day_hour
 COMPUTE SUM LABEL "Total => " OF UPD ON day_hour
 COMPUTE SUM LABEL "Total => " OF DLT ON day_hour
