@@ -10,7 +10,18 @@ FROM      dba_capture dc, dba_queues du, dba_propagation dp, dba_streams_rules d
 WHERE     dc.queue_name = du.name
 AND       dc.queue_name = dp.source_queue_name
 AND       dc.capture_name = dsr.streams_name
+AND       object_name = '&table_name'
 ORDER BY  schema_name;
+
+
+SELECT    capture_name, dc.rule_set_name capture_rule_set, queue_name, queue_table, propagation_name, dp.rule_set_name propgation_rule_set, destination_dblink, schema_name, object_name
+FROM      dba_capture dc, dba_queues du, dba_propagation dp, dba_streams_rules dsr
+WHERE     dc.queue_name = du.name
+AND       dc.queue_name = dp.source_queue_name
+AND       dc.capture_name = dsr.streams_name
+AND       dc.capture_name = '&capture_name'
+ORDER BY  schema_name;
+
 
 SELECT owner, name, queue_table FROM dba_queues WHERE owner = 'STRMADMIN' AND queue_type = 'NORMAL_QUEUE' ORDER BY queue_table;
 SELECT capture_name, queue_name, status FROM dba_capture WHERE queue_owner='STRMADMIN';
@@ -29,8 +40,13 @@ ORDER BY table_owner, table_name;
 BREAK ON source_object_owner SKIP 1
 SELECT source_object_owner, source_object_name, instantiation_scn, ignore_scn FROM dba_apply_instantiated_objects ORDER BY source_object_owner;
 
+-- Conflict View
 BREAK ON object_owner SKIP 1
 SELECT object_owner, object_name, COUNT(*) FROM dba_apply_conflict_columns GROUP BY object_owner, object_name ORDER BY 1;
+
+SELECT 'Conflict Columns: '|| COUNT(*) FROM dba_apply_conflict_columns WHERE object_name = '&&table_name'
+UNION
+SELECT 'Table Columns: ' || COUNT(*) FROM dba_tab_columns WHERE table_name='&&table_name';
 
 -- Capture Lag
 SELECT  capture_name, ((SYSDATE - capture_message_create_time)*86400) LATENCY_SECONDS
