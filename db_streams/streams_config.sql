@@ -44,6 +44,14 @@ SELECT source_object_owner, source_object_name, instantiation_scn, ignore_scn FR
 BREAK ON object_owner SKIP 1
 SELECT object_owner, object_name, COUNT(*) FROM dba_apply_conflict_columns GROUP BY object_owner, object_name ORDER BY 1;
 
+SELECT * FROM
+(
+SELECT 'Conflict Table' metadata, object_name table_name, COUNT(*) CNT FROM dba_apply_conflict_columns WHERE object_owner = '&&schema_name' GROUP BY object_name
+UNION
+SELECT 'Table Columns' metadata, table_name, COUNT(*) CNT FROM dba_tab_columns WHERE owner = '&&schema_name' GROUP BY table_name
+)
+ORDER BY table_name;
+
 SELECT 'Conflict Columns: '|| COUNT(*) FROM dba_apply_conflict_columns WHERE object_name = '&&table_name'
 UNION
 SELECT 'Table Columns: ' || COUNT(*) FROM dba_tab_columns WHERE table_name='&&table_name';
