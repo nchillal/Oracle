@@ -73,7 +73,17 @@ SELECT distinct parameter, value FROM dba_apply_parameters ORDER BY parameter;
 SELECT distinct parameter, value FROM dba_capture_parameters ORDER BY parameter;
 
 -- Set APPLY tag value
-EXEC DBMS_APPLY_ADM.ALTER_APPLY(apply_name => '&apply_name', apply_tag => hextoraw('17'));
+EXEC DBMS_STREAMS.SET_TAG('17');
+-- fix the data on the apply site
+EXEC DBMS_STREAMS.SET_TAG(null);
 
--- Set Apply Parameter
-EXEC DBMS_APPLY_ADM.SET_PARAMETER(apply_name => '&apply_name', parameter => '&parameter', value => &value);
+-- Check if is set or not.
+SELECT DBMS_STREAMS.GET_TAG FROM DUAL;
+
+-- Re-executing the error
+exec DBMS_APPLY_ADM.EXECUTE_ERROR('&local_transaction_id');
+exec DBMS_APPLY_ADM.EXECUTE_ALL_ERRORS();
+
+-- Deleting error from error queue
+exec DBMS_APPLY_ADM.DELETE_ERROR('&local_transaction_id');
+exec DBMS_APPLY_ADM.DELETE_ALL_ERRORS();
