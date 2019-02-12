@@ -38,11 +38,16 @@ GROUP BY streams_name, streams_type, table_name, table_owner
 ORDER BY table_owner, table_name;
 
 BREAK ON source_object_owner SKIP 1
-SELECT source_object_owner, source_object_name, instantiation_scn, ignore_scn FROM dba_apply_instantiated_objects ORDER BY source_object_owner;
+SELECT      source_object_owner, source_object_name, instantiation_scn, ignore_scn
+FROM        dba_apply_instantiated_objects
+ORDER BY    source_object_owner;
 
 -- Conflict View
 BREAK ON object_owner SKIP 1
-SELECT object_owner, object_name, COUNT(*) FROM dba_apply_conflict_columns GROUP BY object_owner, object_name ORDER BY 1;
+SELECT      object_owner, object_name, COUNT(*)
+FROM        dba_apply_conflict_columns
+GROUP BY    object_owner, object_name
+ORDER BY    1;
 
 BREAK ON table_name SKIP 1
 SELECT * FROM
