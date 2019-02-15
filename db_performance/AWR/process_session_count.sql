@@ -7,7 +7,7 @@ FROM      (
           FROM    dba_hist_sysmetric_summary
           )
 PIVOT     (
-          MAX(maxval)
+          MAX(ROUND(maxval, 2))
           FOR metric_name IN ('Current Logons Count' AS CURRENT_LOGON_COUNT ,'Process Limit %' AS PROCESSES_PERCENTAGE,'Session Limit %' AS SESSIONS_PERCENTAGE)
           )
 ORDER BY  snap_id;
