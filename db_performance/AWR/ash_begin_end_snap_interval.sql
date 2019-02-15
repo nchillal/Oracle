@@ -9,4 +9,5 @@ FROM
                   LEAD(TO_CHAR(BEGIN_INTERVAL_TIME, 'DDMMRRHH24MI'), 1) OVER(ORDER BY snap_id) "END_TIME"
           FROM    dba_hist_snapshot
           WHERE   instance_number = 1
+          AND     begin_interval_time > SYSDATE - INTERVAL '&days' DAY
 );
