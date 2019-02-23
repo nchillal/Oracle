@@ -29,56 +29,6 @@ SELECT queue_name, subscriber_name FROM v$buffered_subscribers WHERE queue_schem
 SELECT queue_name, sender_name, sender_address FROM v$buffered_publishers WHERE queue_schema = 'STRMADMIN';
 SELECT queue_name, dst_queue_name, dblink, propagation_name, state FROM v$propagation_sender WHERE queue_schema = 'STRMADMIN';
 
-BREAK ON streams_name ON table_owner skip 1
-SELECT      streams_name, table_owner, table_name, streams_type, COUNT(*) CNT
-FROM        dba_streams_table_rules
-GROUP BY    streams_name, streams_type, table_name, table_owner
-ORDER BY    table_owner, table_name;
-
-BREAK ON source_object_owner SKIP 1
-SELECT      source_object_owner, source_object_name, instantiation_scn, ignore_scn
-FROM        dba_apply_instantiated_objects
-ORDER BY    source_object_owner;
-
--- Conflict View
-BREAK ON object_owner SKIP 1
-SELECT      object_owner, object_name, COUNT(*)
-FROM        dba_apply_conflict_columns
-GROUP BY    object_owner, object_name
-ORDER BY    1;
-
-BREAK ON table_name SKIP 1
-SELECT * FROM
-(
-    SELECT      'Conflict Table' metadata, object_name table_name, COUNT(*) CNT
-    FROM        dba_apply_conflict_columns
-    WHERE       object_owner = '&&schema_name'
-    GROUP BY    object_name
-    UNION
-    SELECT      'Table Columns' metadata, table_name, COUNT(*) CNT
-    FROM        dba_tab_columns
-    WHERE       owner = '&&schema_name'
-    GROUP BY table_name
-)
-ORDER BY table_name;
-
-SELECT  'Conflict Columns: '|| COUNT(*)
-FROM    dba_apply_conflict_columns
-WHERE   object_name = '&&table_name'
-UNION
-SELECT  'Table Columns: ' || COUNT(*)
-FROM    dba_tab_columns
-WHERE   table_name='&&table_name';
-
--- Capture Lag
-SELECT  capture_name, ((SYSDATE - capture_message_create_time) * 86400) LATENCY_SECONDS
-FROM    v$streams_capture
-WHERE EXISTS (SELECT 1 FROM v$database WHERE database_role='PRIMARY')
-UNION
-SELECT  apply_name, NVL( (hwm_time-hwm_message_create_time) * 86400, 0) LAG_SEC
-FROM    v$streams_apply_coordinator
-WHERE EXISTS (SELECT 1 FROM v$database WHERE database_role='PRIMARY');
-
 COLUMN parameter FORMAT a30
 COLUMN value FORMAT a50
 BREAK ON parameter SKIP 1
@@ -100,13 +50,3 @@ exec DBMS_APPLY_ADM.EXECUTE_ALL_ERRORS();
 -- Deleting error from error queue
 exec DBMS_APPLY_ADM.DELETE_ERROR('&local_transaction_id');
 exec DBMS_APPLY_ADM.DELETE_ALL_ERRORS();
-
--- Stop Apply/Capture/Propagation
-EXEC DBMS_CAPTURE_ADM.STOP_CAPTURE(capture_name => '&capture_name');
-EXEC DBMS_PROPAGATION_ADM.STOP_PROPAGATION(propagation_name => '&propagation_name');
-EXEC DBMS_APPLY_ADM.STOP_APPLY(apply_name => '&apply_name');
-
--- Start Apply/Capture/Propagation
-EXEC DBMS_CAPTURE_ADM.START_CAPTURE(capture_name => '&capture_name');
-EXEC DBMS_PROPAGATION_ADM.START_PROPAGATION(propagation_name => '&propagation_name');
-EXEC DBMS_APPLY_ADM.START_APPLY(apply_name => '&appl_name');
