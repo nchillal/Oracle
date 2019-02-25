@@ -22,8 +22,7 @@ FROM    dba_tab_columns
 WHERE   table_name='&&table_name';
 
 -- Conflict View
-BREAK ON object_owner SKIP 1
+BREAK ON object_owner ON object_name SKIP 1
 SELECT      object_owner, object_name, column_name
 FROM        dba_apply_conflict_columns
-GROUP BY    object_owner, object_name
 ORDER BY    1;
