@@ -27,3 +27,7 @@ SELECT  c.capture_name,
 FROM    v$streams_capture c, v$session s
 WHERE   c.sid = s.sid AND
         c.serial# = s.serial#;
+
+SELECT capture_name, checkpoint_retention_time FROM sys.dba_capture;
+EXECUTE DBMS_CAPTURE_ADM.ALTER_CAPTURE(capture_name => '&capture_name' , checkpoint_retention_time => 7);
+EXECUTE DBMS_CAPTURE_ADM.SET_PARAMETER ('&capture_name', '_checkpoint_frequency', '1000');

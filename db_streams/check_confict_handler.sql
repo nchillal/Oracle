@@ -25,4 +25,5 @@ WHERE   table_name='&&table_name';
 BREAK ON object_owner ON object_name SKIP 1
 SELECT      object_owner, object_name, column_name
 FROM        dba_apply_conflict_columns
-ORDER BY    1;
+WHERE       object_owner = '&schema_owner'
+ORDER BY    2;
