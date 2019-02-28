@@ -8,12 +8,17 @@ COLUMN name FORMAT a70
 SELECT first_time, name FROM v$archived_log WHERE dest_id=1 AND first_time BETWEEN '&start_date' AND '&end_date'  ORDER BY 1;
 SELECT first_time, name FROM v$archived_log WHERE dest_id=1 AND sequence# BETWEEN &begin_sequence AND &end_sequence ORDER BY 1;
 
+-- Add initial archive logfile to be mined.
 EXEC DBMS_LOGMNR.ADD_LOGFILE (options => DBMS_LOGMNR.NEW, logfilename => '&archive_logfile');
 
+-- Add additional logfiles you wish to be mined either one by one or
+EXEC DBMS_LOGMNR.ADD_LOGFILE (options => DBMS_LOGMNR.ADDFILE, logfilename => '&archive_logfile');
+
+-- Using time add logfile to be mined.
 BEGIN
     DBMS_OUTPUT.PUT_LINE(chr(13));
     FOR rec in  (
-                SELECT first_time, name FROM v$archived_log WHERE dest_id=1 AND sequence# BETWEEN &begin_sequence AND &end_sequence ORDER BY 1
+                SELECT first_time, name FROM v$archived_log WHERE dest_id=1 AND first_time BETWEEN '&start_date' AND '&end_date'  ORDER BY 1
                 )
     LOOP
         DBMS_OUTPUT.PUT_LINE('Adding archive logfile '||rec.name||' for logminer to mine');
@@ -22,13 +27,15 @@ BEGIN
 END;
 /
 
+-- Using SCN add logfile to be mined.
 BEGIN
+    DBMS_OUTPUT.PUT_LINE(chr(13));
     FOR rec in  (
-                SELECT name FROM v$archived_log WHERE dest_id=1 AND first_time BETWEEN '&start_date' AND '&end_date'  ORDER BY 1
+                SELECT first_time, name FROM v$archived_log WHERE dest_id=1 AND sequence# BETWEEN &begin_sequence AND &end_sequence ORDER BY 1
                 )
     LOOP
         DBMS_OUTPUT.PUT_LINE('Adding archive logfile '||rec.name||' for logminer to mine');
-        DBMS_LOGMNR.ADD_LOGFILE (options => DBMS_LOGMNR.ADDFILE, logfilename => rec.name);
+        -- DBMS_LOGMNR.ADD_LOGFILE (options => DBMS_LOGMNR.ADDFILE, logfilename => rec.name);
     END LOOP;
 END;
 /
@@ -43,10 +50,13 @@ BEGIN
 END;
 /
 
-
-
-DBMS_LOGMNR_D.BUILD ('act6502p_logminer_dump.txt', '/home/oracle/admin/act6502p/work/nchillal', DBMS_LOGMNR_D.STORE_IN_FLAT_FILE);
-
-EXEC DBMS_LOGMNR.START_LOGMNR (DictFileName => '/home/oracle/admin/act6502p/work/nchillal/act6502p_logminer_dump.txt');
+SELECT  (xidusn || '.' || xidslt || '.' || xidsqn) AS xid, username, sql_redo
+FROM    v$logmnr_contents
+WHERE   username != 'SYS'
+AND     seg_owner IS NULL OR seg_owner NOT IN ('SYS', 'SYSTEM');
 
 EXECUTE DBMS_LOGMNR.END_LOGMNR();
+
+-- Extracting the LogMiner Dictionary to a Flat File
+DBMS_LOGMNR_D.BUILD ('act6502p_logminer_dump.txt', '/home/oracle/admin/act6502p/work/nchillal', DBMS_LOGMNR_D.STORE_IN_FLAT_FILE);
+EXEC DBMS_LOGMNR.START_LOGMNR (DictFileName => '/home/oracle/admin/act6502p/work/nchillal/act6502p_logminer_dump.txt');
