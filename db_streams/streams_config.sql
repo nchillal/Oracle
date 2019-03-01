@@ -61,14 +61,27 @@ EXEC DBMS_APPLY_ADM.DELETE_ALL_ERRORS(apply_name => '&apply_name');
 
 SELECT owner, job_name, state FROM dba_scheduler_jobs WHERE owner LIKE '%OWNER';
 
-SELECT  apply_name, local_transaction_id, REGEXP_SUBSTR(error_message, 'SMPCCS_OWNER.*') "Error Table"
-FROM    dba_apply_error
-WHERE   apply_name LIKE '%CCS%';
+-- Check total messages captured and applied in 10 seconds interval.
+SET SERVEROUTPUT ON
+DECLARE
+    capMsgCount1 number;
+    capMsgCount2 number;
+    appMsgCount1 number;
+    appMsgCount2 number;
+    sleepSeconds number := 10;
+    oracleSid varchar2(10);
+BEGIN
+    SELECT instance_name INTO oracleSid FROM v$instance;
+    SELECT SUM(TOTAL_MESSAGES_ENQUEUED) INTO capMsgCount1 FROM v$streams_capture;
+    SELECT SUM(TOTAL_APPLIED) INTO appMsgCount1 FROM v$streams_apply_coordinator;
 
-SELECT  apply_name, local_transaction_id, REGEXP_SUBSTR(error_message, 'IDV_OWNER.*') "Error Table"
-FROM    dba_apply_error
-WHERE   apply_name LIKE '%IDV%';
+    DBMS_LOCK.SLEEP(sleepSeconds);
 
-SELECT      apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}') "Error Table", COUNT(*)
-FROM        dba_apply_error
-GROUP BY    apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}');
+    SELECT SUM(TOTAL_MESSAGES_ENQUEUED) INTO capMsgCount2 FROM v$streams_capture;
+    SELECT SUM(TOTAL_APPLIED) INTO appMsgCount2 FROM v$streams_apply_coordinator;
+
+    DBMS_OUTPUT.PUT_LINE('For ' || oracleSid || ', activity for the last ' || sleepSeconds || ' seconds:');
+    DBMS_OUTPUT.PUT_LINE(RPAD('Messages captured', 20, ' ') || ' : ' || (capMsgCount2 - capMsgCount1) );
+    DBMS_OUTPUT.PUT_LINE(RPAD('Messages applied', 20, ' ') || ' : ' || (appMsgCount2 - appMsgCount1));
+END;
+/
