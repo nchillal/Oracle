@@ -1,3 +1,11 @@
+-- Check when capture process table instantiation SCN.
+SELECT  table_owner,
+        table_name,
+        scn,
+        TO_CHAR(timestamp, 'HH24:MI:SS MM/DD/YY') TIMESTAMP
+FROM    dba_capture_prepared_tables;
+
+-- Get capture process session details.
 COLUMN action heading 'Capture Process Component' FORMAT A30
 COLUMN sid heading 'Session ID' FORMAT 999999
 COLUMN serial# heading 'Session|Serial|Number' FORMAT 99999999
