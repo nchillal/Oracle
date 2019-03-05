@@ -1,3 +1,4 @@
+-- Loading plans from the SQL Shared Area.
 SET SERVEROUTPUT ON
 SET LONG 10000
 
