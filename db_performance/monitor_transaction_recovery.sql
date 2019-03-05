@@ -3,6 +3,6 @@ SELECT  usn,
         state,
         undoblockstotal "Total",
         undoblocksdone "Done",
-        undoblockstotal-undoblocksdone "ToDo",
-        DECODE(cputime, 0, 'unknown', SYSDATE+(((undoblockstotal-undoblocksdone) / (undoblocksdone / cputime)) / 86400)) "Estimated time to complete"
+        undoblockstotal - undoblocksdone "ToDo",
+        DECODE(cputime, 0, 'unknown', SYSDATE + (((undoblockstotal-undoblocksdone) / (undoblocksdone / cputime)) / 86400)) "Estimated time to complete"
 FROM    v$fast_start_transactions;
