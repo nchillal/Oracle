@@ -1,8 +1,4 @@
-BREAK ON source_object_owner SKIP 1
-SELECT      source_object_owner, source_object_name, instantiation_scn, ignore_scn
-FROM        dba_apply_instantiated_objects
-ORDER BY    source_object_owner;
-
+-- Capture objects instantiated details.
 BREAK ON table_owner SKIP 1
 COLUMN table_owner HEADING 'Table Owner'  FORMAT A30
 COLUMN table_name  HEADING 'Table Name'   FORMAT A40
@@ -23,3 +19,12 @@ SELECT  r.consumer_name, r.source_database, r.sequence#, r.name
 FROM    dba_registered_archived_log r, dba_capture c
 WHERE   r.consumer_name =  c.capture_name
 AND     r.next_scn >= c.required_checkpoint_scn;
+
+-- Apply objects instantiated details.
+BREAK ON source_object_owner SKIP 1
+SELECT      source_object_owner, source_object_name, instantiation_scn, ignore_scn
+FROM        dba_apply_instantiated_objects
+ORDER BY    source_object_owner;
+
+-- Remove invalid entries from DBA_APPLY_INSTANTIATED_OBJECTS
+EXEC DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN('&schema.table',instantiation_scn => NULL);

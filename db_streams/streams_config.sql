@@ -85,3 +85,19 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(RPAD('Messages applied', 20, ' ') || ' : ' || (appMsgCount2 - appMsgCount1));
 END;
 /
+
+SELECT      dc.table_name table_name, dc.scn capture_scn, da.instantiation_scn apply_scn, (da.instantiation_scn - dc.scn) ca_ap_scn_diff
+FROM        dba_apply_instantiated_objects da, dba_capture_prepared_tables dc
+WHERE       da.source_object_name = dc.table_name
+ORDER BY    1;
+
+COLUMN xid FORMAT a20
+COLUMN timestamp FORMAT a40
+COLUMN message_creation_time FORMAT a30
+COLUMN action FORMAT a30
+COLUMN command_type FORMAT a10
+
+BREAK ON xid SKIP 1
+SELECT      xid, timestamp, message_creation_time, action, object_name, object_owner, command_type, component_name
+FROM        v$streams_message_tracking
+ORDER BY    timestamp, xid;
