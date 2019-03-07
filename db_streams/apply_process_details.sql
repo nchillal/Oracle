@@ -8,20 +8,25 @@ FROM    dba_apply_progress;
 
 -- Group apply errors by Apply Process.
 BREAK ON apply_name SKIP 1
-SELECT      apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}') "Error Table", COUNT(*)
+COLUMN "Error Table" FORMAT a30
+SELECT      apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}') "ORA-ERROR", COUNT(*)
 FROM        dba_apply_error
-GROUP BY    apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}');
+GROUP BY    apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}')
+ORDER BY    apply_name;
 
 -- List all objects in apply error tables.
+BREAK ON apply_name SKIP 1
 COLUMN "Table" FORMAT a50
 COLUMN "Error" FORMAT a20
-SELECT      apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}') "Error", REGEXP_SUBSTR(error_message, '\w+_OWNER.\w+') "Table"
+SELECT      apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}') "ORA-Error", REGEXP_SUBSTR(error_message, '\w+_OWNER.\w+') "Table", COUNT(*)
 FROM        dba_apply_error
-ORDER BY    3;
+GROUP BY    apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}'), REGEXP_SUBSTR(error_message, '\w+_OWNER.\w+')
+ORDER BY    4, 1 DESC;
 
 -- List distinct objects having apply errors.
+BREAK ON apply_name SKIP 1
 COLUMN "Table" FORMAT a50
 COLUMN "Error" FORMAT a20
-SELECT      distinct apply_name, REGEXP_SUBSTR(error_message, '\w+_OWNER.\w+') "Table"
+SELECT      DISTINCT apply_name, REGEXP_SUBSTR(error_message, '\w+_OWNER.\w+') "Table"
 FROM        dba_apply_error
 ORDER BY    2;
