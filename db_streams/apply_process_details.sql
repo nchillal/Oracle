@@ -17,7 +17,7 @@ ORDER BY    apply_name;
 -- List all objects in apply error tables.
 BREAK ON apply_name SKIP 1
 COLUMN "Table" FORMAT a50
-COLUMN "Error" FORMAT a20
+COLUMN "ORA-Error" FORMAT a20
 SELECT      apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}') "ORA-Error", REGEXP_SUBSTR(error_message, '\w+_OWNER.\w+') "Table", COUNT(*)
 FROM        dba_apply_error
 GROUP BY    apply_name, REGEXP_SUBSTR(error_message, 'ORA-\d{5}'), REGEXP_SUBSTR(error_message, '\w+_OWNER.\w+')
