@@ -27,4 +27,4 @@ FROM        dba_apply_instantiated_objects
 ORDER BY    source_object_owner;
 
 -- Remove invalid entries from DBA_APPLY_INSTANTIATED_OBJECTS
-EXEC DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN('&schema.table',instantiation_scn => NULL);
+EXEC DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN('&schema.table', instantiation_scn => NULL);
