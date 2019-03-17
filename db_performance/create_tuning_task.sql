@@ -10,10 +10,7 @@ END;
 /
 
 -- Run the SQL TUNING TASK
-BEGIN
-  DBMS_SQLTUNE.execute_tuning_task(task_name => '&&task_name');
-END;
-/
+EXEC DBMS_SQLTUNE.execute_tuning_task(task_name => '&&task_name');
 
 -- Monitor the processing of the tuning task with the statement
 SELECT  TASK_NAME, STATUS
