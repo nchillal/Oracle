@@ -20,3 +20,16 @@ FROM      v$session_event se,
 WHERE     s.sid = se.sid
 AND       s.sid = &1
 ORDER BY  se.time_waited DESC;
+
+SELECT    sql_id, percentage
+FROM
+(
+  SELECT    sql_id, ROUND(ratio_to_report(COUNT(*)) over(), 2)*100 as PERCENTAGE
+  FROM      v$active_session_history
+  WHERE     sample_time > SYSDATE - INTERVAL '&hours' HOUR
+  AND       user_id > 0
+  AND       session_id = &sid
+  GROUP BY  sql_id
+  ORDER BY  2 DESC
+)
+WHERE percentage > 0;
