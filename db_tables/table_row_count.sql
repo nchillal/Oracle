@@ -9,7 +9,7 @@ DECLARE
     cnt NUMBER;
 BEGIN
     DBMS_OUTPUT.PUT_LINE(CHR(13));
-    FOR rec IN (SELECT owner, table_name FROM dba_tables WHERE owner='&schema_name')
+    FOR rec IN (SELECT owner, table_name FROM dba_tables WHERE owner='&schema_name' ORDER BY table_name)
     LOOP
 
         sql_stat := 'SELECT COUNT(*) FROM '||rec.owner||'.'||rec.table_name;
