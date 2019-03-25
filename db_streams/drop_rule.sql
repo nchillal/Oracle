@@ -2,3 +2,5 @@ SELECT    'EXEC DBMS_'||streams_type||'_ADM.ALTER_'||streams_type||'('||DECODE(s
 FROM      dba_streams_rules
 WHERE     rule_name IN (SELECT RULE_NAME FROM dba_streams_table_rules WHERE TABLE_OWNER = '&table_owner')
 AND       streams_type = '&streams_type';
+
+EXEC DBMS_STREAMS_ADM.REMOVE_RULE(rule_name => 'strmadmin.&rule_name', streams_type => 'CAPTURE', streams_name => '&streams_name');
