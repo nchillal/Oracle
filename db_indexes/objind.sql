@@ -56,10 +56,11 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE(RPAD('index_owner', 30)||RPAD('index_name', 35)||RPAD('column_position', 30)||RPAD('column_name', 30)||RPAD('descend', 10));
     DBMS_OUTPUT.PUT_LINE(LPAD('*', 150, '*'));
     FOR row IN  (
-                SELECT  index_owner, index_name, column_position, column_name, descend
-                FROM    dba_ind_columns
-                WHERE   table_name = v_table_name
-                AND     table_owner = v_table_owner
+                SELECT      index_owner, index_name, column_position, column_name, descend
+                FROM        dba_ind_columns
+                WHERE       table_name = v_table_name
+                AND         table_owner = v_table_owner
+                ORDER BY    index_name, column_position
                 )
     LOOP
         DBMS_OUTPUT.PUT_LINE(RPAD(row.index_owner, 30)||RPAD(row.index_name, 35)||RPAD(row.column_position, 30)||RPAD(row.column_name, 30)||RPAD(row.descend, 5));
