@@ -18,14 +18,26 @@ GROUP BY  snap_id, sql_id, sql_exec_id, sql_plan_hash_value
 ORDER BY  sql_exec_id;
 
 COLUMN begin_time FORMAT a30
-SELECT      begin_interval_time "BEGIN_TIME", executions_delta executions, ROUND(rows_processed_delta/executions_delta) rows_per_exec, ROUND(elapsed_time_delta/executions_delta/1000, 0) ela_per_exec_ms
+BREAK ON plan_hash_value SKIP 1
+SELECT      begin_interval_time "BEGIN_TIME",
+            plan_hash_value,
+            executions_delta executions,
+            ROUND(rows_processed_delta/executions_delta) rows_per_exec,
+            ROUND(elapsed_time_delta/executions_delta/1000, 0) ela_per_exec_ms,
+            ROUND(buffer_gets_delta/executions_delta, 0) buf_gets_per_exec,
+            physical_read_bytes_delta/executions_delta phy_reads_per_exec
 FROM        dba_hist_sqlstat dhs, dba_hist_snapshot dhss
 WHERE       dhs.dbid = dhss.dbid
 AND         dhs.instance_number = dhss.instance_number
 AND         dhs.snap_id = dhss.snap_id
 AND         sql_id = '&sql_id'
-ORDER BY    1;
+ORDER BY    2, 1;
 
-SELECT      executions, round(rows_processed/executions) rows_per_exec, round(elapsed_time/executions/1000) ela_per_exec_ms
+SELECT      executions,
+            ROUND(rows_processed/executions) rows_per_exec,
+            ROUND(elapsed_time/executions/1000, 0) ela_per_exec_ms,
+            ROUND(buffer_gets/executions, 0) buf_gets_per_exec,
+            ROUND(physical_read_bytes/executions) phy_reads_per_exec_bytes,
+            ROUND(physical_read_requests/executions) phy_write_per_exec_bytes
 FROM        v$sqlstats
 WHERE       sql_id = '&sql_id';
