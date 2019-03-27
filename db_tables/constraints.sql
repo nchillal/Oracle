@@ -5,7 +5,7 @@ DECLARE
 BEGIN
     DBMS_OUTPUT.PUT_LINE(CHR(13));
     DBMS_OUTPUT.PUT_LINE(LPAD('*', 158, '*'));
-    DBMS_OUTPUT.PUT_LINE(RPAD('constraint_name', 35)||RPAD('column_name', 18)||RPAD('constraint_type', 18)||RPAD('status', 10)||RPAD('deferrable', 18)||RPAD('deferred', 12)||RPAD('validated', 12)||RPAD('search_condition', 35));
+    DBMS_OUTPUT.PUT_LINE(RPAD('constraint_name', 35)||RPAD('column_name', 30)||RPAD('constraint_type', 18)||RPAD('status', 10)||RPAD('deferrable', 18)||RPAD('deferred', 12)||RPAD('validated', 12)||RPAD('search_condition', 35));
     DBMS_OUTPUT.PUT_LINE(LPAD('*', 158, '*'));
     FOR row in (SELECT    b.constraint_name constraint_name,
                           a.column_name column_name,
@@ -24,7 +24,7 @@ BEGIN
               AND         b.owner = v_table_owner
     )
     LOOP
-        DBMS_OUTPUT.PUT_LINE(RPAD(row.constraint_name, 35)||RPAD(row.column_name, 18)||RPAD(row.constraint_type, 18)||RPAD(row.status, 10)||RPAD(row.deferrable, 18)||RPAD(row.deferred, 12)||RPAD(row.validated, 12)||RPAD(row.search_condition, 35));
+        DBMS_OUTPUT.PUT_LINE(RPAD(row.constraint_name, 35)||RPAD(row.column_name, 30)||RPAD(row.constraint_type, 18)||RPAD(row.status, 10)||RPAD(row.deferrable, 18)||RPAD(row.deferred, 12)||RPAD(row.validated, 12)||RPAD(row.search_condition, 35));
     END LOOP;
 END;
 /
