@@ -8,14 +8,7 @@ BEGIN
 END;
 /
 
-BEGIN
-  DBMS_SPM.CREATE_STGTAB_BASELINE
-    (
-    table_name      => 'sqlplan_staging_tab',
-    table_owner     => 'dbamaint_user'
-    );
-END;
-/
+EXEC DBMS_SPM.CREATE_STGTAB_BASELINE(table_name => 'sqlplan_staging_tab', table_owner => 'dbamaint_user');
 
 SET SERVEROUTPUT ON
 DECLARE
