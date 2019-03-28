@@ -4,13 +4,13 @@ SET SERVEROUTPUT ON PAUSE ON
 DECLARE
   stmt_task VARCHAR2(40);
 BEGIN
-  stmt_task := DBMS_SQLTUNE.create_tuning_task(sql_id => '&sql_id', scope=> 'COMPREHENSIVE');
+  stmt_task := DBMS_SQLTUNE.CREATE_TUNING_TASK(sql_id => '&sql_id', scope=> 'COMPREHENSIVE');
   DBMS_OUTPUT.put_line('task_id: ' || stmt_task );
 END;
 /
 
 -- Run the SQL TUNING TASK
-EXEC DBMS_SQLTUNE.execute_tuning_task(task_name => '&&task_name');
+EXEC DBMS_SQLTUNE.EXECUTE_TUNING_TASK(task_name => '&&task_name');
 
 -- Monitor the processing of the tuning task with the statement
 SELECT  TASK_NAME, STATUS
@@ -22,5 +22,5 @@ SET linesize 200
 SET LONG 999999999
 SET pagesize 1000
 SET longchunksize 20000
-SELECT  DBMS_SQLTUNE.report_tuning_task('&&task_name') AS recommendations
+SELECT  DBMS_SQLTUNE.REPORT_TUNING_TASK('&&task_name') AS recommendations
 FROM    dual;
