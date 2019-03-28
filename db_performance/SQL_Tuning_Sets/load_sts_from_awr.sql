@@ -1,6 +1,4 @@
--- Capturing the SQL Workload
--- Creating or use existing SQL Tuning Set
--- Loading a SQL Tuning Set
+-- Loading a SQL Tuning Set from AWR.
 DECLARE
     baseline_cursor DBMS_SQLTUNE.SQLSET_CURSOR;
 BEGIN
