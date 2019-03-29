@@ -15,4 +15,4 @@ scp -rp sts_staging_table.dmp <target>:<target_dest>
 impdp dumpfile=sts_staging_table.dmp logfile=sts_staging_table.log directory=EXPDIR
 
 -- Copy the SQL tuning sets from the staging table into the database.
-EXEC DBMS_SQLTUNE.UNPACK_STGTAB_SQLSET(sqlset_name => '%', replace => true, staging_table_name => 'my_11g_staging_table');
+EXEC DBMS_SQLTUNE.UNPACK_STGTAB_SQLSET(sqlset_name => '%', replace => true, staging_table_name => 'sts_staging_table');

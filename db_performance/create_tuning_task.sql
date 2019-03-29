@@ -2,10 +2,10 @@
 SET SERVEROUTPUT ON PAUSE ON
 
 DECLARE
-  stmt_task VARCHAR2(40);
+    task_name VARCHAR2(40);
 BEGIN
-  stmt_task := DBMS_SQLTUNE.CREATE_TUNING_TASK(sql_id => '&sql_id', scope=> 'COMPREHENSIVE');
-  DBMS_OUTPUT.put_line('task_id: ' || stmt_task );
+    task_name := DBMS_SQLTUNE.CREATE_TUNING_TASK(sql_id => '&sql_id', scope=> 'COMPREHENSIVE');
+    DBMS_OUTPUT.PUT_LINE('task_id: ' ||task_name);
 END;
 /
 
