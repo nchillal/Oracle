@@ -53,7 +53,7 @@ BEGIN
     -- Index column details
     DBMS_OUTPUT.PUT_LINE(CHR(13));
     DBMS_OUTPUT.PUT_LINE(LPAD('*', 150, '*'));
-    DBMS_OUTPUT.PUT_LINE(RPAD('index_owner', 30)||RPAD('index_name', 35)||RPAD('column_position', 30)||RPAD('column_name', 30)||RPAD('descend', 10));
+    DBMS_OUTPUT.PUT_LINE(RPAD('index_owner', 30)||RPAD('index_name', 35)||RPAD('column_position', 20)||RPAD('column_name', 35)||RPAD('descend', 10));
     DBMS_OUTPUT.PUT_LINE(LPAD('*', 150, '*'));
     FOR row IN  (
                 SELECT      index_owner, index_name, column_position, column_name, descend
@@ -63,7 +63,7 @@ BEGIN
                 ORDER BY    index_name, column_position
                 )
     LOOP
-        DBMS_OUTPUT.PUT_LINE(RPAD(row.index_owner, 30)||RPAD(row.index_name, 35)||RPAD(row.column_position, 30)||RPAD(row.column_name, 30)||RPAD(row.descend, 5));
+        DBMS_OUTPUT.PUT_LINE(RPAD(row.index_owner, 30)||RPAD(row.index_name, 35)||RPAD(row.column_position, 20)||RPAD(row.column_name, 35)||RPAD(row.descend, 5));
     END LOOP;
 
     DBMS_OUTPUT.PUT_LINE(CHR(13));
