@@ -33,3 +33,17 @@ FROM
   ORDER BY  2 DESC
 )
 WHERE percentage > 0;
+
+
+SELECT    sql_id, percentage
+FROM
+(
+  SELECT    sql_id, ROUND(ratio_to_report(COUNT(*)) over(), 2)*100 as PERCENTAGE
+  FROM      dba_hist_active_sess_history
+  WHERE     snap_id BETWEEN &&begin_snap AND &&end_snap
+  AND       user_id > 0
+  AND       event = &sid
+  GROUP BY  sql_id
+  ORDER BY  2 DESC
+)
+WHERE percentage > 0;
