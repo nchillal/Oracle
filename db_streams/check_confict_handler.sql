@@ -24,8 +24,11 @@ WHERE   table_name='&&table_name'
 AND     data_type NOT IN ('LOB', 'LONG', 'LONG RAW', 'BLOB');
 
 -- Conflict View
-BREAK ON object_owner ON object_name SKIP 1
-SELECT      object_owner, object_name, column_name
-FROM        dba_apply_conflict_columns
-WHERE       object_owner = '&schema_owner'
-ORDER BY    2;
+SELECT  'Conflict Handler Columns: '||LISTAGG(COLUMN_NAME, ', ') WITHIN GROUP(ORDER BY column_name) COLUMNS
+FROM    dba_apply_conflict_columns
+WHERE   object_name = '&&table_name'
+UNION
+SELECT  'Table Columns: '||LISTAGG(COLUMN_NAME, ', ') WITHIN GROUP(ORDER BY column_name) COLUMNS
+FROM    dba_tab_columns
+WHERE   table_name='&&table_name'
+AND     data_type NOT IN ('LOB', 'LONG', 'LONG RAW', 'BLOB');
