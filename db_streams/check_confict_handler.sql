@@ -9,7 +9,8 @@ SELECT * FROM
     SELECT      'Table Columns' metadata, table_name, COUNT(*) CNT
     FROM        dba_tab_columns
     WHERE       owner = '&&schema_name'
-    GROUP BY table_name
+    AND         data_type NOT IN ('LOB', 'LONG', 'LONG RAW', 'BLOB')
+    GROUP BY    table_name
 )
 ORDER BY table_name;
 
@@ -19,7 +20,8 @@ WHERE   object_name = '&&table_name'
 UNION
 SELECT  'Table Columns: ' || COUNT(*)
 FROM    dba_tab_columns
-WHERE   table_name='&&table_name';
+WHERE   table_name='&&table_name'
+AND     data_type NOT IN ('LOB', 'LONG', 'LONG RAW', 'BLOB');
 
 -- Conflict View
 BREAK ON object_owner ON object_name SKIP 1
