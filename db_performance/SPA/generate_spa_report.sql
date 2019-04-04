@@ -2,7 +2,10 @@ SET PAGESIZE 0 LINESIZE 1000 LONG 1000000 LONGCHUNKSIZE 1000000 TRIMSPOOL ON TRI
 
 SPOOL /tmp/execute_comparison_report.html
 
-SELECT DBMS_SQLPA.REPORT_ANALYSIS_TASK('my_spa_task', 'HTML', 'ALL')
-FROM   dual;
+SELECT  DBMS_SQLPA.REPORT_ANALYSIS_TASK('my_spa_task', 'HTML', 'ALL')
+FROM    dual;
 
 SPOOL OFF
+
+SELECT  DBMS_SQLPA.REPORT_ANALYSIS_TASK(task_name => 'my_spa_task', object_id => &object_id) report
+FROM    dual;
