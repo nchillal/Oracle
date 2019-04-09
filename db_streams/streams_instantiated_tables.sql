@@ -22,9 +22,10 @@ AND     r.next_scn >= c.required_checkpoint_scn;
 
 -- Apply objects instantiated details.
 BREAK ON source_object_owner SKIP 1
-SELECT      source_object_owner, source_object_name, instantiation_scn, ignore_scn
+COLUMN source_database FORMAT a20
+SELECT      source_database, source_object_owner, source_object_name, instantiation_scn, ignore_scn
 FROM        dba_apply_instantiated_objects
 ORDER BY    source_object_owner;
 
 -- Remove invalid entries from DBA_APPLY_INSTANTIATED_OBJECTS
-EXEC DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN('&schema.table', instantiation_scn => NULL);
+EXEC DBMS_APPLY_ADM.SET_TABLE_INSTANTIATION_SCN('&schema_table', '&source_database', instantiation_scn=>NULL);

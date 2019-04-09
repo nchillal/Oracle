@@ -1,15 +1,19 @@
 BREAK ON table_name SKIP 1
+COLUMN columns FORMAT a150 WRAP
 SELECT * FROM
 (
-    SELECT      'Conflict Table' metadata, object_name table_name, COUNT(*) CNT
+    SELECT      object_name table_name, 'Conflict Handler Columns: '||LISTAGG(COLUMN_NAME, ', ') WITHIN GROUP(ORDER BY column_name) columns
     FROM        dba_apply_conflict_columns
     WHERE       object_owner = '&&schema_name'
+    AND         object_name NOT LIKE 'STR_LAG_MON%'
     GROUP BY    object_name
     UNION
-    SELECT      'Table Columns' metadata, table_name, COUNT(*) CNT
+    SELECT      table_name, RPAD('Table Columns: ', 26)||LISTAGG(COLUMN_NAME, ', ') WITHIN GROUP(ORDER BY column_name) columns
     FROM        dba_tab_columns
     WHERE       owner = '&&schema_name'
-    AND         data_type NOT IN ('LOB', 'LONG', 'LONG RAW', 'BLOB')
+    AND         table_name NOT LIKE 'STR_LAG_MON%'
+    AND         table_name NOT LIKE 'BIN$%'
+    AND         data_type NOT IN ('LOB', 'LONG', 'LONG RAW', 'BLOB', 'CLOB')
     GROUP BY    table_name
 )
 ORDER BY table_name;
