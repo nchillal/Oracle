@@ -12,6 +12,7 @@ FROM      (
           SELECT    username, TO_CHAR(sample_time, 'DDMMRRHH24MI') "DAY_HOUR", sql_opname
           FROM      v$active_session_history ash, dba_users du
           WHERE     ash.user_id = du.user_id
+          AND       username NOT IN ('SYS', 'SYSTEM')
           AND       sample_time > SYSDATE - INTERVAL '&minutes' MINUTE
           )
 PIVOT     (
@@ -34,6 +35,7 @@ FROM      (
           SELECT    username, TO_CHAR(sample_time, 'DDMMRRHH24MI') "DAY_HOUR", sql_opname
           FROM      v$active_session_history ash, dba_users du
           WHERE     ash.user_id = du.user_id
+          AND       username NOT IN ('SYS', 'SYSTEM')
           AND       sample_time > SYSDATE - INTERVAL '&minutes' MINUTE
           )
 PIVOT     (
