@@ -1,1 +1,1 @@
-EXEC DBMS_SQLPA.EXECUTE_ANALYSIS_TASK(task_name => 'my_spa_task', execution_type => 'TEST EXECUTE', execution_name => 'b4_upgrade');
+EXEC DBMS_SQLPA.EXECUTE_ANALYSIS_TASK(task_name => '&task_name', execution_type => 'TEST EXECUTE', execution_name => '&execution_name');
