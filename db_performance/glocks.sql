@@ -1,3 +1,4 @@
+
 SELECT    INST_ID,
           DECODE(request,0,'Holder: ','Waiter: ') || sid sess, id1, id2, lmode, request, type
 FROM      GV$LOCK

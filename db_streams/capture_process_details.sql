@@ -20,6 +20,7 @@ SELECT  /*+PARAM('_module_action_old_length',0)*/ action,
         serial#,
         sql_id,
         process,
+        event,
         SUBSTR(program,INSTR(program,'(')+1,4) process_name
 FROM    v$session
 WHERE   module ='Streams'
