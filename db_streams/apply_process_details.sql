@@ -1,5 +1,5 @@
 -- Get capture process session details.
-COLUMN action heading 'Capture Process Component' FORMAT A30
+COLUMN action heading 'Capture Process Component' FORMAT A50
 COLUMN sid heading 'Session ID' FORMAT 999999
 COLUMN serial# heading 'Session|Serial|Number' FORMAT 99999999
 COLUMN process heading 'Operating System|Process Number' FORMAT A30
@@ -17,7 +17,7 @@ SELECT  /*+PARAM('_module_action_old_length',0)*/ action,
         SUBSTR(program,INSTR(program,'(')+1,4) process_name
 FROM    v$session
 WHERE   module ='Streams'
-AND     action LIKE '%Apply%';
+AND     action LIKE '%&apply_name%'
 
 -- Check Apply latency
 SELECT  (apply_time - applied_message_create_time) * 86400 "latency_in_seconds",
