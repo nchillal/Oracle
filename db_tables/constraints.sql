@@ -31,16 +31,16 @@ END;
 
 COLUMN REFERENCES FORMAT a150
 
-SELECT ' TABLE "'||b.owner||'.'||b.table_name||'"'||
-        '('||listagg (c.column_name, ',') within group (order by c.column_name)||')'||
-        ' FK "'||b.constraint_name||'" -> '||a.table_name||
-        ' INDEX "'||a.index_name||'"'
-        REFERENCES
-FROM all_indexes a,
-       all_constraints b,
-       all_cons_columns c
-WHERE RTRIM(a.owner) = '&owner'
-AND a.index_name = b.r_constraint_name
-AND c.constraint_name = b.constraint_name
-GROUP BY b.owner, b.table_name, b.constraint_name, a.table_name, a.index_name
-ORDER BY 1;
+SELECT      ' TABLE "'||b.owner||'.'||b.table_name||'"'||
+            '('||listagg (c.column_name, ',') within group (order by c.column_name)||')'||
+            ' FK "'||b.constraint_name||'" -> '||a.table_name||
+            ' INDEX "'||a.index_name||'"'
+            REFERENCES
+FROM        all_indexes a,
+            all_constraints b,
+            all_cons_columns c
+WHERE       RTRIM(a.owner) = '&owner'
+AND         a.index_name = b.r_constraint_name
+AND         c.constraint_name = b.constraint_name
+GROUP BY    b.owner, b.table_name, b.constraint_name, a.table_name, a.index_name
+ORDER BY    1;
