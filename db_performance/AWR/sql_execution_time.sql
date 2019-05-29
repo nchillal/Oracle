@@ -25,12 +25,13 @@ SELECT      begin_interval_time "BEGIN_TIME",
             ROUND(rows_processed_delta/executions_delta) rows_per_exec,
             ROUND(elapsed_time_delta/executions_delta/1000, 0) ela_per_exec_ms,
             ROUND(buffer_gets_delta/executions_delta, 0) buf_gets_per_exec,
-            physical_read_bytes_delta/executions_delta phy_reads_per_exec
+            ROUND(physical_read_bytes_delta/executions_delta) phy_reads_per_exec
 FROM        dba_hist_sqlstat dhs, dba_hist_snapshot dhss
 WHERE       dhs.dbid = dhss.dbid
 AND         dhs.instance_number = dhss.instance_number
 AND         dhs.snap_id = dhss.snap_id
 AND         sql_id = '&sql_id'
+AND         executions_delta > 0
 ORDER BY    2, 1;
 
 SELECT      executions,
