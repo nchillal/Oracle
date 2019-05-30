@@ -18,7 +18,7 @@ BEGIN
     (
     table_name      => 'sqlplan_staging_tab',
     table_owner     => 'dbamaint_user',
-    sql_handle      => 'SQL_ab6adfbe2d5b525b'
+    sql_handle      => '&sql_handle'
     );
   DBMS_OUTPUT.PUT_LINE('Plans Packed: ' || l_plans_packed);
 END;
@@ -39,7 +39,7 @@ BEGIN
     (
     table_name      => 'sqlplan_staging_tab',
     table_owner     => 'dbamaint_user',
-    sql_handle      => 'SQL_ab6adfbe2d5b525b'
+    sql_handle      => '&sql_handle'
     );
   DBMS_OUTPUT.PUT_LINE('Plans Unpacked: ' || l_plans_unpacked);
 END;
