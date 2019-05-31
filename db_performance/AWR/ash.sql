@@ -18,6 +18,7 @@ FROM    (
                   username,
                   sql_id,
                   sql_child_number,
+                  sql_plan_hash_value,
                   SUM(DECODE(session_state,'ON CPU',1,0)) AS CPU,
                   SUM(DECODE(session_state,'WAITING',1,0)) - SUM(DECODE(session_state,'WAITING', DECODE(wait_class, 'User I/O',1,0),0)) AS WAIT,
                   SUM(DECODE(session_state,'WAITING', DECODE(wait_class, 'User I/O',1,0),0)) AS IO,
@@ -26,7 +27,7 @@ FROM    (
         where     ash.user_id=du.user_id
         AND       sample_time > SYSDATE - interval '&mins' minute
         AND       sql_id IS NOT NULL
-        GROUP BY  session_id, username, sql_id, sql_child_number
+        GROUP BY  session_id, username, sql_id, sql_child_number, sql_plan_hash_value
         ORDER BY  SUM(DECODE(session_state,'ON CPU',1,1)) DESC
 )
 WHERE   ROWNUM <11;
