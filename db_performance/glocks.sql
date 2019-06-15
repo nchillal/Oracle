@@ -5,19 +5,20 @@ FROM      GV$LOCK
 WHERE     (id1, id2, type) IN (SELECT id1, id2, type FROM GV$LOCK WHERE request > 0)
 ORDER BY  id1, request;
 
-SELECT    blocking_session, sid, serial#, sql_id, p1text, p1, p2text, p2, p3text, p3, wait_class, seconds_in_wait
+SELECT    blocking_session, sid||','||serial# "SID_SERIAL#", username, sql_id, p1text, p1, p2text, p2, p3text, p3, wait_class, seconds_in_wait
 FROM      v$session
 WHERE     blocking_session IS NOT NULL
 ORDER BY  blocking_session;
 
-SELECT    inst_id, sid||','||serial# "SID_SERIAL#", sql_id, blocking_session, blocking_session_status, status, event
+SELECT    inst_id, sid||','||serial# "SID_SERIAL#", username, sql_id, blocking_session, blocking_session_status, status, event
 FROM      gv$session
 WHERE     event ='&event_name'
 AND       blocking_session IS NOT NULL;
 
-SELECT    session_id||','||session_serial# "SID_SERIAL#", sql_id, blocking_session, blocking_session_status, session_state, event
-FROM      v$active_session_history
+SELECT    session_id||','||session_serial# "SID_SERIAL#", du.username, sql_id, blocking_session, blocking_session_status, session_state, event
+FROM      v$active_session_history ash, dba_users du
 WHERE     blocking_session IS NOT NULL
+AND       ash.user_id = du.user_id
 AND       sample_time > SYSDATE - INTERVAL '&minutes' MINUTE;
 
 SELECT    session_id||','||session_serial# "SID_SERIAL#", sql_id, blocking_session, blocking_session_status, session_state, event
