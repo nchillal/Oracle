@@ -1,6 +1,11 @@
 COLUMN path FORMAT a40
-COLUMN name FORMAT a15
+COLUMN "Disk Name" FORMAT a15
 COLUMN failgroup FORMAT a15
+COLUMN "Disk Group Name" FORMAT a15
+COLUMN "Total MB" FORMAT a10
+COLUMN "Free MB" FORMAT a10
+COLUMN "Usable Free MB" FORMAT a10
+COLUMN ReqMirrorFree FORMAT a15
 
 SELECT    group_number, disk_number, failgroup, name "Disk Name", mount_status "Mount Status", state, mode_status "Mode Status", path
 FROM      v$asm_disk
@@ -12,6 +17,6 @@ SELECT    dg.name "Disk Group Name",
           type "Type",
           TO_CHAR(NVL(dg.usable_file_mb, 0)) "Usable Free MB",
           TO_CHAR(NVL(dg.required_mirror_free_mb, 0)) "ReqMirrorFree",
-          DECODE(type, 'EXTERN', 1, 'NORMAL', 2, 'HIGH', 3, 1) redundancy_factor, 100 - (dg.free_mb/dg.total_mb*100) "percentUsed"
+          DECODE(type, 'EXTERN', 1, 'NORMAL', 2, 'HIGH', 3, 1) redundancy_factor, ROUND(100 - (dg.free_mb/dg.total_mb*100)) "percentUsed"
 FROM      v$asm_diskgroup_stat dg
 WHERE     state = 'MOUNTED';
