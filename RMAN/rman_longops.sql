@@ -11,3 +11,19 @@ WHERE   UPPER(opname) LIKE '%RMAN%'
 AND     sofar <> totalwork
 AND     totalwork <> 0
 AND     opname='RMAN: aggregate input';
+
+COLUMN client_info FORMAT a30
+COLUMN event FORMAT a40
+
+SELECT  sid,
+        spid,
+        client_info,
+        event,
+        seconds_in_wait,
+        p1,
+        p2,
+        p3
+FROM    v$process p,
+        v$session s
+WHERE   p.addr = s.paddr
+AND     client_info LIKE 'rman channel=%';
