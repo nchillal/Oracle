@@ -1,6 +1,6 @@
-SET linesize 158 pagesize 200
+SET linesize 200 pagesize 200
 COLUMN name FORMAT a30
-COLUMN value FORMAT a120
+COLUMN value FORMAT a140
 
 SELECT  name, value
 FROM    v$parameter
