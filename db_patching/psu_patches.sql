@@ -13,3 +13,19 @@ SELECT  SUBSTR(action_time,1,30)
         SUBSTR(BUNDLE_SERIES,1,6) bundle,
         SUBSTR(comments,1,20) comments
 FROM    registry$history;
+
+SET LINESIZE 200 PAGESIZE 100
+COLUMN description FORMAT a55
+COLUMN action_time FORMAT a30
+COLUMN status FORMAT a10
+COLUMN action FORMAT a10
+ 
+SELECT  patch_id,
+        patch_type,
+        action,
+        status,
+        action_time,
+        description,
+        source_version,
+        target_version
+FROM    sys.dba_registry_sqlpatch;
