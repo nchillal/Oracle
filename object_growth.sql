@@ -11,6 +11,7 @@ WHERE     begin_interval_time >= TRUNC(SYSDATE) - &&days
 AND       sn.snap_id = a.snap_id
 AND       b.object_id = a.obj#
 AND       b.owner = c.owner
+AND       c.tablespace_name = '&tablespace_name'
 AND       b.object_name = c.segment_name
 GROUP BY  TRUNC(begin_interval_time), TRUNC(begin_interval_time + 1), tablespace_name
 ORDER BY  1, 2, 3;
@@ -36,7 +37,7 @@ FROM      (
                       AND       sn.snap_id = a.snap_id
                       AND       b.object_id = a.obj#
                       AND       b.owner = c.owner
-                      AND       c.tablespace_name = 'DATA_NEW_TS'
+                      AND       c.tablespace_name = '&tablespace_name'
                       AND       b.object_name = c.segment_name
                     )
 )
