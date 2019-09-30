@@ -1,7 +1,7 @@
 -- SELECT * FROM V$LOGMNR_DICTIONARY     The dictionary file in use.
 -- SELECT * FROM V$LOGMNR_PARAMETERS     Current parameter settings for LogMiner.
 -- SELECT * FROM V$LOGMNR_LOGS           Which redo log files are being analyzed.
--- V$LOGMNR_CONTENTS       The contents of the redo log files being analyzed.
+-- SELECT * FROM V$LOGMNR_CONTENTS       The contents of the redo log files being analyzed.
 
 SET LINESIZE 250 PAGES 2000
 COLUMN name FORMAT a70
