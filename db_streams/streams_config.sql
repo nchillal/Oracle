@@ -43,6 +43,8 @@ SELECT distinct parameter, value FROM dba_capture_parameters ORDER BY parameter;
 
 -- Set APPLY tag value
 EXEC DBMS_STREAMS.SET_TAG('17');
+EXEC DBMS_STREAMS_ADM.SET_TAG(HEXTORAW('00'));
+
 -- fix the data on the apply site
 EXEC DBMS_STREAMS.SET_TAG(null);
 
