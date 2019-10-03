@@ -24,7 +24,7 @@ BEGIN
                 )
     LOOP
         DBMS_OUTPUT.PUT_LINE('Adding archive logfile '||rec.name||' for logminer to mine');
-        -- DBMS_LOGMNR.ADD_LOGFILE (options => DBMS_LOGMNR.ADDFILE, logfilename => rec.name);
+        DBMS_LOGMNR.ADD_LOGFILE (options => DBMS_LOGMNR.ADDFILE, logfilename => rec.name);
     END LOOP;
 END;
 /
@@ -37,7 +37,7 @@ BEGIN
                 )
     LOOP
         DBMS_OUTPUT.PUT_LINE('Adding archive logfile '||rec.name||' for logminer to mine');
-        -- DBMS_LOGMNR.ADD_LOGFILE (options => DBMS_LOGMNR.ADDFILE, logfilename => rec.name);
+        DBMS_LOGMNR.ADD_LOGFILE (options => DBMS_LOGMNR.ADDFILE, logfilename => rec.name);
     END LOOP;
 END;
 /
