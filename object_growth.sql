@@ -66,7 +66,7 @@ FROM      (
             AND       sn.snap_id = a.snap_id
             AND       b.object_id = a.obj#
             AND       b.owner = c.owner
-            AND       c.tablespace_name = 'DATA_NEW_TS'
+            AND       c.tablespace_name = '&tablespace_name'
             AND       b.object_name = c.segment_name
             GROUP BY  c.tablespace_name, c.segment_name, b.object_type
             ORDER BY  6 DESC
@@ -76,10 +76,11 @@ WHERE rownum <= 10;
 COLUMN "Percent of Total Disk Usage" JUSTIFY RIGHT FORMAT 999.99
 COLUMN "Space Used (MB)" JUSTIFY RIGHT FORMAT 9,999,999.99
 COLUMN "Total Object Size (MB)" JUSTIFY RIGHT FORMAT 9,999,999.99
+COLUMN segment_name FORMAT a40
 SET LINESIZE 150
 SET PAGESIZE 80
 SET FEEDBACK off
-SELECT * FROM 
+SELECT * FROM
 (
   SELECT    TO_CHAR(end_interval_time, 'Mon/DD/YYYY') mydate,
             SUM(space_used_delta)/1024/1024 "Space used (MB)",
@@ -98,3 +99,23 @@ SELECT * FROM
   GROUP BY  TO_CHAR(end_interval_time, 'Mon/DD/YYYY')
 )
 ORDER BY TO_DATE(mydate, 'Mon/DD/YYYY');
+
+BREAK ON segment_name SKIP 1
+SELECT * FROM
+(
+  SELECT    c.segment_name, TO_CHAR(end_interval_time, 'Mon/DD/YYYY') mydate,
+            SUM(space_used_delta)/1024/1024 "Space used (MB)",
+            AVG(c.bytes)/1024/1024 "Total Object Size (MB)",
+            ROUND(SUM(space_used_delta)/SUM(c.bytes) * 100, 2) "Percent of Total Disk Usage"
+  FROM      dba_hist_snapshot sn,
+            dba_hist_seg_stat a,
+            dba_objects b,
+            dba_segments c
+  WHERE     begin_interval_time > SYSDATE - INTERVAL '&days' DAY
+  AND       sn.snap_id = a.snap_id
+  AND       b.object_id = a.obj#
+  AND       b.owner = c.owner
+  AND       b.object_name = c.segment_name
+  GROUP BY  c.segment_name, TO_CHAR(end_interval_time, 'Mon/DD/YYYY')
+)
+ORDER BY 1, TO_DATE(mydate, 'Mon/DD/YYYY');
