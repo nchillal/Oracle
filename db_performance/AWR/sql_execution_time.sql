@@ -34,7 +34,8 @@ AND         sql_id = '&sql_id'
 AND         executions_delta > 0
 ORDER BY    2, 1;
 
-SELECT      executions,
+SELECT      sql_id,
+            executions,
             ROUND(rows_processed/executions) rows_per_exec,
             ROUND(elapsed_time/executions/1000, 0) ela_per_exec_ms,
             ROUND(buffer_gets/executions, 0) buf_gets_per_exec,
@@ -42,3 +43,19 @@ SELECT      executions,
             ROUND(physical_read_requests/executions) phy_write_per_exec_bytes
 FROM        v$sqlstats
 WHERE       sql_id = '&sql_id';
+
+BREAK ON sql_id ON plan_hash_value SKIP 1
+SELECT      inst_id,
+            sql_id,
+            plan_hash_value,
+            SYSDATE,
+            last_active_time,
+            executions,
+            ROUND(rows_processed/executions) rows_per_exec,
+            ROUND(elapsed_time/executions/1000, 0) ela_per_exec_ms,
+            ROUND(buffer_gets/executions, 0) buf_gets_per_exec,
+            ROUND(physical_read_bytes/executions) phy_reads_per_exec_bytes,
+            ROUND(physical_read_requests/executions) phy_write_per_exec_bytes
+FROM        gv$sqlstats
+WHERE       sql_id IN (SELECT distinct sql_id FROM v$session WHERE username LIKE '%USER' AND sql_id IS NOT NULL)
+ORDER BY    inst_id;
