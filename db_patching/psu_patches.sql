@@ -15,7 +15,7 @@ SELECT  SUBSTR(action_time,1,30)
 FROM    registry$history;
 
 SET LINESIZE 200 PAGESIZE 100
-COLUMN description FORMAT a55
+COLUMN description FORMAT a80
 COLUMN action_time FORMAT a30
 COLUMN status FORMAT a10
 COLUMN action FORMAT a10
