@@ -33,7 +33,7 @@ ORDER BY  inst_id, machine
 ;
 
 -- This query returns username, logon_time and their count
-BREAK ON inst_id SKIP 1
+BREAK ON inst_id ON username SKIP 1
 COMPUTE SUM LABEL 'TOTAL' OF 'ACTIVE' ON inst_id
 COMPUTE SUM LABEL 'TOTAL' OF 'INACTIVE' ON inst_id
 SELECT    *
