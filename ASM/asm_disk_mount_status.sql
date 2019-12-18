@@ -20,3 +20,8 @@ SELECT    dg.name "Disk Group Name",
           DECODE(type, 'EXTERN', 1, 'NORMAL', 2, 'HIGH', 3, 1) redundancy_factor, ROUND(100 - (dg.free_mb/dg.total_mb*100)) "percentUsed"
 FROM      v$asm_diskgroup_stat dg
 WHERE     state = 'MOUNTED';
+
+SELECT      NVL(REGEXP_SUBSTR(failgroup, 'DATA|SYSTEMDG'), 'NOT_USED') "Disk Group Name",
+            COUNT(*) "COUNT"
+FROM        v$asm_disk
+GROUP BY    REGEXP_SUBSTR(failgroup, 'DATA|SYSTEMDG');
