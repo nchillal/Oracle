@@ -30,17 +30,17 @@ FROM      gv$sql_monitor
 WHERE     sid IN (SELECT sid FROM gv$session WHERE status='ACTIVE')
 AND       status = 'EXECUTING';
 
-SELECT    inst_id,
-          sid||','||serial# "sid, serial#",
-          username,
-          sql_id,
-          sql_exec_id,
-          event,
-          SYSDATE,
-          sql_exec_start,
-          TRUNC(SYSDATE - ADD_MONTHS(sql_exec_start, MONTHS_BETWEEN(SYSDATE, sql_exec_start))) "DAYS",
-          TRUNC(24 * MOD(SYSDATE - sql_exec_start, 1)) "HOURS",
-          TRUNC(MOD(MOD(SYSDATE - sql_exec_start, 1) * 24, 1) *60) "MINUTES",
-          MOD(MOD(MOD(SYSDATE - sql_exec_start, 1) * 24, 1) * 60, 1) * 60 "SECONDS"
-FROM      gv$session
+SELECT   inst_id,
+        sid||','||serial# "sid, serial#",
+        username,
+        sql_id,
+        sql_exec_id,
+        event,
+        SYSDATE,
+        sql_exec_start,
+        TRUNC(SYSDATE - ADD_MONTHS(sql_exec_start, MONTHS_BETWEEN(SYSDATE, sql_exec_start))) "DAYS",
+        TRUNC(24 * MOD(SYSDATE - sql_exec_start, 1)) "HOURS",
+        TRUNC(MOD(MOD(SYSDATE - sql_exec_start, 1) * 24, 1) *60) "MINUTES",
+        MOD(MOD(MOD(SYSDATE - sql_exec_start, 1) * 24, 1) * 60, 1) * 60 "SECONDS"
+FROM    gv$session
 WHERE     status = 'ACTIVE' AND type <> 'BACKGROUND' AND username <> 'SYS';
