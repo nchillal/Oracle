@@ -18,7 +18,7 @@ SELECT    NVL(s.username, '(oracle)') AS username,
 FROM      v$session_event se,
           v$session s
 WHERE     s.sid = se.sid
-AND       s.sid = &1
+AND       s.sid = &sid
 ORDER BY  se.time_waited DESC;
 
 SELECT    sql_id, sql_child_number, percentage
