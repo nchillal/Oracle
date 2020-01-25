@@ -46,3 +46,27 @@ GROUP BY  protocol;
   END IF;
 END;
 /
+
+SELECT    machine, protocol, TO_CHAR(logon_time, 'DD-MON-RR HH24:MI'), COUNT(*)
+FROM      (
+          SELECT  machine, logon_time,
+                  CASE WHEN program NOT LIKE 'ora___@% (P%)' THEN
+                    (
+                      SELECT  MAX(
+                                  CASE
+                                      WHEN network_service_banner LIKE '%TCP/IP%' THEN 'TCP'
+                                      WHEN network_service_banner LIKE '%Bequeath%' THEN 'BEQUEATH'
+                                      WHEN network_service_banner LIKE '%IPC%' THEN 'IPC'
+                                      WHEN network_service_banner LIKE '%SDP%' THEN 'SDP'
+                                      WHEN network_service_banner LIKE '%NAMED P%' THEN 'Named pipe'
+                                      WHEN network_service_banner IS NULL THEN 'TCPS'
+                                  END
+                                )
+          FROM    v$session_connect_info i
+          WHERE   i.sid=s.sid
+          )
+    END     protocol
+    FROM    v$session s
+    )
+GROUP BY machine, protocol, TO_CHAR(logon_time, 'DD-MON-RR HH24:MI')
+ORDER BY 2;
