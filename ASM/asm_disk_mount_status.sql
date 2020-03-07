@@ -7,7 +7,7 @@ COLUMN "Free MB" FORMAT a10
 COLUMN "Usable Free MB" FORMAT a10
 COLUMN ReqMirrorFree FORMAT a15
 
-SELECT    group_number, disk_number, failgroup, name "Disk Name", mount_status "Mount Status", state, mode_status "Mode Status", path
+SELECT    group_number, disk_number, failgroup, name, header_status, mount_status, state, mode_status, path
 FROM      v$asm_disk
 ORDER BY  failgroup, name, path;
 
