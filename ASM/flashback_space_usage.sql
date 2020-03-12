@@ -1,5 +1,5 @@
-select  *
-from    v$recovery_area_usage;
+SELECT  *
+FROM    v$recovery_area_usage;
 
 SELECT  file_type,
         percent_space_used,
@@ -29,3 +29,5 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Total reclaimable: '||TO_CHAR(totrcml)||' Mb');
 END;
 /
+
+SELECT * FROM v$flashback_database_logfile;
