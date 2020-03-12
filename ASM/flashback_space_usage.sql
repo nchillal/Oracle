@@ -10,21 +10,22 @@ SELECT  file_type,
 FROM    v$flash_recovery_area_usage f, v$parameter p
 WHERE   p.name='db_recovery_file_dest_size';
 
+SET SERVEROUTPUT ON
 DECLARE
-    pcntrclm number;
-    pcntused number;
-    recdestsize number;
-    totrcml number;
-    totused number;
+    pcntrclm NUMBER;
+    pcntused NUMBER;
+    recdestsize NUMBER;
+    totrcml NUMBER;
+    totused NUMBER;
 BEGIN
     SELECT SUM(percent_space_reclaimable) INTO pcntrclm FROM v$flash_recovery_area_usage;
-    SELECT SUM(percent_space_used) INTO pcntused from v$flash_recovery_area_usage;
-    SELECT value INTO recdestsize FROM v$parameter where name='db_recovery_file_dest_size';
+    SELECT SUM(percent_space_used) INTO pcntused FROM v$flash_recovery_area_usage;
+    SELECT value INTO recdestsize FROM v$parameter WHERE name='db_recovery_file_dest_size';
     totrcml := pcntrclm*recdestsize/100/1024/1024;
     totused := pcntused*recdestsize/100/1024/1024;
-    DBMS_OUTPUT.PUT_LINE('Total FRA space: '||to_char(recdestsize/1024/1024)||' Mb');
-    DBMS_OUTPUT.PUT_LINE('Total used: '||to_char(totused)||' Mb');
-    DBMS_OUTPUT.PUT_LINE('Total free: '||to_char(recdestsize/1024/1024-totused)||' Mb');
-    DBMS_OUTPUT.PUT_LINE('Total reclaimable: '||to_char(totrcml)||' Mb');
+    DBMS_OUTPUT.PUT_LINE(chr(10)||'Total FRA space: '||TO_CHAR(recdestsize/1024/1024)||' Mb');
+    DBMS_OUTPUT.PUT_LINE('Total used: '||TO_CHAR(totused)||' Mb');
+    DBMS_OUTPUT.PUT_LINE('Total free: '||TO_CHAR(recdestsize/1024/1024-totused)||' Mb');
+    DBMS_OUTPUT.PUT_LINE('Total reclaimable: '||TO_CHAR(totrcml)||' Mb');
 END;
 /
