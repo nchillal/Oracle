@@ -23,10 +23,10 @@ BEGIN
     SELECT value INTO recdestsize FROM v$parameter WHERE name='db_recovery_file_dest_size';
     totrcml := pcntrclm*recdestsize/100/1024/1024;
     totused := pcntused*recdestsize/100/1024/1024;
-    DBMS_OUTPUT.PUT_LINE(chr(10)||'Total FRA space: '||TO_CHAR(recdestsize/1024/1024)||' Mb');
-    DBMS_OUTPUT.PUT_LINE('Total used: '||TO_CHAR(totused)||' Mb');
-    DBMS_OUTPUT.PUT_LINE('Total free: '||TO_CHAR(recdestsize/1024/1024-totused)||' Mb');
-    DBMS_OUTPUT.PUT_LINE('Total reclaimable: '||TO_CHAR(totrcml)||' Mb');
+    DBMS_OUTPUT.PUT_LINE(CHR(10)||'Total FRA space: '||TO_CHAR(recdestsize/1024/1024)||' MB');
+    DBMS_OUTPUT.PUT_LINE('Total used: '||TO_CHAR(totused)||' MB');
+    DBMS_OUTPUT.PUT_LINE('Total free: '||TO_CHAR(recdestsize/1024/1024-totused)||' MB');
+    DBMS_OUTPUT.PUT_LINE('Total reclaimable: '||TO_CHAR(totrcml)||' MB');
 END;
 /
 
