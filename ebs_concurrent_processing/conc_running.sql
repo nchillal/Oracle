@@ -14,17 +14,17 @@ SELECT    sess.sid,
           fusr.description user_name,
           fcp.user_concurrent_program_name progName,
           TO_CHAR(actual_Start_date,'DD-MON-YYYY HH24:MI:SS') StartDate,
-          request_id	RequestId,
+          request_id RequestId,
           (SYSDATE - actual_start_date)*24*60*60 ETime
-FROM 	    apps.fnd_concurrent_requests fcr,
+FROM      apps.fnd_concurrent_requests fcr,
           apps.fnd_concurrent_programs_tl fcp,
           apps.fnd_user fusr,
           gv$session sess
 WHERE     fcp.concurrent_program_id = fcr.concurrent_program_id
-AND       fcr.program_application_id	= fcp.application_id
-AND       fcp.language		= 'US'
-AND       fcr.phase_code	= 'R'
-AND       fcr.status_code	= 'R'
+AND       fcr.program_application_id = fcp.application_id
+AND       fcp.language = 'US'
+AND       fcr.phase_code = 'R'
+AND       fcr.status_code = 'R'
 AND       fcr.requested_by = fusr.user_id
 AND       fcr.oracle_session_id = sess.audsid (+)
 AND       fcr.oracle_session_id IS NOT NULL
@@ -33,9 +33,9 @@ SELECT    sess.sid,
           proc.spid SERVER,
           fcpr.os_process_id CLIENT,
           fusr.description user_name,
-          fcp.user_concurrent_program_name	progName,
+          fcp.user_concurrent_program_name progName,
           TO_CHAR(actual_Start_date,'DD-MON-YYYY HH24:MI:SS') StartDate,
-          request_id	RequestId,
+          request_id RequestId,
           (SYSDATE - actual_start_date)*24*60*60 ETime
 FROM 	    apps.fnd_concurrent_requests fcr,
           apps.fnd_concurrent_programs_tl fcp,
@@ -44,10 +44,10 @@ FROM 	    apps.fnd_concurrent_requests fcr,
           gv$session sess,
           gv$process proc
 WHERE     fcp.concurrent_program_id = fcr.concurrent_program_id
-AND       fcr.program_application_id	= fcp.application_id
-AND       fcp.language		= 'US'
-AND       fcr.phase_code	= 'R'
-AND       fcr.status_code	= 'R'
+AND       fcr.program_application_id = fcp.application_id
+AND       fcp.language = 'US'
+AND       fcr.phase_code = 'R'
+AND       fcr.status_code = 'R'
 AND       fcr.requested_by = fusr.user_id
 AND       fcr.controlling_manager=fcpr.concurrent_process_id
 AND       fcpr.session_id = sess.audsid
