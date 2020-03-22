@@ -2,7 +2,7 @@
 BREAK ON snap_id SKIP 1
 SELECT    instance_number,
           end_time,
-          AAS, UCPS, UTPS, EPS, DTPS, DBGPS, PRBPS, TSU, LRPS, PWBPS
+          LPS, AAS, UCPS, UTPS, EPS, DTPS, DBGPS, PRBPS, TSU, LRPS, PWBPS
 FROM      (
           SELECT  snap_id,
                   instance_number,
@@ -15,6 +15,6 @@ FROM      (
           )
 PIVOT     (
           MAX(maxval)
-          FOR metric_name IN ('Average Active Sessions' AS AAS, 'User Commits Per Sec' AS UCPS, 'User Transaction Per Sec' AS UTPS, 'Executions Per Sec' AS EPS, 'Database Time Per Sec' AS DTPS, 'DB Block Gets Per Sec' AS DBGPS, 'Physical Read Bytes Per Sec' AS PRBPS, 'Temp Space Used' AS TSU, 'Logical Reads Per Sec' AS LRPS, 'Physical Write Bytes Per Sec' AS PWBPS)
+          FOR metric_name IN ('Logons Per Sec' AS LPS, 'Average Active Sessions' AS AAS, 'User Commits Per Sec' AS UCPS, 'User Transaction Per Sec' AS UTPS, 'Executions Per Sec' AS EPS, 'Database Time Per Sec' AS DTPS, 'DB Block Gets Per Sec' AS DBGPS, 'Physical Read Bytes Per Sec' AS PRBPS, 'Temp Space Used' AS TSU, 'Logical Reads Per Sec' AS LRPS, 'Physical Write Bytes Per Sec' AS PWBPS)
           )
 ORDER BY  snap_id;
