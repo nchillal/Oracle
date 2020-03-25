@@ -1,3 +1,16 @@
+SELECT  *
+FROM    TABLE(
+              DBMS_SPACE.OBJECT_GROWTH_TREND (
+                  object_owner => UPPER('&&schema_name'),
+                  object_name => UPPER('&&object_name'),
+                  object_type => UPPER('&&object_type'),
+                  partition_name => '&partition_name',
+                  start_time => SYSDATE - 30,
+                  end_time => SYSDATE + 30,
+                  interval => to_dsinterval('1 00:00:00')
+              )
+);
+
 break on begin_time on end_time SKIP 1
 SELECT    TRUNC(begin_interval_time) begin_time,
           TRUNC(begin_interval_time + 1) end_time,
