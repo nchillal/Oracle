@@ -11,15 +11,19 @@
 --  object_type_mvlog = 14
 
 SET LINESIZE 200
-COLUMN segment_owner FORMAT a25
-COLUMN segment_name FORMAT a25
+COLUMN segment_owner FORMAT a30
+COLUMN segment_name FORMAT a30
 COLUMN segment_type FORMAT a20
-COLUMN tablespace_name FORMAT a20
-COLUMN partition_name FORMAT a20
-COLUMN lob_column_name FORMAT a12
+COLUMN tablespace_name FORMAT a30
+COLUMN partition_name FORMAT a30
+COLUMN lob_column_name FORMAT a30
+
+BREAK ON segment_owner ON segment_name ON segment_type
 
 SELECT  segment_owner,
         segment_name,
         segment_type,
-        tablespace_name
+        tablespace_name,
+        partition_name,
+        lob_column_name
 FROM    (TABLE(DBMS_SPACE.OBJECT_DEPENDENT_SEGMENTS(objowner => '&schema', objname => '&object', partname => NULL, objtype => &type)));
