@@ -23,7 +23,7 @@ WHERE   OWNER = '&owner'
 AND     segment_name= '&lob_segment_name';
 
 -- Check the space that is actually allocated to the LOB data
-SELECT  SUM(DBMS_LOB.GETLENGTH(&lob_column_name)) 
+SELECT  SUM(DBMS_LOB.GETLENGTH(&lob_column_name))
 FROM    &table_name;
 
 -- The difference between these two is free space and/or undo space. It is not possible to assess the actual empty space using the queries above alone, because of the UNDO segment size, which is virtually impossible to assess.
@@ -47,15 +47,15 @@ DECLARE
     v_full_blocks NUMBER;
     v_full_bytes NUMBER;
 BEGIN
-    DBMS_SPACE.SPACE_USAGE ('&schema', '&table_name>', 'TABLE', v_unformatted_blocks,
+    DBMS_SPACE.SPACE_USAGE ('&segment_owner', '&segment_name', '&segment_type', v_unformatted_blocks,
     v_unformatted_bytes, v_fs1_blocks, v_fs1_bytes, v_fs2_blocks, v_fs2_bytes,
     v_fs3_blocks, v_fs3_bytes, v_fs4_blocks, v_fs4_bytes, v_full_blocks, v_full_bytes);
-    DBMS_OUTPUT.PUT_LINE('Unformatted Blocks = '||v_unformatted_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS1 Blocks = '||v_fs1_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS2 Blocks = '||v_fs2_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS3 Blocks = '||v_fs3_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS4 Blocks = '||v_fs4_blocks);
-    DBMS_OUTPUT.PUT_LINE('Full Blocks = '||v_full_blocks);
+    DBMS_OUTPUT.PUT_LINE('Total number of blocks unformatted = '||v_unformatted_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 0 to 25% free space = '||v_fs1_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 25 to 50% free space = '||v_fs2_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 50 to 75% free space = '||v_fs3_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 75 to 100% free space = '||v_fs4_blocks);
+    DBMS_OUTPUT.PUT_LINE('Total number of blocks full in the segment = '||v_full_blocks);
 end;
 /
 
@@ -75,15 +75,15 @@ DECLARE
     v_full_blocks NUMBER;
     v_full_bytes NUMBER;
 BEGIN
-    DBMS_SPACE.SPACE_USAGE ('&schema', '&table_name', 'TABLE PARTITION', v_unformatted_blocks,
+    DBMS_SPACE.SPACE_USAGE ('&segment_owner', '&segment_name', '&segment_type', v_unformatted_blocks,
     v_unformatted_bytes, v_fs1_blocks, v_fs1_bytes, v_fs2_blocks, v_fs2_bytes,
-    v_fs3_blocks, v_fs3_bytes, v_fs4_blocks, v_fs4_bytes, v_full_blocks, v_full_bytes, <partition name>);
-    DBMS_OUTPUT.PUT_LINE('Unformatted Blocks = '||v_unformatted_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS1 Blocks = '||v_fs1_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS2 Blocks = '||v_fs2_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS3 Blocks = '||v_fs3_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS4 Blocks = '||v_fs4_blocks);
-    DBMS_OUTPUT.PUT_LINE('Full Blocks = '||v_full_blocks);
+    v_fs3_blocks, v_fs3_bytes, v_fs4_blocks, v_fs4_bytes, v_full_blocks, v_full_bytes, '&partition_name');
+    DBMS_OUTPUT.PUT_LINE('Total number of blocks unformatted = '||v_unformatted_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 0 to 25% free space = '||v_fs1_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 25 to 50% free space = '||v_fs2_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 50 to 75% free space = '||v_fs3_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 75 to 100% free space = '||v_fs4_blocks);
+    DBMS_OUTPUT.PUT_LINE('Total number of blocks full in the segment = '||v_full_blocks);
 end;
 /
 
@@ -106,12 +106,12 @@ BEGIN
     DBMS_SPACE.SPACE_USAGE ('&owner', '&lob_segment_name', 'LOB', v_unformatted_blocks,
     v_unformatted_bytes, v_fs1_blocks, v_fs1_bytes, v_fs2_blocks, v_fs2_bytes,
     v_fs3_blocks, v_fs3_bytes, v_fs4_blocks, v_fs4_bytes, v_full_blocks, v_full_bytes);
-    DBMS_OUTPUT.PUT_LINE('Unformatted Blocks = '||v_unformatted_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS1 Blocks = '||v_fs1_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS2 Blocks = '||v_fs2_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS3 Blocks = '||v_fs3_blocks);
-    DBMS_OUTPUT.PUT_LINE('FS4 Blocks = '||v_fs4_blocks);
-    DBMS_OUTPUT.PUT_LINE('Full Blocks = '||v_full_blocks);
+    DBMS_OUTPUT.PUT_LINE('Total number of blocks unformatted = '||v_unformatted_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 0 to 25% free space = '||v_fs1_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 25 to 50% free space = '||v_fs2_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 50 to 75% free space = '||v_fs3_blocks);
+    DBMS_OUTPUT.PUT_LINE('Number of blocks having at least 75 to 100% free space = '||v_fs4_blocks);
+    DBMS_OUTPUT.PUT_LINE('Total number of blocks full in the segment = '||v_full_blocks);
 end;
 /
 

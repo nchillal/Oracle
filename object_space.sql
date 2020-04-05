@@ -8,10 +8,7 @@ DECLARE
   last_used_extent_block_id NUMBER;
   last_used_block           NUMBER;
 BEGIN
-  DBMS_SPACE.UNUSED_SPACE('&schema','&object','&type', total_blocks, total_bytes, unused_blocks, unused_bytes, last_used_extent_file_id, last_used_extent_block_id, last_used_block);
-  DBMS_OUTPUT.PUT_LINE('-----------------------------------');
-  DBMS_OUTPUT.PUT_LINE('           UNUSED SPACE            ');
-  DBMS_OUTPUT.PUT_LINE('-----------------------------------');
+  DBMS_SPACE.UNUSED_SPACE('&segment_owner','&segment_name','&segment_type', total_blocks, total_bytes, unused_blocks, unused_bytes, last_used_extent_file_id, last_used_extent_block_id, last_used_block);
   DBMS_OUTPUT.PUT_LINE('TOTAL_BLOCKS              = '||total_blocks);
   DBMS_OUTPUT.PUT_LINE('TOTAL_BYTES               = '||total_bytes);
   DBMS_OUTPUT.PUT_LINE('UNUSED_BLOCKS             = '||unused_blocks);
