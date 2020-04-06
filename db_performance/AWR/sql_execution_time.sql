@@ -32,7 +32,7 @@ AND         dhs.instance_number = dhss.instance_number
 AND         dhs.snap_id = dhss.snap_id
 AND         sql_id = '&sql_id'
 AND         executions_delta > 0
-ORDER BY    2, 1;
+ORDER BY    1, 2;
 
 SELECT      sql_id,
             executions,
