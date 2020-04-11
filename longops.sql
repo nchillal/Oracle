@@ -1,4 +1,9 @@
-SELECT  opname,
+COLUMN opname FORMAT a25
+SELECT  sid,
+        opname,
+        sql_id,
+        sql_plan_hash_value,
+        last_update_time,
         ROUND(sofar * 8/1024/1024, 2) "Completed[GB]",
         ROUND(totalwork * 8/1024/1024, 2) "TotalWork[GB]",
         ROUND((sofar * 100)/totalwork, 2) "%Completed",
