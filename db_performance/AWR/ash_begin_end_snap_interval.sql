@@ -1,3 +1,11 @@
+SELECT  TO_CHAR(BEGIN_INTERVAL_TIME, 'DD-MM-YYYY') "BEGIN_TIME",
+        MIN(snap_id) "BEGIN_SNAP",
+        MAX(snap_id) "END_SNAP"
+FROM    dba_hist_snapshot
+WHERE   instance_number = 1
+AND     begin_interval_time > SYSDATE - INTERVAL '&days' DAY
+GROUP BY TO_CHAR(BEGIN_INTERVAL_TIME, 'DD-MM-YYYY');
+
 COLUMN begin_end_snapid FORMAT a20
 SELECT    begin_snap||' ---> '||end_snap "BEGIN_END_SNAPID",
           begin_time||' ---> '||end_time "BEGIN_END_SNAPTIME"
