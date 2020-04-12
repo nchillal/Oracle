@@ -16,16 +16,19 @@ ORDER BY  blocking_session;
 
 SELECT    inst_id, sid||','||serial# "SID_SERIAL#", username, sql_id, blocking_session, blocking_session_status, status, event
 FROM      gv$session
-WHERE     event ='&event_name'
+WHERE     REGEXP_LIKE(event, '&event_name')
 AND       blocking_session IS NOT NULL;
 
 SELECT    session_id||','||session_serial# "SID_SERIAL#", du.username, sql_id, blocking_session, blocking_session_status, session_state, event
 FROM      v$active_session_history ash, dba_users du
 WHERE     blocking_session IS NOT NULL
 AND       ash.user_id = du.user_id
+AND       REGEXP_LIKE(event, '&event_name')
+AND       sql_id = '&sql_id'
 AND       sample_time > SYSDATE - INTERVAL '&minutes' MINUTE;
 
 SELECT    session_id||','||session_serial# "SID_SERIAL#", sql_id, blocking_session, blocking_session_status, session_state, event
 FROM      dba_hist_active_sess_history
 WHERE     blocking_session IS NOT NULL
-AND       snap_id BETWEEN &&begin_snap AND &&end_snap;
+AND       snap_id BETWEEN &&begin_snap AND &&end_snap
+AND       REGEXP_LIKE(event, '&event');
