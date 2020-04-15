@@ -11,7 +11,7 @@ SELECT    sql_id,
           MAX(sample_time) "END_TIME",
           EXTRACT(HOUR FROM (MAX(sample_time) - MIN(sample_time)))||' Hour '||EXTRACT(MINUTE FROM (MAX(sample_time) - MIN(sample_time))) ||' Minute '||ROUND(EXTRACT(SECOND FROM (MAX(sample_time) - MIN(sample_time)))) ||' Second ' "TIME_TAKEN"
 FROM      dba_hist_active_sess_history
-WHERE     sql_id = '&&sql_id'
+WHERE     REGEXP_LIKE(sql_id, '&&sql_id')
 AND       sample_time >= SYSDATE - INTERVAL '&days' day
 AND       sql_exec_id IS NOT NULL
 GROUP BY  snap_id, sql_id, sql_exec_id, sql_plan_hash_value
@@ -30,7 +30,7 @@ FROM        dba_hist_sqlstat dhs, dba_hist_snapshot dhss
 WHERE       dhs.dbid = dhss.dbid
 AND         dhs.instance_number = dhss.instance_number
 AND         dhs.snap_id = dhss.snap_id
-AND         sql_id = '&sql_id'
+AND         REGEXP_LIKE(sql_id, '&sql_id')
 AND         executions_delta > 0
 ORDER BY    1, 2;
 
@@ -42,7 +42,7 @@ SELECT      sql_id,
             ROUND(physical_read_bytes/executions) phy_reads_per_exec_bytes,
             ROUND(physical_read_requests/executions) phy_write_per_exec_bytes
 FROM        v$sqlstats
-WHERE       sql_id = '&sql_id';
+WHERE       REGEXP_LIKE(sql_id, '&sql_id');
 
 BREAK ON sql_id ON plan_hash_value SKIP 1
 SELECT      inst_id,

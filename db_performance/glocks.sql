@@ -24,7 +24,7 @@ FROM      v$active_session_history ash, dba_users du
 WHERE     blocking_session IS NOT NULL
 AND       ash.user_id = du.user_id
 AND       REGEXP_LIKE(event, '&event_name')
-AND       sql_id = '&sql_id'
+AND       REGEXP_LIKE(sql_id, '&sql_id')
 AND       sample_time > SYSDATE - INTERVAL '&minutes' MINUTE;
 
 SELECT    session_id||','||session_serial# "SID_SERIAL#", sql_id, blocking_session, blocking_session_status, session_state, event
